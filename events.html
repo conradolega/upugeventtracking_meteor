@@ -1,0 +1,29 @@
+<head>
+  <title>Event Tracking System</title>
+</head>
+
+<body>
+  {{> page}}
+</body>
+
+<template name="page">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+				{{#each events}}
+				{{> event}}
+				{{/each}}
+		    </div>
+		    <div class="span10">
+		    	{{eventbody}}
+		    </div>
+		</div>
+	</div>
+</template>
+
+<template name="event">
+	<dl>
+		<a id="event" href="#"><dt>{{name}}</dt></a>
+		<dd>{{venue}} / {{time}}</dd>
+	</dl>
+</template>
