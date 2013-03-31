@@ -1,3 +1,5 @@
+Meteor.subscribe("events");
+
 Template.body.showAddEventModule = function () {
   return Session.get("addEvent");
 }
@@ -21,7 +23,7 @@ Template.event.events({
 });
 
 Template.eventSidebar.eventBlock = function () {
-  return Events.find({}, {});
+  return Events.find();
 };
 
 Template.eventSidebar.addEventClass = function () {
