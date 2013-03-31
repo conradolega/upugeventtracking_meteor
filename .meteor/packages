@@ -9,7 +9,7 @@ preserve-inputs
 bootstrap
 jquery
 accounts-base
-accounts-password
 accounts-ui
 bootstrap-datetimepicker
 moment
+accounts-facebook

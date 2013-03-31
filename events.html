@@ -8,15 +8,22 @@
 
 <template name="page">
   <div class="container-fluid">
-  {{> navBar}}
+  	{{> navBar}}
+    {{#if currentUser}}
+      {{> body}}
+    {{/if}}
+   </div>
+</template>
+
+<template name="body">
     <div class="row-fluid">
       <div class="span2">
         <div class="well sidebar-nav">
-          {{> eventSidebar}}
+            {{> eventSidebar}}
         </div>
       </div>
       <div class="span10">
-      	
+
       	{{#if showError}}
           <div class="alert alert-error">
     	    <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -29,7 +36,6 @@
         {{/if}}
 	  </div>
     </div>
-   </div>
 </template>
 
 <template name="navBar">
@@ -44,7 +50,7 @@
       <a class="brand" href="#">Project name</a>
       <div class="nav-collapse collapse">
         <p class="navbar-text pull-right">
-          Logged in as <a href="#" class="navbar-link">Username</a>
+            {{loginButtons align="right"}}
         </p>
         <ul class="nav">
           <li class="active"><a href="#">Home</a></li>
@@ -74,7 +80,8 @@
     <a id="event" href="#">{{name}}
       <ul class="nav nav-list">
         <li class="inactive"><i class="icon-home"></i>  <small>{{venue}}</small></li>
-        <li class="inactive"><i class="icon-time"></i>  <small>{{time}}</small></li>
+        <li class="inactive"><i class="icon-time"></i>  <small>{{startTime}}</small></li>
+        <li class="inactive"><i class="icon-minus"></i>  <small>{{endTime}}</small></li>
       </ul>
     </a>
   </li>

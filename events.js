@@ -2,15 +2,15 @@ if (Meteor.isClient) {
 
   Session.setDefault("addEvent", false);
 
-  Template.page.showAddEventModule = function () {
+  Template.body.showAddEventModule = function () {
     return Session.get("addEvent");
   }
 
-  Template.page.showError = function () {
+  Template.body.showError = function () {
     return Session.get("addEventError");
   }
 
-  Template.page.events({
+  Template.body.events({
     'click .close' : function () {
       Session.set("addEventError", null);
     }

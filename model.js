@@ -25,5 +25,12 @@ Meteor.methods({
       throw new Meteor.Error(403, "Invalid date input", "start date may not be less than or equal to end date");
     else if((timeDiff >= 0) && (timeDiff < 30))
       throw new Meteor.Error(404, "Event duration too short", "event must span for at least 30 minutes");
+
+    return Events.insert({
+      name: options.name,
+      venue: "None",
+      startTime: start.format("ddd, MMM DD hA"),
+      endTime: end.format("ddd, MMM DD hA")
+    });
   } 
 })
