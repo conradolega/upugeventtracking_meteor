@@ -27,6 +27,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Event duration too short", "event must span for at least 30 minutes");
 
     return Events.insert({
+      owner: Meteor.userId(),
       name: options.name,
       venue: "None",
       startTime: start.format("ddd, MMM DD hA"),
