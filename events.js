@@ -57,7 +57,7 @@ if (Meteor.isClient) {
       var end = template.find("#endTimeField").value;
       if(name.length && start.length && end.length)
       {
-        Meteor.call('createEvent', {
+          Meteor.call('createEvent', {
           name: name,
           start: start,
           end: end
