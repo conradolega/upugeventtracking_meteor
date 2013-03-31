@@ -8,6 +8,7 @@
 
 <template name="page">
   <div class="container-fluid">
+  {{> navBar}}
     <div class="row-fluid">
       <div class="span2">
         <div class="well sidebar-nav">
@@ -15,12 +16,45 @@
         </div>
       </div>
       <div class="span10">
+      	
+      	{{#if showError}}
+          <div class="alert alert-error">
+    	    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    	    <strong>{{showError.error}}:</strong> {{showError.details}}.
+          </div>
+        {{/if}}
+
        	{{#if showAddEventModule}}
           {{> addEventModule}}
         {{/if}}
 	  </div>
     </div>
    </div>
+</template>
+
+<template name="navBar">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="#">Project name</a>
+      <div class="nav-collapse collapse">
+        <p class="navbar-text pull-right">
+          Logged in as <a href="#" class="navbar-link">Username</a>
+        </p>
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
 </template>
 
 <template name="eventSidebar">
@@ -30,7 +64,7 @@
         {{#each eventBlock}}
           {{> event}}
         {{/each}}
-      <li class="inactive"><a id="addevent" href="#"><small>Add event...</small></a></li>
+        <li class="{{addEventClass}}"><a id="addevent" href="#"><small>Add event...</small></a></li>
    </ul>
 </template>
 
@@ -48,28 +82,34 @@
 </template>
 
 <template name="addEventModule">
-  <legend>New event</legend>
-  <div id="error-group">
-  </div>
+  <legend>Add event...</legend>
   <div class="control-group">
-    <label class="control-label" for="eventName">Event name</label>
+    <label class="control-label" for="eventName">Name</label>
 	<div class="controls">
-	  <input type="text" id="where">
+	  <input class="input-xlarge" type="text" id="name">
     </div>
   </div>
+  {{#constant}}
   <div class="control-group">
-    <label class="control-label" for="venue">Venue</label>
-	<div class="controls">
-	  <input type="text" id="venue">
+  	<label class="control-label" for="startTime">Start</label>
+    <div id="startTime" class="input-append">
+      <input id="startTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+        </i>
+      </span>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="time">Time</label>
-	<div class="controls">
-		<input type="text" id="paid">
-    </div>
+    <label class="control-label" for="endTime">End</label>
+    <div id="endTime" class="input-append">
+      <input id="endTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+        </i>
+      </span>
+    </div>    
+  {{/constant}}    
 	<div class="form-actions">
-      <button id="venue_button" class="btn btn-primary">Add event</button>
+      <button id="add" class="btn btn-primary">Add event</button>
       <button type="reset" class="btn">Cancel</button>
     </div>
   </div>

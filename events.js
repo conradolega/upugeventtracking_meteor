@@ -1,10 +1,20 @@
-Events = new Meteor.Collection("events");
-
 if (Meteor.isClient) {
+
+  Session.setDefault("addEvent", false);
 
   Template.page.showAddEventModule = function () {
     return Session.get("addEvent");
   }
+
+  Template.page.showError = function () {
+    return Session.get("addEventError");
+  }
+
+  Template.page.events({
+    'click .close' : function () {
+      Session.set("addEventError", null);
+    }
+  });
 
   Template.event.events({
     'click #event' : function () {
@@ -18,9 +28,50 @@ if (Meteor.isClient) {
     return Events.find({}, {});
   };
 
+  Template.eventSidebar.addEventClass = function () {
+    return Session.get("addEvent") ? "active" : "inactive";
+  };
+
   Template.eventSidebar.events({
     'click #addevent' : function(event) {
       Session.set("addEvent", true);
+      Session.set("addEventError", null);
+    }
+  });
+
+  Template.addEventModule.rendered = function () {
+    $("#startTime").datetimepicker({
+      pick12HourFormat: true,
+      pickSeconds: false
+    });
+    $("#endTime").datetimepicker({
+      pick12HourFormat: true,
+      pickSeconds: false
+    });    
+  }
+
+  Template.addEventModule.events({
+    'click #add' : function(event, template) {
+      var name = template.find("#name").value;
+      var start = template.find("#startTimeField").value;
+      var end = template.find("#endTimeField").value;
+      if(name.length && start.length && end.length)
+      {
+        Meteor.call('createEvent', {
+          name: name,
+          start: start,
+          end: end
+        }, function (error) {
+        if (error) {
+          Session.set("addEventError", {error: error.reason, details: error.details});
+        }
+        });
+        Session.set("addEventError", null);
+      }
+      else
+      {
+        Session.set("addEventError", {error: "Required parameter missing", details: "please check fields"});
+      }
     }
   });
 
