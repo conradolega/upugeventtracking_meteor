@@ -35,12 +35,12 @@ Meteor.methods({
         startTime: 
         {
           store: start.format('MM/DD/YYYY hh:mm A'),
-          disp: start.format("ddd, MMM DD hA")
+          disp: start.format("ddd, MMM DD h:mmA")
         },
         endTime: 
         {
           store: end.format('MM/DD/YYYY hh:mm A'),
-          disp: end.format("ddd, MMM DD hA")
+          disp: end.format("ddd, MMM DD h:mmA")
         },
         created: moment()
       });
@@ -53,12 +53,12 @@ Meteor.methods({
           startTime: 
           {
             store: start.format('MM/DD/YYYY hh:mm A'),
-            disp: start.format("ddd, MMM DD hA")
+            disp: start.format("ddd, MMM DD h:mmA")
           },
           endTime: 
           {
             store: end.format('MM/DD/YYYY hh:mm A'),
-            disp: end.format("ddd, MMM DD hA")
+            disp: end.format("ddd, MMM DD h:mmA")
           }}
         }
       );
