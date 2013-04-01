@@ -9,21 +9,21 @@
 <template name="page">
   <div class="container-fluid">
   	{{> navBar}}
-    {{#if currentUser}}
       {{> body}}
-    {{/if}}
    </div>
 </template>
 
 <template name="body">
     <div class="row-fluid">
       <div class="span2">
+        {{#if currentUser}}
         <div class="well sidebar-nav">
             {{> eventSidebar}}
         </div>
+      {{/if}}        
       </div>
       <div class="span10">
-
+      {{#if currentUser}}
       	{{#if showError}}
           <div class="alert alert-error">
     	    <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -31,9 +31,10 @@
           </div>
         {{/if}}
 
-       	{{#if showAddEventModule}}
-          {{> addEventModule}}
+       	{{#if showDetails}}
+          {{> detailsModule}}
         {{/if}}
+       {{/if}}
 	  </div>
     </div>
 </template>
@@ -70,30 +71,30 @@
         {{#each eventBlock}}
           {{> event}}
         {{/each}}
-        <li class="{{addEventClass}}"><a id="addevent" href="#"><small>Add event...</small></a></li>
+        <li class="{{addEventClass}}"><a id="addEvent" href="#"><small>Add event...</small></a></li>
    </ul>
 </template>
 
 
 <template name="event">
-  <li class="inactive">
+  <li class="{{listItemClass}}">
     <a id="event" href="#">{{name}}
       <ul class="nav nav-list">
         <li class="inactive"><i class="icon-home"></i>  <small>{{venue}}</small></li>
-        <li class="inactive"><i class="icon-time"></i>  <small>{{startTime}}</small></li>
-        <li class="inactive"><i class="icon-minus"></i>  <small>{{endTime}}</small></li>
+        <li class="inactive start"><i class="icon-time"></i>  <small>{{startTime.disp}}</small></li>
+        <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTime.disp}}</small></li>
       </ul>
     </a>
   </li>
   <li class="divider"></li>
 </template>
 
-<template name="addEventModule">
-  <legend>Add event...</legend>
+<template name="detailsModule">
+  <legend>{{moduleHeader}}</legend>
   <div class="control-group">
     <label class="control-label" for="eventName">Name</label>
 	<div class="controls">
-	  <input class="input-xlarge" type="text" id="name">
+	  <input class="input-xlarge" type="text" id="name" value="{{eventName}}">
     </div>
   </div>
   {{#constant}}
@@ -108,7 +109,7 @@
     </div>
     <label class="control-label" for="endTime">End</label>
     <div id="endTime" class="input-append">
-      <input id="endTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
+      <input id="endTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text"  disabled></input>
       <span class="add-on">
         <i data-time-icon="icon-time" data-date-icon="icon-calendar">
         </i>
@@ -116,8 +117,8 @@
     </div>    
   {{/constant}}    
 	<div class="form-actions">
-      <button id="add" class="btn btn-primary">Add event</button>
-      <button id="reset" class="btn">Cancel</button>
+      <button id="add" class="btn btn-primary">{{buttonName}}</button>
+      <button id="cancel" class="btn">Cancel</button>
     </div>
   </div>
 </template>
