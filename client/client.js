@@ -136,7 +136,7 @@ Template.detailsModule.moduleHeader = function () {
   if(!event)
     return "Add event...";
   else
-    return "Event details";
+    return "1. Setup event details";
 }
 
 Template.detailsModule.eventName = function () {

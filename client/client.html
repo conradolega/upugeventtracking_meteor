@@ -52,7 +52,7 @@
 
            	{{#if showDetails}}
               {{> detailsModule}}
-              {{> checklist}}
+              {{> collaboratorsModule}}
             {{/if}}
 
         {{/if}}
@@ -111,7 +111,9 @@
 </template>
 
 <template name="detailsModule">
-  <legend>{{moduleHeader}}</legend>
+  <div class="page-header">
+    <h1>{{moduleHeader}}</h1>
+  </div>
   <div class="control-group">
     <label class="control-label" for="eventName">Name</label>
 	<div class="controls">
@@ -145,36 +147,8 @@
   </div>
 </template>
 
-<template name="checklist">
-  <legend>Checklist</legend>
-  <h1>Week 1</h1>
-  <ul>
-    <li>Contact sponsors</li>
-    <li>Contact bands</li>
-    <li>Finalize proposal</li>
-  </ul>
-    <h1>Week 2</h1>
-  <ul>
-    <li>Contact sponsors</li>
-    <li>Contact bands</li>
-    <li>Finalize proposal</li>
-  </ul>
-    <h1>Week 3</h1>
-  <ul>
-    <li>Contact sponsors</li>
-    <li>Contact bands</li>
-    <li>Finalize proposal</li>
-  </ul>
-    <h1>Week 4</h1>
-  <ul>
-    <li>Contact sponsors</li>
-    <li>Contact bands</li>
-    <li>Finalize proposal</li>
-  </ul>
-    <h1>Week 5</h1>
-  <ul>
-    <li>Contact sponsors</li>
-    <li>Contact bands</li>
-    <li>Finalize proposal</li>
-  </ul>
+<template name="collaboratorsModule">
+  <div class="page-header">
+    <h1>2. Add collaborators</h1>
+  </div>
 </template>
