@@ -113,11 +113,11 @@ Template.detailsModule.events({
         else {
           if(Session.get("selected") === "addEvent")
           {
-            Session.set("selected", _id);
             Session.set("addEventSuccess",{
               success: "Event successfully added",
               details: "Go and add more details to your event"
             });
+            Session.set("selected", _id);
           }
         }
         Session.set("loading", false);
@@ -167,8 +167,8 @@ Template.detailsModule.updateText = function () {
     return "";
   else
   {
-    var user = Meteor.users.findOne({_id: event.owner});
-    return "Updated " + moment(event.created).fromNow() + " by " + user.profile.name;
+    var user = Meteor.users.findOne({_id: event.lastUpdate});
+    return "Updated " + moment(event.updated).fromNow() + " by " + user.profile.name;
   }
 }
 
@@ -176,14 +176,47 @@ Template.collaboratorsModule.you = function () {
   return Meteor.user().profile.name;
 }
 
+Template.collaboratorsModule.help = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+    return Meteor.users.find({_id: {$in: event.collaborators}});
+}
+
 Template.collaboratorsModal.others = function () {
   var event = Events.findOne({_id: Session.get("selected")});
   if(event)
-    return Meteor.users.find({$and: [{_id: {$not: {$in: event.collaborators}}}, {_id: {$ne: Meteor.userId()}}]});
+    return Meteor.users.find({_id: {$nin: event.collaborators}});
 }
 
 Template.collaboratorsModal.events({
   'click #addCollaborator' : function () {
-
+    var checked = $("#collaboratorModal").find("input[type=checkbox]:checked");
+    var ids = [];
+    checked.each( function () {
+      ids.push($(this).attr('userId'));
+    });
+    if(ids.length > 0)
+    {
+      Meteor.call('addCollaborators', 
+      {
+        ids: ids,
+        selected: Session.get("selected")
+      },
+      function (error, _id) {
+        if (error) {
+          Session.set("addEventError", {error: error.reason, details: error.details});
+        }
+        else {
+          if(Session.get("selected") === "addEvent")
+          {
+            Session.set("selected", _id);
+            Session.set("addEventSuccess",{
+              success: "Successfully added collaborators",
+              details: "Start working on the event"
+            });
+          }
+        }
+      });
+    }
   }
-})
+});

@@ -29,13 +29,14 @@ Meteor.methods({
     if(options.selected == "addEvent")
     {
       return Events.insert({
-        owner: Meteor.userId(),
         name: options.name,
         venue: "None",
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
         created: moment().format('MM/DD/YYYY hh:mm A'),
-        collaborators: []
+        updated: moment().format('MM/DD/YYYY hh:mm A'),
+        collaborators: [Meteor.userId()],
+        lastUpdate: Meteor.userId()
       });
     }
     else
@@ -45,10 +46,19 @@ Meteor.methods({
         {$set: {name: options.name, 
           startTime: start.format('MM/DD/YYYY hh:mm A'),
           endTime: end.format('MM/DD/YYYY hh:mm A'),
-          created: moment().format('MM/DD/YYYY hh:mm A')}
+          updated: moment().format('MM/DD/YYYY hh:mm A'),
+          lastUpdate: Meteor.userId()}
         }
       );
     }
-
+  },
+  addCollaborators: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $addToSet: { collaborators: { $each: options.ids } }
+      }
+    );
   } 
 })

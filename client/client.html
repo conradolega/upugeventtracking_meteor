@@ -158,7 +158,9 @@
     <h2>Collaborators</h2>
   </div>
   <ul>
-    <li class="span4"><strong>{{you}}</strong> <span class="badge badge-success">You</span></li>
+    {{#each help}}
+      <li class="span4"><strong>{{profile.name}}</strong></li>
+    {{/each}}
   </ul>
   <div class="row-fluid">
     <div class="form-actions">
@@ -176,15 +178,15 @@
             <a class="close" data-dismiss="modal">×</a>
             <h3>Troops</h3>
         </div>
-        <div class="modal-body">
+        <div id="collaboratorModal" class="modal-body">
             <ul>
             {{#each others}}
-             <li class="span4"><label class="checkbox">{{profile.name}}<input type="checkbox"></label></li>
+             <li class="span4"><label class="checkbox">{{profile.name}}<input userId="{{_id}}" type="checkbox"></label></li>
             {{/each}}
             </ul>
         </div>
         <div class="modal-footer">
-            <a id="addCollaborator" class="btn btn-success" href="#">Call to action</a>
+            <a id="addCollaborator" data-dismiss="modal"class="btn btn-success" href="#">Call to action</a>
             <a class="btn" data-dismiss="modal" href="#">Close</a>
         </div>
     </div>

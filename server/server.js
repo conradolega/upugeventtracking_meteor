@@ -1,5 +1,10 @@
+Meteor.startup( function () {
+
+	Events.remove({});
+});
+
 Meteor.publish("events", function () {
-	return Events.find({owner: this.userId});
+	return Events.find({collaborators: this.userId});
 });
 
 Meteor.publish("users", function (){
