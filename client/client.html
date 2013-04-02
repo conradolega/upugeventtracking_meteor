@@ -159,7 +159,12 @@
   </div>
   <ul>
     {{#each help}}
-      <li class="span4"><strong>{{profile.name}}</strong></li>
+      <li class="span4">
+        <strong>{{profile.name}}</strong>
+        {{#if you}}
+           <span class="badge badge-success">You</span>
+        {{/if}}
+      </li>
     {{/each}}
   </ul>
   <div class="row-fluid">

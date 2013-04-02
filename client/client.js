@@ -173,7 +173,7 @@ Template.detailsModule.updateText = function () {
 }
 
 Template.collaboratorsModule.you = function () {
-  return Meteor.user().profile.name;
+  return this._id === Meteor.userId();
 }
 
 Template.collaboratorsModule.help = function () {
