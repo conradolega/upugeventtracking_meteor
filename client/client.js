@@ -168,7 +168,7 @@ Template.detailsModule.updateText = function () {
   else
   {
     var user = Meteor.users.findOne({_id: event.lastUpdate});
-    return "Updated " + moment().utc().from(moment(event.updated)) + " by " + user.profile.name;
+    return "Last updated: " + moment(event.updated).calendar() + " by " + user.profile.name;
   }
 }
 
