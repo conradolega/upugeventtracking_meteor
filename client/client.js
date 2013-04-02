@@ -30,9 +30,6 @@ Template.event.events({
   'click #event' : function (event) {
     Session.set("addEventError", null);
     Session.set("addEventSuccess", null);
-    // template data, if any, is available in 'this'
-    if (typeof console !== 'undefined')
-      console.log("You pressed the button");
     Session.set("selected", this._id);
   }
 });
