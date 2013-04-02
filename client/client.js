@@ -1,4 +1,5 @@
 Meteor.subscribe("events");
+Meteor.subscribe("users");
 
 Template.body.showDetails = function () {
   return Session.get("selected");
@@ -170,3 +171,19 @@ Template.detailsModule.updateText = function () {
     return "Updated " + moment(event.created).fromNow() + " by " + user.profile.name;
   }
 }
+
+Template.collaboratorsModule.you = function () {
+  return Meteor.user().profile.name;
+}
+
+Template.collaboratorsModal.others = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+    return Meteor.users.find({$and: [{_id: {$not: {$in: event.collaborators}}}, {_id: {$ne: Meteor.userId()}}]});
+}
+
+Template.collaboratorsModal.events({
+  'click #addCollaborator' : function () {
+
+  }
+})

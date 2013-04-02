@@ -34,7 +34,8 @@ Meteor.methods({
         venue: "None",
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
-        created: moment().format('MM/DD/YYYY hh:mm A')
+        created: moment().format('MM/DD/YYYY hh:mm A'),
+        collaborators: []
       });
     }
     else
@@ -43,8 +44,8 @@ Meteor.methods({
         {_id: options.selected},
         {$set: {name: options.name, 
           startTime: start.format('MM/DD/YYYY hh:mm A'),
-          endTime: end.format('MM/DD/YYYY hh:mm A')},
-          created: moment().format('MM/DD/YYYY hh:mm A')
+          endTime: end.format('MM/DD/YYYY hh:mm A'),
+          created: moment().format('MM/DD/YYYY hh:mm A')}
         }
       );
     }
