@@ -33,8 +33,8 @@ Meteor.methods({
         venue: "None",
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
-        created: moment().utc().format('MM/DD/YYYY hh:mm A'),
-        updated: moment().utc().format('MM/DD/YYYY hh:mm A'),
+        created: moment().utc().toString(),
+        updated: moment().utc().toString(),
         collaborators: [Meteor.userId()],
         lastUpdate: Meteor.userId()
       });
@@ -46,7 +46,7 @@ Meteor.methods({
         {$set: {name: options.name, 
           startTime: start.format('MM/DD/YYYY hh:mm A'),
           endTime: end.format('MM/DD/YYYY hh:mm A'),
-          updated: moment().utc().format('MM/DD/YYYY hh:mm A'),
+          updated: moment().utc().toString(),
           lastUpdate: Meteor.userId()}
         }
       );
