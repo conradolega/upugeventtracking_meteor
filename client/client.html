@@ -9,32 +9,51 @@
 <template name="page">
   <div class="container-fluid">
   	{{> navBar}}
+
+    {{#if loading}}
+      <img src="http://viewvc.svn.mozilla.org/vc/addons/trunk/bandwagon/skin/images/spinner.gif?revision=18591&view=co&pathrev=18591">
+    {{else}}
+
       {{> body}}
+
+    {{/if}}
    </div>
 </template>
 
 <template name="body">
     <div class="row-fluid">
-      <div class="span2">
-        {{#if currentUser}}
+      <div class="span3">
+
+      {{#if currentUser}}
+
         <div class="well sidebar-nav">
             {{> eventSidebar}}
         </div>
+
       {{/if}}        
       </div>
-      <div class="span10">
+      <div class="span9">
       {{#if currentUser}}
-      	{{#if showError}}
-          <div class="alert alert-error">
-    	    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    	    <strong>{{showError.error}}:</strong> {{showError.details}}.
-          </div>
-        {{/if}}
 
-       	{{#if showDetails}}
-          {{> detailsModule}}
-        {{/if}}
-       {{/if}}
+          {{#if showError}}
+            <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{showError.error}}:</strong> {{showError.details}}.
+            </div>
+          {{/if}}
+
+          {{#if showSuccess}}
+            <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
+            </div>
+          {{/if}}
+
+         	{{#if showDetails}}
+            {{> detailsModule}}
+          {{/if}}
+
+      {{/if}}
 	  </div>
     </div>
 </template>

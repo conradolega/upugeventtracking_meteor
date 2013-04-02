@@ -3,19 +3,33 @@ Meteor.subscribe("events");
 Template.body.showDetails = function () {
   return Session.get("selected");
 }
+Template.page.loading = function () {
+  return Session.get("loading");
+}
+
+Template.body.showLoader = function () {
+  return Session.get("eventsLoaded");
+}
 
 Template.body.showError = function () {
   return Session.get("addEventError");
 }
 
+Template.body.showSuccess = function () {
+  return Session.get("addEventSuccess");
+}
+
 Template.body.events({
   'click .close' : function () {
     Session.set("addEventError", null);
+    Session.set("addEventSuccess", null);
   }
 });
 
 Template.event.events({
   'click #event' : function (event) {
+    Session.set("addEventError", null);
+    Session.set("addEventSuccess", null);
     // template data, if any, is available in 'this'
     if (typeof console !== 'undefined')
       console.log("You pressed the button");
@@ -40,6 +54,7 @@ Template.eventSidebar.events({
   'click #addEvent' : function(event) {
     Session.set("selected", "addEvent");
     Session.set("addEventError", null);
+    Session.set("addEventSuccess", null);
   }
 });
 
@@ -72,20 +87,30 @@ Template.detailsModule.events({
     var end = template.find("#endTimeField").value;
     if(name.length && start.length && end.length)
     {
+        Session.set("loading", true);
         Meteor.call('createEvent', {
         name: name,
         start: start,
         end: end,
         selected: Session.get("selected")
-      }, function (error) {
-      if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
-      }
-      else {
-
-      }
+      }, function (error, _id) {
+        if (error) {
+          Session.set("addEventError", {error: error.reason, details: error.details});
+        }
+        else {
+          if(Session.get("selected") === "addEvent")
+          {
+            Session.set("selected", _id);
+            Session.set("addEventSuccess",{
+              success: "Event successfully added",
+              details: "Go and add more details to your event"
+            });
+          }
+        }
+        Session.set("loading", false);
       });
       Session.set("addEventError", null);
+      Session.set("addEventSuccess", null);
     }
     else
     {
@@ -95,6 +120,7 @@ Template.detailsModule.events({
   'click #cancel' : function () {
     Session.set("selected", null);
     Session.set("addEventError", null);    
+    Session.set("addEventSuccess", null);
   },
 });
 
