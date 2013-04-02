@@ -100,8 +100,8 @@
     <a id="event" href="#">{{name}}
       <ul class="nav nav-list">
         <li class="inactive"><i class="icon-home"></i>  <small>{{venue}}</small></li>
-        <li class="inactive start"><i class="icon-time"></i>  <small>{{startTime.disp}}</small></li>
-        <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTime.disp}}</small></li>
+        <li class="inactive start"><i class="icon-time"></i>  <small>{{startTimeDisp}}</small></li>
+        <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTimeDisp}}</small></li>
       </ul>
     </a>
   </li>
@@ -135,6 +135,7 @@
       </span>
     </div>    
   {{/constant}}    
+  <p class="muted">{{updateText}}</p>
 	<div class="form-actions">
       <button id="add" class="btn btn-primary">{{buttonName}}</button>
       <button id="cancel" class="btn">Cancel</button>

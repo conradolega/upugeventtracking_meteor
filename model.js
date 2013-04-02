@@ -32,34 +32,19 @@ Meteor.methods({
         owner: Meteor.userId(),
         name: options.name,
         venue: "None",
-        startTime: 
-        {
-          store: start.format('MM/DD/YYYY hh:mm A'),
-          disp: start.format("ddd, MMM DD h:mmA")
-        },
-        endTime: 
-        {
-          store: end.format('MM/DD/YYYY hh:mm A'),
-          disp: end.format("ddd, MMM DD h:mmA")
-        },
-        created: moment()
+        startTime: start.format('MM/DD/YYYY hh:mm A'),  
+        endTime: end.format('MM/DD/YYYY hh:mm A'),
+        created: moment().format('MM/DD/YYYY hh:mm A')
       });
     }
     else
     {
       return Events.update(
         {_id: options.selected},
-        { $set: {name: options.name, 
-          startTime: 
-          {
-            store: start.format('MM/DD/YYYY hh:mm A'),
-            disp: start.format("ddd, MMM DD h:mmA")
-          },
-          endTime: 
-          {
-            store: end.format('MM/DD/YYYY hh:mm A'),
-            disp: end.format("ddd, MMM DD h:mmA")
-          }}
+        {$set: {name: options.name, 
+          startTime: start.format('MM/DD/YYYY hh:mm A'),
+          endTime: end.format('MM/DD/YYYY hh:mm A')},
+          created: moment().format('MM/DD/YYYY hh:mm A')
         }
       );
     }

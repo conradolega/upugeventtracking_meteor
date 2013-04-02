@@ -49,6 +49,16 @@ Template.eventSidebar.addEventClass = function () {
   return Session.get("selected") === "addEvent" ? "active" : "inactive";
 };
 
+Template.event.startTimeDisp = function () {
+  var startTime = this.startTime;
+  return moment(this.startTime).format("ddd, MMM DD h:mmA");
+}
+
+Template.event.endTimeDisp = function () {
+  var endTime = this.endTime;
+  return moment(this.endTime).format("ddd, MMM DD h:mmA");
+}
+
 
 Template.eventSidebar.events({
   'click #addEvent' : function(event) {
@@ -70,8 +80,8 @@ Template.detailsModule.rendered = function () {
   var event = Events.findOne({_id:Session.get("selected")});
   if(event)
   {
-    $("#startTimeField").val(event.startTime.store);
-    $("#endTimeField").val(event.endTime.store);
+    $("#startTimeField").val(event.startTime);
+    $("#endTimeField").val(event.endTime);
   }
   else
   {
@@ -146,4 +156,15 @@ Template.detailsModule.buttonName = function () {
     return "Add event";
   else
     return "Save changes";
+} 
+
+Template.detailsModule.updateText = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(!event)
+    return "";
+  else
+  {
+    var user = Meteor.users.findOne({_id: event.owner});
+    return "Updated " + moment(event.created).fromNow() + " by " + user.profile.name;
+  }
 }
