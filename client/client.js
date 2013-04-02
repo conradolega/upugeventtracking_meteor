@@ -3,6 +3,11 @@ Meteor.subscribe("events");
 Template.body.showDetails = function () {
   return Session.get("selected");
 }
+
+Template.body.showSteps = function () {
+  return Session.get("selected") !== "addEvent";
+}
+
 Template.page.loading = function () {
   return Session.get("loading");
 }
