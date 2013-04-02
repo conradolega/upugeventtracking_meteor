@@ -7,8 +7,8 @@
 </body>
 
 <template name="page">
+  {{> navBar}}
   <div class="container-fluid">
-  	{{> navBar}}
 
     {{#if loading}}
       <img src="http://viewvc.svn.mozilla.org/vc/addons/trunk/bandwagon/skin/images/spinner.gif?revision=18591&view=co&pathrev=18591">
@@ -17,7 +17,8 @@
       {{> body}}
 
     {{/if}}
-   </div>
+  </div>
+
 </template>
 
 <template name="body">
@@ -26,35 +27,36 @@
 
       {{#if currentUser}}
 
-        <div class="well sidebar-nav">
+        <div class="well sidebar-nav sidebar-nav-fixed">
             {{> eventSidebar}}
         </div>
 
       {{/if}}        
       </div>
       <div class="span9">
-      {{#if currentUser}}
+        {{#if currentUser}}
 
-          {{#if showError}}
-            <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{showError.error}}:</strong> {{showError.details}}.
-            </div>
-          {{/if}}
+            {{#if showError}}
+              <div class="alert alert-error">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>{{showError.error}}:</strong> {{showError.details}}.
+              </div>
+            {{/if}}
 
-          {{#if showSuccess}}
-            <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
-            </div>
-          {{/if}}
+            {{#if showSuccess}}
+              <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
+              </div>
+            {{/if}}
 
-         	{{#if showDetails}}
-            {{> detailsModule}}
-          {{/if}}
+           	{{#if showDetails}}
+              {{> detailsModule}}
+              {{> checklist}}
+            {{/if}}
 
-      {{/if}}
-	  </div>
+        {{/if}}
+	   </div>
     </div>
 </template>
 
@@ -141,4 +143,38 @@
       <button id="cancel" class="btn">Cancel</button>
     </div>
   </div>
+</template>
+
+<template name="checklist">
+  <legend>Checklist</legend>
+  <h1>Week 1</h1>
+  <ul>
+    <li>Contact sponsors</li>
+    <li>Contact bands</li>
+    <li>Finalize proposal</li>
+  </ul>
+    <h1>Week 2</h1>
+  <ul>
+    <li>Contact sponsors</li>
+    <li>Contact bands</li>
+    <li>Finalize proposal</li>
+  </ul>
+    <h1>Week 3</h1>
+  <ul>
+    <li>Contact sponsors</li>
+    <li>Contact bands</li>
+    <li>Finalize proposal</li>
+  </ul>
+    <h1>Week 4</h1>
+  <ul>
+    <li>Contact sponsors</li>
+    <li>Contact bands</li>
+    <li>Finalize proposal</li>
+  </ul>
+    <h1>Week 5</h1>
+  <ul>
+    <li>Contact sponsors</li>
+    <li>Contact bands</li>
+    <li>Finalize proposal</li>
+  </ul>
 </template>

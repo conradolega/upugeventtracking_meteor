@@ -5,3 +5,8 @@
   .sidebar-nav {
 	padding: 9px 0;
   }
+
+  .sidebar-nav-fixed {
+  	position: fixed;
+  	width: 21.97%;
+  }
