@@ -207,14 +207,10 @@ Template.collaboratorsModal.events({
           Session.set("addEventError", {error: error.reason, details: error.details});
         }
         else {
-          if(Session.get("selected") === "addEvent")
-          {
-            Session.set("selected", _id);
-            Session.set("addEventSuccess",{
-              success: "Successfully added collaborators",
-              details: "Start working on the event"
-            });
-          }
+          Session.set("addEventSuccess",{
+            success: "Successfully added collaborators",
+            details: "Start working on the event"
+          });
         }
       });
     }
@@ -234,12 +230,72 @@ Template.week1.dates = function () {
 Template.lineup.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#lineup_table");
-    $(table).append('<tr><td><a href="#" class="editable">Edit</a></td><td><a href="#" class="editableTime">Edit</a></td><td><a href="#" class="editableTime">Edit</a></td></tr>');
-    $(".editable").editable();
-    $(".editableTime").editable({
+    var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
+    if(isNaN(next))
+      next = 1;
+    $(table).append('<tr><td>' + next + '</td><td><a href="#" class="editCell">Edit</a></td><td><a href="#" class="editStartTime">Edit</a></td><td><a href="#" class="editEndTime">Edit</a></td></tr>');
+    $(".editCell").editable({
+      unsavedclass: null
+    });
+    $(".editStartTime").editable({
       type: 'combodate',
       format: 'hh:mm A',
-      template: 'hh : mm A'
+      template: 'hh : mm A',
+      unsavedclass: null
+    });
+    $(".editEndTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A',
+      unsavedclass: null
+    });
+  },
+  'click #save' : function(event, template) {
+    var records = _.rest(template.findAll("tr"));
+    var save = [];
+    $(records).each( function () {
+      var band = $(this).find("a.editCell").html();
+      var startTime = $(this).find("a.editStartTime").html();
+      var endTime = $(this).find("a.editEndTime").html();
+      if(!((band === "Empty") || (band === "Edit") || (startTime === "Empty") || (startTime === "Edit") || (endTime === "Empty") || (endTime === "Edit")))
+      {
+        var push = {
+          band: band,
+          startTime: startTime,
+          endTime: endTime
+        };
+        save.push(push);
+      }
+    });
+    Meteor.call("updateLineup",
+    {
+      lineup: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+      else {
+        Session.set("addEventSuccess",{
+          success: "Successfully updated lineup",
+          details: ""
+        });
+      }
     });
   }
 });
+
+Template.lineup.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { lineup: 1 });
+  if(cursor)
+  {
+    var num = 1;
+    cursor.lineup.forEach(function (entry)
+    {
+      entry.num = 1;
+      num++;
+    });
+    return cursor.lineup;
+  }
+}

@@ -36,7 +36,8 @@ Meteor.methods({
         created: moment().utc().toString(),
         updated: moment().utc().toString(),
         collaborators: [Meteor.userId()],
-        lastUpdate: Meteor.userId()
+        lastUpdate: Meteor.userId(),
+        lineup: []
       });
     }
     else
@@ -58,6 +59,15 @@ Meteor.methods({
       {_id: options.selected},
       {
         $addToSet: { collaborators: { $each: options.ids } }
+      }
+    );
+  },
+  updateLineup: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { lineup: options.lineup }
       }
     );
   } 
