@@ -227,6 +227,24 @@ Template.week1.dates = function () {
   }
 }
 
+Template.lineup.rendered = function () {
+  $(".editCell").editable({
+    unsavedclass: null
+  });
+  $(".editStartTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });
+  $(".editEndTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });
+}
+
 Template.lineup.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#lineup_table");
@@ -248,7 +266,7 @@ Template.lineup.events({
       format: 'hh:mm A',
       template: 'hh : mm A',
       unsavedclass: null
-    });
+    });    
   },
   'click #save' : function(event, template) {
     var records = _.rest(template.findAll("tr"));
@@ -267,6 +285,8 @@ Template.lineup.events({
         save.push(push);
       }
     });
+
+    Session.set("loading", true);
     Meteor.call("updateLineup",
     {
       lineup: save,
@@ -279,10 +299,11 @@ Template.lineup.events({
       else {
         Session.set("addEventSuccess",{
           success: "Successfully updated lineup",
-          details: ""
+          details: "Check other modules for completion"
         });
       }
     });
+    Session.set("loading", false);
   }
 });
 
