@@ -220,3 +220,26 @@ Template.collaboratorsModal.events({
     }
   }
 });
+
+Template.week1.dates = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    var startDate = moment(event.starTime).subtract('weeks', 4).format("ddd, MMM DD");
+    var endDate = moment(event.starTime).subtract('weeks', 3).format("ddd, MMM DD");
+    return startDate + " - " + endDate;
+  }
+}
+
+Template.lineup.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#lineup_table");
+    $(table).append('<tr><td><a href="#" class="editable">Edit</a></td><td><a href="#" class="editableTime">Edit</a></td><td><a href="#" class="editableTime">Edit</a></td></tr>');
+    $(".editable").editable();
+    $(".editableTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A'
+    });
+  }
+});

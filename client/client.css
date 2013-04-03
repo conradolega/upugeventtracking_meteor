@@ -14,3 +14,15 @@
   li.span4:nth-child(3n+1) {
   margin-left:0;
   }
+
+  .center {
+  text-align: center;
+  }
+
+  .table td {
+   text-align: center;   
+  }
+
+  .table th {
+   text-align: center;   
+  }  
