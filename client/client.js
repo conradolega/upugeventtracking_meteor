@@ -314,7 +314,7 @@ Template.lineup.rows = function() {
     var num = 1;
     cursor.lineup.forEach(function (entry)
     {
-      entry.num = 1;
+      entry.num = num;
       num++;
     });
     return cursor.lineup;
