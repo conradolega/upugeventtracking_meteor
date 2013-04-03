@@ -298,7 +298,7 @@ Template.lineup.events({
       }
       else {
         Session.set("addEventSuccess",{
-          success: "Successfully updated lineup",
+          success: "Successfully updated line-up",
           details: "Check other modules for completion"
         });
       }
