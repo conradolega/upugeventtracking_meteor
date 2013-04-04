@@ -25,7 +25,7 @@
 
       {{#if currentUser}}
 
-        <div class="well sidebar-nav sidebar-nav-fixed">
+        <div id="sidebar" class="well sidebar-nav sidebar-nav-fixed">
             {{> eventSidebar}}
         </div>
 
@@ -48,7 +48,7 @@
               </div>
             {{/if}}
 
-           	{{#if showDetails}}
+            {{#if showDetails}}
               
               {{> detailsModule}}
               {{#if showSteps}}
@@ -59,7 +59,7 @@
             {{/if}}
 
         {{/if}}
-	   </div>
+     </div>
     </div>
 </template>
 
@@ -91,7 +91,7 @@
 <template name="eventSidebar">
   <ul class="nav nav-list">
     <li class="nav-header">My Events</li>
-      <li class="divider"></li>		
+      <li class="divider"></li>   
         {{#each eventBlock}}
           {{> event}}
         {{/each}}
@@ -104,7 +104,7 @@
   <li class="{{listItemClass}}">
     <a id="event" href="#">{{name}}
       <ul class="nav nav-list">
-        <li class="inactive"><i class="icon-home"></i>  <small>{{venue}}</small></li>
+        <li class="inactive"><i class="icon-home"></i>  <small>{{venueFinal}}</small></li>
         <li class="inactive start"><i class="icon-time"></i>  <small>{{startTimeDisp}}</small></li>
         <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTimeDisp}}</small></li>
       </ul>
@@ -119,13 +119,13 @@
   </div>
   <div class="control-group">
     <label class="control-label" for="eventName">Name</label>
-	<div class="controls">
-	  <input class="input-xlarge" type="text" id="name" value="{{eventName}}">
+  <div class="controls">
+    <input class="input-xlarge" type="text" id="name" value="{{eventName}}">
     </div>
   </div>
   {{#constant}}
   <div class="control-group">
-  	<label class="control-label" for="startTime">Start</label>
+    <label class="control-label" for="startTime">Start</label>
     <div id="startTime" class="input-append">
       <input id="startTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
       <span class="add-on">
@@ -143,7 +143,7 @@
     </div>    
   {{/constant}}    
   <p class="muted">{{updateText}}</p>
-	<div class="form-actions">
+  <div class="form-actions">
       <button id="add" class="btn btn-primary">{{buttonName}}</button>
       <button id="cancel" class="btn">Cancel</button>
     </div>
@@ -229,17 +229,42 @@
       {{> posterDraft}}
     </div>
   </div>
+  <hr>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> venueHeader}}
+      </div>
+    </div>
+    <div class="span6">
+      <div class="center">
+        {{> workHeader}}
+      </div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> venue}}
+      </div>
+    </div>
+    <div class="span6">
+      <div class="center">
+        {{> work}}
+      </div>
+    </div>
+  </div>
   <div class="row-fluid">
     <div class="center">
       <div class="form-actions">
           <button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <template name="lineupHeader">
-  <h2>Line-up</h2>
+  <h3>Line-up</h3>
   <p>List bands/performers that would be playing and their corresponding set times</p>
 </template>
 
@@ -274,7 +299,7 @@
 </template>
 
 <template name="sponsorsHeader">
-  <h2>Potential sponsors</h2>
+  <h3>Potential sponsors</h3>
   <p>List companies you intend to send sponsorship letters to</p>
 </template>
 
@@ -308,7 +333,7 @@
 
 <template name="posterDraft">
   <h3>Studies for event poster</h3>
-  <ul class="thumbnails">
+    <ul class="thumbnails">
     {{#each images}}
       <li class="span4">
         <a href="#" class="thumbnail">
@@ -316,7 +341,66 @@
         </a>
       </li>
     {{/each}}
-  </ul>
+  </ul> 
   <p>Upload concept sketches for the event poster</p>
+  <p class="muted">(usually in 8.5x11 or 11x17)</p>
   <button class="btn" id="upload">Pick file</button>
+</template>
+
+<template name="venueHeader">
+  <h3>Potential venues</h3>
+  <p>List possible venues of the event, unless assigned beforehand</p>
+</template>
+
+<template name="venue">
+  <table id="venue_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Venue</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td>
+          <a href="#" class="editVenue">{{venue}}</a>
+        </td>
+        <td>
+          <a href="#" class="editAddress">{{address}}</a>
+        </td>        
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="workHeader">
+  <h3>Work logistics</h3>
+  <p>List down the number and type of workers you would need</p>
+</template>  
+
+<template name="work">
+  <table id="work_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th style="width:85%">Work</th>
+      <th style="width:15%">Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td style="width:85%">
+          {{work}}
+        </td>
+        <td style="width:15%">
+          <a href="#" class="editAddress">{{address}}</a>
+        </td>                
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
 </template>

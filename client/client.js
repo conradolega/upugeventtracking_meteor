@@ -1,6 +1,9 @@
 Meteor.subscribe("events");
 Meteor.subscribe("users");
-$('#navbar').affix();
+
+Template.body.rendered = function () {
+  $('#sidebar').affix();
+}
 
 Template.body.showDetails = function () {
   return Session.get("selected");
@@ -276,6 +279,33 @@ Template.week1.events({
     if (error) {
       Session.set("addEventError", {error: error.reason, details: error.details});
     }
+  });
+
+  table = template.find("#venue_table");
+  records = _.rest($(table).find("tr"));
+  save = [];
+  $(records).each( function () {
+    var venue = $(this).find("a.editVenue").html();
+    var address = $(this).find("a.editAddress").html();
+    if(($(this).find("a.editable-empty").length == 0))
+    {
+      var push = {
+        venue: venue,
+        address: address
+      };
+      save.push(push);
+    }
+  });
+
+  Meteor.call("updateVenue",
+  {
+    venue: save,
+    selected: Session.get("selected")
+  },
+  function (error, _id) {
+    if (error) {
+      Session.set("addEventError", {error: error.reason, details: error.details});
+    }
     else {
       Session.set("addEventSuccess",{
         success: "Update successful",
@@ -283,7 +313,7 @@ Template.week1.events({
       });
     }
   });
-  Session.set("loading", false);          
+  Session.set("loading", false);            
 }  
 });
 
@@ -357,9 +387,6 @@ Template.lineup.rows = function() {
 Template.sponsors.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#sponsors_table");
-    var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
-    if(isNaN(next))
-      next = 1;
     $(table).append('<tr><td><a href="#" class="editSponsor"></a></td><td><a href="#" class="editPerson"></a></td><td><a href="#" class="editContact"></a></td></tr>');
     $(".editSponsor").editable({
       unsavedclass: null
@@ -396,12 +423,8 @@ Template.sponsors.rendered = function () {
 Template.posterDraft.images = function () {
   var event = Events.findOne({_id: Session.get("selected")});
   if (!event) return [];
-  else return event.images;
-}
-
-Template.posterDraft.rendered = function () {
-
-}
+    else return event.images;
+} 
 
 Template.posterDraft.events({
   'click #upload' : function() {
@@ -432,3 +455,63 @@ Template.posterDraft.events({
   );
   }
 });
+
+Template.venue.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#venue_table");
+    $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
+    $(".editVenue").editable({
+      unsavedclass: null
+    });
+    $(".editAddress").editable({
+      unsavedclass: null
+    });    
+  }
+});
+
+Template.venue.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { venue: 1 });
+  if(cursor)
+  {
+    return cursor.venue;
+  }
+}
+
+Template.venue.rendered = function () {
+  $(".editVenue").editable({
+    unsavedclass: null
+  });
+  $(".editAddress").editable({
+    unsavedclass: null
+  });
+}
+
+Template.work.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#venue_table");
+    $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
+    $(".editVenue").editable({
+      unsavedclass: null
+    });
+    $(".editAddress").editable({
+      unsavedclass: null
+    });    
+  }
+});
+
+Template.work.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { venue: 1 });
+  if(cursor)
+  {
+    return cursor.venue;
+  }
+}
+
+Template.work.rendered = function () {
+  $(".editVenue").editable({
+    unsavedclass: null
+  });
+  $(".editAddress").editable({
+    unsavedclass: null
+  });
+}

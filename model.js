@@ -8,7 +8,6 @@
 Events = new Meteor.Collection("events");
 
 Meteor.methods({
-  // Events methods
   createEvent: function (options) {
     options = options || {};
     if (! (typeof options.name === "string" && options.name.length &&
@@ -31,7 +30,7 @@ Meteor.methods({
     {
       return Events.insert({
         name: options.name,
-        venue: "None",
+        venueFinal: "None",
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
         created: moment().utc().toString(),
@@ -40,6 +39,8 @@ Meteor.methods({
         lastUpdate: Meteor.userId(),
         lineup: [],
         sponsors: [],
+        venue: [],
+        work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
         images: []
       });
     }
@@ -80,6 +81,15 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { sponsors: options.sponsors }
+      }
+    );
+  },
+ updateVenue: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { venue: options.venue }
       }
     );
   },
