@@ -1,6 +1,9 @@
 Meteor.subscribe("events");
 Meteor.subscribe("users");
-$('#navbar').affix();
+
+Template.body.rendered = function () {
+  $('#sidebar').affix();
+}
 
 Template.body.showDetails = function () {
   return Session.get("selected");
@@ -357,9 +360,6 @@ Template.lineup.rows = function() {
 Template.sponsors.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#sponsors_table");
-    var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
-    if(isNaN(next))
-      next = 1;
     $(table).append('<tr><td><a href="#" class="editSponsor"></a></td><td><a href="#" class="editPerson"></a></td><td><a href="#" class="editContact"></a></td></tr>');
     $(".editSponsor").editable({
       unsavedclass: null
@@ -397,3 +397,15 @@ Template.posterDraft.rendered = function () {
   filepicker.constructWidget($("#upload"));
 }
 
+Template.venues.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#venues_table");
+    $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
+    $(".editVenue").editable({
+      unsavedclass: null
+    });
+    $(".editAddress").editable({
+      unsavedclass: null
+    });    
+  }
+});
