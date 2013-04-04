@@ -251,7 +251,7 @@ Template.lineup.events({
     var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
     if(isNaN(next))
       next = 1;
-    $(table).append('<tr><td>' + next + '</td><td><a href="#" class="editCell">Edit</a></td><td><a href="#" class="editStartTime">Edit</a></td><td><a href="#" class="editEndTime">Edit</a></td></tr>');
+    $(table).append('<tr><td>' + next + '</td><td><a href="#" class="editCell"></a></td><td><a href="#" class="editStartTime"></a></td><td><a href="#" class="editEndTime"></a></td></tr>');
     $(".editCell").editable({
       unsavedclass: null
     });
@@ -275,7 +275,7 @@ Template.lineup.events({
       var band = $(this).find("a.editCell").html();
       var startTime = $(this).find("a.editStartTime").html();
       var endTime = $(this).find("a.editEndTime").html();
-      if(!((band === "Empty") || (band === "Edit") || (startTime === "Empty") || (startTime === "Edit") || (endTime === "Empty") || (endTime === "Edit")))
+      if(!((($(this).find("a.editable-empty"))) || (startTime === "Empty") || (startTime === "Edit") || (endTime === "Empty") || (endTime === "Edit")))
       {
         var push = {
           band: band,
