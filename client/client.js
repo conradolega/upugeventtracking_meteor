@@ -1,5 +1,6 @@
 Meteor.subscribe("events");
 Meteor.subscribe("users");
+$('#navbar').affix();
 
 Template.body.showDetails = function () {
   return Session.get("selected");
