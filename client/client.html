@@ -32,7 +32,6 @@
       {{/if}}        
       </div>
       <div class="span9">
-        <input type="filepicker" name="myName" class="btn btn-primary upload" data-fp-apikey="AwF05MMJuRkGDqKAeQanoz"/>
         {{#if currentUser}}
 
             {{#if showError}}
@@ -224,6 +223,11 @@
       </div>
     </div>
   </div>
+  <div class="row-fluid">
+    <div class="center">
+      {{> posterDraft}}
+    </div>
+  </div>
 </template>
 
 <template name="lineupHeader">
@@ -294,4 +298,10 @@
   </table>
   <button class="btn" id="addEntry">Add row</button>
   <button type="submit" class="btn btn-primary" id="save">Save</button>
+</template>
+
+<template name="posterDraft">
+  <h3>Studies for event poster</h3>
+  <p>Upload concept sketches for the event poster</p>
+  <input type="filepicker" name="myName" class="btn btn-primary upload" data-fp-apikey="AwF05MMJuRkGDqKAeQanoz"/>
 </template>
