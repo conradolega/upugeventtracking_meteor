@@ -308,6 +308,15 @@
 
 <template name="posterDraft">
   <h3>Studies for event poster</h3>
+  <ul class="thumbnails">
+    {{#each images}}
+      <li class="span4">
+        <a href="#" class="thumbnail">
+          <img src="{{url}}" alt="">
+        </a>
+      </li>
+    {{/each}}
+  </ul>
   <p>Upload concept sketches for the event poster</p>
-  <input type="filepicker" id="upload" class="btn upload"/>
+  <button class="btn" id="upload">Pick file</button>
 </template>

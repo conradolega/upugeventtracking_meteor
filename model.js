@@ -8,6 +8,7 @@
 Events = new Meteor.Collection("events");
 
 Meteor.methods({
+  // Events methods
   createEvent: function (options) {
     options = options || {};
     if (! (typeof options.name === "string" && options.name.length &&
@@ -38,7 +39,8 @@ Meteor.methods({
         collaborators: [Meteor.userId()],
         lastUpdate: Meteor.userId(),
         lineup: [],
-        sponsors: []
+        sponsors: [],
+        images: []
       });
     }
     else
@@ -78,6 +80,22 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { sponsors: options.sponsors }
+      }
+    );
+  },
+  // Images methods
+  addImage: function(options) {
+    options = options || {};
+    console.log(options.url);
+    return Events.update(
+      {_id: options.id},
+      {
+        $addToSet: { 
+          images: {
+            url: options.url
+            // To do: get uploader
+          }  
+        }
       }
     );
   }   
