@@ -223,9 +223,17 @@
       </div>
     </div>
   </div>
+  <hr>
   <div class="row-fluid">
     <div class="center">
       {{> posterDraft}}
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="center">
+      <div class="form-actions">
+          <button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+      </div>
     </div>
   </div>
 </template>
@@ -263,7 +271,6 @@
     </tbody>
   </table>
   <button class="btn" id="addEntry">Add row</button>
-  <button type="submit" class="btn btn-primary" id="save">Save</button>
 </template>
 
 <template name="sponsorsHeader">
@@ -297,11 +304,10 @@
     </tbody>
   </table>
   <button class="btn" id="addEntry">Add row</button>
-  <button type="submit" class="btn btn-primary" id="save">Save</button>
 </template>
 
 <template name="posterDraft">
   <h3>Studies for event poster</h3>
   <p>Upload concept sketches for the event poster</p>
-  <input type="filepicker" name="myName" class="btn btn-primary upload" data-fp-apikey="AwF05MMJuRkGDqKAeQanoz"/>
+  <input type="filepicker" name="myName" class="btn upload" data-fp-apikey="AwF05MMJuRkGDqKAeQanoz"/>
 </template>

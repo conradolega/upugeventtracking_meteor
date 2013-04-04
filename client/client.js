@@ -218,6 +218,75 @@ Template.collaboratorsModal.events({
   }
 });
 
+Template.week1.events({
+ 'click #save' : function(event, template) {
+  var table = template.find("#sponsors_table");
+  var records = _.rest($(table).find("tr"));
+  var save = [];
+  $(records).each( function () {
+    var sponsor = $(this).find("a.editSponsor").html();
+    var person = $(this).find("a.editPerson").html();
+    var contact = $(this).find("a.editContact").html();
+    if(($(this).find("a.editable-empty").length == 0))
+    {
+      var push = {
+        sponsor: sponsor,
+        person: person,
+        contact: contact
+      };
+      save.push(push);
+    }
+  });
+  Session.set("loading", true);
+  Meteor.call("updateSponsors",
+  {
+    sponsors: save,
+    selected: Session.get("selected")
+  },
+  function (error, _id) {
+    if (error) {
+      Session.set("addEventError", {error: error.reason, details: error.details});
+    }
+  });
+
+  table = template.find("#lineup_table");
+  records = _.rest($(table).find("tr"));
+  save = [];
+  $(records).each( function () {
+    var band = $(this).find("a.editCell").html();
+    var startTime = $(this).find("a.editStartTime").html();
+    var endTime = $(this).find("a.editEndTime").html();
+    if(($(this).find("a.editable-empty").length == 0))
+    {
+      var push = {
+        band: band,
+        startTime: startTime,
+        endTime: endTime
+      };
+      save.push(push);
+    }
+  });
+
+  Meteor.call("updateLineup",
+  {
+    lineup: save,
+    selected: Session.get("selected")
+  },
+  function (error, _id) {
+    if (error) {
+      Session.set("addEventError", {error: error.reason, details: error.details});
+    }
+    else {
+      Session.set("addEventSuccess",{
+        success: "Update successful",
+        details: "Check other modules for completion"
+      });
+    }
+  });
+  Session.set("loading", false);          
+}  
+});
+
 Template.week1.dates = function () {
   var event = Events.findOne({_id: Session.get("selected")});
   if(event)
@@ -268,43 +337,6 @@ Template.lineup.events({
       template: 'hh : mm A',
       unsavedclass: null
     });    
-  },
-  'click #save' : function(event, template) {
-    var records = _.rest(template.findAll("tr"));
-    var save = [];
-    $(records).each( function () {
-      var band = $(this).find("a.editCell").html();
-      var startTime = $(this).find("a.editStartTime").html();
-      var endTime = $(this).find("a.editEndTime").html();
-      if(($(this).find("a.editable-empty").length == 0))
-      {
-        var push = {
-          band: band,
-          startTime: startTime,
-          endTime: endTime
-        };
-        save.push(push);
-      }
-    });
-
-    Session.set("loading", true);
-    Meteor.call("updateLineup",
-    {
-      lineup: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id) {
-      if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
-      }
-      else {
-        Session.set("addEventSuccess",{
-          success: "Successfully updated line-up",
-          details: "Check other modules for completion"
-        });
-      }
-    });
-    Session.set("loading", false);
   }
 });
 
@@ -338,43 +370,7 @@ Template.sponsors.events({
     $(".editContact").editable({
       unsavedclass: null
     });        
-  },
-  'click #save' : function(event, template) {
-    var records = _.rest(template.findAll("tr"));
-    var save = [];
-    $(records).each( function () {
-      var sponsor = $(this).find("a.editSponsor").html();
-      var person = $(this).find("a.editPerson").html();
-      var contact = $(this).find("a.editContact").html();
-      if(($(this).find("a.editable-empty").length == 0))
-      {
-        var push = {
-          sponsor: sponsor,
-          person: person,
-          contact: contact
-        };
-        save.push(push);
-      }
-    });
-    Session.set("loading", true);
-    Meteor.call("updateSponsors",
-    {
-      sponsors: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id) {
-      if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
-      }
-      else {
-        Session.set("addEventSuccess",{
-          success: "Successfully updated sponsors",
-          details: "Check other modules for completion"
-        });
-      }
-    });
-    Session.set("loading", false);          
-  }  
+  }
 });
 
 Template.sponsors.rows = function() {
