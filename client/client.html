@@ -240,7 +240,7 @@
   <div class="row-fluid">
     <div class="span6">
       <div class="center">
-        {{> venues}}
+        {{> venue}}
       </div>
     </div>
   </div>
@@ -333,8 +333,8 @@
   <p>List possible venues of the event, unless assigned beforehand</p>
 </template>
 
-<template name="venues">
-  <table id="venues_table" class="table table-bordered">
+<template name="venue">
+  <table id="venue_table" class="table table-bordered">
   <thead>
     <tr>
       <th>Venue</th>
@@ -345,10 +345,10 @@
     {{#each rows}}
       <tr>
         <td>
-          <a href="#" class="editVenue"></a>
+          <a href="#" class="editVenue">{{venue}}</a>
         </td>
         <td>
-          <a href="#" class="editAddress"></a>
+          <a href="#" class="editAddress">{{address}}</a>
         </td>        
       </tr>
     {{/each}}

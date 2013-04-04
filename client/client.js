@@ -279,6 +279,33 @@ Template.week1.events({
     if (error) {
       Session.set("addEventError", {error: error.reason, details: error.details});
     }
+  });
+
+  table = template.find("#venue_table");
+  records = _.rest($(table).find("tr"));
+  save = [];
+  $(records).each( function () {
+    var venue = $(this).find("a.editVenue").html();
+    var address = $(this).find("a.editAddress").html();
+    if(($(this).find("a.editable-empty").length == 0))
+    {
+      var push = {
+        venue: venue,
+        address: address
+      };
+      save.push(push);
+    }
+  });
+
+  Meteor.call("updateVenue",
+  {
+    venue: save,
+    selected: Session.get("selected")
+  },
+  function (error, _id) {
+    if (error) {
+      Session.set("addEventError", {error: error.reason, details: error.details});
+    }
     else {
       Session.set("addEventSuccess",{
         success: "Update successful",
@@ -286,7 +313,7 @@ Template.week1.events({
       });
     }
   });
-  Session.set("loading", false);          
+  Session.set("loading", false);            
 }  
 });
 
@@ -397,7 +424,7 @@ Template.posterDraft.rendered = function () {
   filepicker.constructWidget($("#upload"));
 }
 
-Template.venues.events({
+Template.venue.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#venues_table");
     $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
@@ -409,3 +436,20 @@ Template.venues.events({
     });    
   }
 });
+
+Template.venue.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { venue: 1 });
+  if(cursor)
+  {
+    return cursor.venue;
+  }
+}
+
+Template.venue.rendered = function () {
+  $(".editVenue").editable({
+    unsavedclass: null
+  });
+  $(".editAddress").editable({
+    unsavedclass: null
+  });
+}

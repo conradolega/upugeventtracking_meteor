@@ -38,7 +38,8 @@ Meteor.methods({
         collaborators: [Meteor.userId()],
         lastUpdate: Meteor.userId(),
         lineup: [],
-        sponsors: []
+        sponsors: [],
+        venue: []
       });
     }
     else
@@ -80,5 +81,14 @@ Meteor.methods({
         $set: { sponsors: options.sponsors }
       }
     );
-  }   
+  },
+ updateVenue: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { venue: options.venue }
+      }
+    );
+  }     
 })
