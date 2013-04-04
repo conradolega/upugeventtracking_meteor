@@ -381,7 +381,6 @@ Template.sponsors.rows = function() {
   }
 }
 
-
 Template.sponsors.rendered = function () {
   $(".editSponsor").editable({
     unsavedclass: null
@@ -392,5 +391,9 @@ Template.sponsors.rendered = function () {
   $(".editContact").editable({
     unsavedclass: null
   });  
+}
+
+Template.posterDraft.rendered = function () {
+  filepicker.constructWidget($("#upload"));
 }
 
