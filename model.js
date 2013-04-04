@@ -108,5 +108,14 @@ Meteor.methods({
         }
       }
     );
-  }   
+  },
+ updateWork: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { work: options.work }
+      }
+    );
+  }     
 })

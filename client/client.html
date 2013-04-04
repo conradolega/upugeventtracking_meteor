@@ -250,7 +250,9 @@
     </div>
     <div class="span6">
       <div class="center">
-        {{> work}}
+        <div class="span8 offset2">
+          {{> work}}
+        </div>
       </div>
     </div>
   </div>
@@ -344,6 +346,7 @@
   </ul> 
   <p>Upload concept sketches for the event poster</p>
   <p class="muted">(usually in 8.5x11 or 11x17)</p>
+  <p class="alert-error">DI PA PWEDE MAG DELETE NG IMAGES SORRY!</p>
   <button class="btn" id="upload">Pick file</button>
 </template>
 
@@ -393,10 +396,12 @@
     {{#each rows}}
       <tr>
         <td style="width:85%">
-          {{work}}
+          <a href="" class="{{class}}">
+            {{work}}
+          </a>
         </td>
         <td style="width:15%">
-          <a href="#" class="editAddress">{{address}}</a>
+          <a href="#" class="editNum">{{num}}</a>
         </td>                
       </tr>
     {{/each}}

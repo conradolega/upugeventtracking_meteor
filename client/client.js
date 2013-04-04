@@ -306,15 +306,60 @@ Template.week1.events({
     if (error) {
       Session.set("addEventError", {error: error.reason, details: error.details});
     }
-    else {
-      Session.set("addEventSuccess",{
-        success: "Update successful",
-        details: "Check other modules for completion"
-      });
+  });
+
+  table = template.find("#work_table");
+  records = _.rest($(table).find("tr"));
+  save = [];
+  $(records).each( function () {
+    var work = $($(this).find("a")[0]).html();
+    var num = $(this).find("a.editNum").html();
+    var editable = $(this).find("a.editWork").html();
+    if(!editable)
+    {
+      if(num == "Empty")
+      {
+        var push = {
+          work: work,
+        };
+      }
+      else
+      {
+        var push = {
+          work: work,
+          num: num
+        };
+      }
+      save.push(push);
+    }
+    else if($(this).find("a.editable-empty").length == 0)
+    {
+      var push = {
+        work: work,
+        num: num
+      };
+      save.push(push);
     }
   });
-  Session.set("loading", false);            
-}  
+  Meteor.call("updateWork",
+  {
+    work: save,
+    selected: Session.get("selected")
+  },
+  function (error, _id) {
+    if (error) {
+      Session.set("addEventError", {error: error.reason, details: error.details});
+    }
+    else {
+      Session.set("addEventSuccess",{
+        success: "Successfully saved changes",
+        details: "Check other modules for completion"
+      });
+    }    
+  }); 
+  Session.set("loading",false);
+
+}
 });
 
 Template.week1.dates = function () {
@@ -488,30 +533,38 @@ Template.venue.rendered = function () {
 
 Template.work.events({
   'click #addEntry' : function(event, template) {
-    var table = template.find("#venue_table");
-    $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
-    $(".editVenue").editable({
+    var table = template.find("#work_table");
+    $(table).append('<tr><td><a href="#" class="editWork"></a></td><td><a href="#" class="editNum"></a></td></tr>');
+    $(".editWork").editable({
       unsavedclass: null
     });
-    $(".editAddress").editable({
-      unsavedclass: null
+    $(".editNum").editable({
+      unsavedclass: null,
+      type: 'number'
     });    
   }
 });
 
 Template.work.rows = function() {
-  var cursor = Events.findOne({_id: Session.get("selected")}, { venue: 1 });
+  var cursor = Events.findOne({_id: Session.get("selected")}, { work: 1 });
   if(cursor)
   {
-    return cursor.venue;
+    var num = 1;
+   cursor.work.forEach(function (entry)
+    {
+      entry.class = (num > 6) ? "editWork" : "";
+      num++;
+    });
+    return cursor.work;
   }
 }
 
 Template.work.rendered = function () {
-  $(".editVenue").editable({
+  $(".editWork").editable({
     unsavedclass: null
   });
-  $(".editAddress").editable({
-    unsavedclass: null
+  $(".editNum").editable({
+    unsavedclass: null,
+    type: 'number'
   });
 }
