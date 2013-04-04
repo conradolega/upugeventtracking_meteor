@@ -396,3 +396,4 @@ Template.sponsors.rendered = function () {
     unsavedclass: null
   });  
 }
+
