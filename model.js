@@ -30,7 +30,7 @@ Meteor.methods({
     {
       return Events.insert({
         name: options.name,
-        venue: "None",
+        venueFinal: "None",
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
         created: moment().utc().toString(),
