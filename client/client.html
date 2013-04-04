@@ -42,7 +42,6 @@
             {{/if}}
 
             {{#if showSuccess}}
-              <a name="#top"></a>
               <div class="alert alert-success">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
@@ -208,18 +207,27 @@
   <div class="row-fluid">
     <div class="center">
       <div class="span6">
-        <h2>Line-up</h2>
-        <p>List bands/performers that would be playing and their corresponding set times</p>
+        {{> lineupHeader}}
       </div>
+      <div class="span6">
+        {{> sponsorsHeader}}
+      </div>      
     </div>
   </div>
   <div class="row-fluid">
       <div class="span6">
         {{> lineup}}    
       </div>
-      <div class="span6"></div>
+      <div class="span6">
+        {{> sponsors}}
+      </div>
     </div>
   </div>
+</template>
+
+<template name="lineupHeader">
+  <h2>Line-up</h2>
+  <p>List bands/performers that would be playing and their corresponding set times</p>
 </template>
 
 <template name="lineup">
@@ -247,6 +255,40 @@
           </td>
         </tr>
       {{/each}}
+    </tbody>
+  </table>
+  <button class="btn" id="addEntry">Add row</button>
+  <button type="submit" class="btn btn-primary" id="save">Save</button>
+</template>
+
+<template name="sponsorsHeader">
+  <h2>Potential sponsors</h2>
+  <p>List companies you intend to send sponsorship letters to</p>
+</template>
+
+<template name="sponsors">
+  <table id="sponsors_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sponsor</th>
+        <th>Contact person</th>
+        <th>Contact info</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+      <tr>
+        <td>
+          <a href="#" class="editSponsor">{{sponsor}}</a>
+        </td>
+        <td>
+          <a href="#" class="editPerson">{{person}}</a>
+        </td>
+        <td>
+          <a href="#" class="editContact">{{contact}}</a>
+        </td>              
+      </tr>   
+      {{/each}}         
     </tbody>
   </table>
   <button class="btn" id="addEntry">Add row</button>

@@ -275,7 +275,7 @@ Template.lineup.events({
       var band = $(this).find("a.editCell").html();
       var startTime = $(this).find("a.editStartTime").html();
       var endTime = $(this).find("a.editEndTime").html();
-      if(!((($(this).find("a.editable-empty"))) || (startTime === "Empty") || (startTime === "Edit") || (endTime === "Empty") || (endTime === "Edit")))
+      if(($(this).find("a.editable-empty").length == 0))
       {
         var push = {
           band: band,
@@ -319,4 +319,80 @@ Template.lineup.rows = function() {
     });
     return cursor.lineup;
   }
+}
+
+Template.sponsors.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#sponsors_table");
+    var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
+    if(isNaN(next))
+      next = 1;
+    $(table).append('<tr><td><a href="#" class="editSponsor"></a></td><td><a href="#" class="editPerson"></a></td><td><a href="#" class="editContact"></a></td></tr>');
+    $(".editSponsor").editable({
+      unsavedclass: null
+    });
+    $(".editPerson").editable({
+      unsavedclass: null
+    });
+    $(".editContact").editable({
+      unsavedclass: null
+    });        
+  },
+  'click #save' : function(event, template) {
+    var records = _.rest(template.findAll("tr"));
+    var save = [];
+    $(records).each( function () {
+      var sponsor = $(this).find("a.editSponsor").html();
+      var person = $(this).find("a.editPerson").html();
+      var contact = $(this).find("a.editContact").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          sponsor: sponsor,
+          person: person,
+          contact: contact
+        };
+        save.push(push);
+      }
+    });
+    Session.set("loading", true);
+    Meteor.call("updateSponsors",
+    {
+      sponsors: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+      else {
+        Session.set("addEventSuccess",{
+          success: "Successfully updated sponsors",
+          details: "Check other modules for completion"
+        });
+      }
+    });
+    Session.set("loading", false);          
+  }  
+});
+
+Template.sponsors.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { sponsors: 1 });
+  if(cursor)
+  {
+    return cursor.sponsors;
+  }
+}
+
+
+Template.sponsors.rendered = function () {
+  $(".editSponsor").editable({
+    unsavedclass: null
+  });
+  $(".editPerson").editable({
+    unsavedclass: null
+  });
+  $(".editContact").editable({
+    unsavedclass: null
+  });  
 }

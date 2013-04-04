@@ -37,7 +37,8 @@ Meteor.methods({
         updated: moment().utc().toString(),
         collaborators: [Meteor.userId()],
         lastUpdate: Meteor.userId(),
-        lineup: []
+        lineup: [],
+        sponsors: []
       });
     }
     else
@@ -70,5 +71,14 @@ Meteor.methods({
         $set: { lineup: options.lineup }
       }
     );
-  } 
+  },
+  updateSponsors: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { sponsors: options.sponsors }
+      }
+    );
+  }   
 })
