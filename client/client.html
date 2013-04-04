@@ -236,11 +236,21 @@
         {{> venueHeader}}
       </div>
     </div>
+    <div class="span6">
+      <div class="center">
+        {{> workHeader}}
+      </div>
+    </div>
   </div>
   <div class="row-fluid">
     <div class="span6">
       <div class="center">
         {{> venue}}
+      </div>
+    </div>
+    <div class="span6">
+      <div class="center">
+        {{> work}}
       </div>
     </div>
   </div>
@@ -323,9 +333,18 @@
 
 <template name="posterDraft">
   <h3>Studies for event poster</h3>
+    <ul class="thumbnails">
+    {{#each images}}
+      <li class="span4">
+        <a href="#" class="thumbnail">
+          <img src="{{url}}" alt="">
+        </a>
+      </li>
+    {{/each}}
+  </ul> 
   <p>Upload concept sketches for the event poster</p>
   <p class="muted">(usually in 8.5x11 or 11x17)</p>
-  <input type="filepicker" id="upload" class="btn upload"/>
+  <button class="btn" id="upload">Pick file</button>
 </template>
 
 <template name="venueHeader">
@@ -350,6 +369,35 @@
         <td>
           <a href="#" class="editAddress">{{address}}</a>
         </td>        
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="workHeader">
+  <h3>Work logistics</h3>
+  <p>List down the number and type of workers you would need</p>
+</template>  
+
+<template name="work">
+  <table id="work_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th style="width:85%">Work</th>
+      <th style="width:15%">Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td style="width:85%">
+          {{work}}
+        </td>
+        <td style="width:15%">
+          <a href="#" class="editAddress">{{address}}</a>
+        </td>                
       </tr>
     {{/each}}
   </tbody>

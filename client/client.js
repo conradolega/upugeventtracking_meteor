@@ -420,13 +420,45 @@ Template.sponsors.rendered = function () {
   });  
 }
 
-Template.posterDraft.rendered = function () {
-  filepicker.constructWidget($("#upload"));
-}
+Template.posterDraft.images = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if (!event) return [];
+    else return event.images;
+} 
+
+Template.posterDraft.events({
+  'click #upload' : function() {
+    filepicker.setKey("AwF05MMJuRkGDqKAeQanoz");
+    filepicker.pick({
+      mimetypes: ['image/*'],
+      container: 'modal',
+      services: ['COMPUTER', 'FACEBOOK'],
+    },
+    function(FPFile) {
+      console.log(JSON.stringify(FPFile));
+      Meteor.call("addImage", {
+        id: Session.get("selected"),
+        url: FPFile.url
+      },
+      function(error, _id) {
+        if (error) {
+          Session.set("addImageError", {error: error.reason, details: error.details});
+        }
+        else {
+          console.log("Successfully uploaded image");
+        }        
+      });
+    },
+    function(FPError) {
+      console.log(FPError.toString());
+    }
+  );
+  }
+});
 
 Template.venue.events({
   'click #addEntry' : function(event, template) {
-    var table = template.find("#venues_table");
+    var table = template.find("#venue_table");
     $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
     $(".editVenue").editable({
       unsavedclass: null
@@ -446,6 +478,36 @@ Template.venue.rows = function() {
 }
 
 Template.venue.rendered = function () {
+  $(".editVenue").editable({
+    unsavedclass: null
+  });
+  $(".editAddress").editable({
+    unsavedclass: null
+  });
+}
+
+Template.work.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#venue_table");
+    $(table).append('<tr><td><a href="#" class="editVenue"></a></td><td><a href="#" class="editAddress"></a></td></tr>');
+    $(".editVenue").editable({
+      unsavedclass: null
+    });
+    $(".editAddress").editable({
+      unsavedclass: null
+    });    
+  }
+});
+
+Template.work.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { venue: 1 });
+  if(cursor)
+  {
+    return cursor.venue;
+  }
+}
+
+Template.work.rendered = function () {
   $(".editVenue").editable({
     unsavedclass: null
   });

@@ -39,7 +39,9 @@ Meteor.methods({
         lastUpdate: Meteor.userId(),
         lineup: [],
         sponsors: [],
-        venue: []
+        venue: [],
+        work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
+        images: []
       });
     }
     else
@@ -90,5 +92,21 @@ Meteor.methods({
         $set: { venue: options.venue }
       }
     );
-  }     
+  },
+  // Images methods
+  addImage: function(options) {
+    options = options || {};
+    console.log(options.url);
+    return Events.update(
+      {_id: options.id},
+      {
+        $addToSet: { 
+          images: {
+            url: options.url
+            // To do: get uploader
+          }  
+        }
+      }
+    );
+  }   
 })
