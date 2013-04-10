@@ -621,7 +621,7 @@ Template.finalVenue.rendered = function() {
     });
     $(".editFinalVenue").editable({
       unsavedclass: null,
-      type: 'select',
+      type: 'typeahead',
       source: venues
     });
     $(".editDeal").editable({
