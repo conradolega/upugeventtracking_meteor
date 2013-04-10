@@ -54,6 +54,7 @@
               {{#if showSteps}}
                 {{> collaboratorsModule}}
                 {{> week1}}
+                {{> week2}}
               {{/if}}
               
             {{/if}}
@@ -408,4 +409,55 @@
   </tbody>
 </table>
 <button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="week2">
+  <div class="page-header">
+    <h1>4. Week 2 <small>{{dates}}</small></h1>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> venueFinalHeader}}
+      </div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> venueFinal}}
+      </div>
+    </div>
+  </div>
+  <div class="row-fluid">
+    <div class="center">
+      <div class="form-actions">
+          <button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+      </div>
+    </div>
+  </div>    
+</template>
+
+<template name="venueFinalHeader">
+  <h3>Finalization of Venue</h3>
+  <p>Venue must be finalized (better description soon)</p>
+</template>
+
+<template name="venueFinal">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th width="20%">Venue</th>
+        <td width="80%"><a href="#" class="editFinalVenue"></a></td>
+      </tr>
+      <tr>
+        <th>Deal</th>
+        <td><a href="#" class="editDeal"></a></td>
+      </tr>
+      <tr>
+        <th>Paid</th>
+        <td><a href="#" class="editPaid"></a></td>
+      </tr>
+    </tbody>
+  </table>
 </template>

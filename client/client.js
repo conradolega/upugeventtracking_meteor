@@ -568,3 +568,50 @@ Template.work.rendered = function () {
     type: 'number'
   });
 }
+
+Template.week2.dates = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    var startDate = moment(event.startTime).subtract('weeks', 3).format("ddd, MMM DD");
+    var endDate = moment(event.startTime).subtract('weeks', 2).format("ddd, MMM DD");
+    return startDate + " - " + endDate;
+  }
+}
+
+Template.week2.events({
+  'click #save' : function (event, template) {
+    var finalVenue = $(template.find(".editFinalVenue"));
+    var deal = $(template.find(".editDeal"));
+    var paid = $(template.find(".editPaid"));
+    var save = [finalVenue.text(), deal.text(), paid.text()];
+    if(!_.contains(save, "Empty"))
+    {
+    }
+  }
+});
+
+Template.venueFinal.rendered = function() {
+  var event = Events.findOne({_id: Session.get("selected")});
+  var venues = [];
+  if(event)
+  {
+    $(event.venue).each( function() {
+      venues.push($(this).attr("venue"));
+    });
+    $(".editFinalVenue").editable({
+      unsavedclass: null,
+      type: 'select',
+      source: venues
+    });
+    $(".editDeal").editable({
+      unsavedclass: null,
+      type: 'textarea'
+    });  
+    $(".editPaid").editable({
+        unsavedclass: null,
+        type: 'number'
+    });      
+  }
+}
+
