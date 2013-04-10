@@ -86,25 +86,12 @@ Meteor.methods({
   },
  updateVenue: function(options) {
     options = options || {};
-    var event = Events.findOne({_id: options.selected});
-    if(_.contains(_.pluck(options.venue, "venue"),event.finalVenue.venue))
-    {
-      return Events.update(
-        {_id: options.selected},
-        {
-          $set: { venue: options.venue}
-        }
-      );
-    }
-    else
-    {
-      return Events.update(
-        {_id: options.selected},
-        {
-          $set: { venue: options.venue, finalVenue: {}}
-        }
-      );    
-    }
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { venue: options.venue}
+      }
+    );    
   },
   // Images methods
   addImage: function(options) {
