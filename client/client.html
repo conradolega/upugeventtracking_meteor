@@ -105,7 +105,7 @@
   <li class="{{listItemClass}}">
     <a id="event" href="#">{{name}}
       <ul class="nav nav-list">
-        <li class="inactive"><i class="icon-home"></i>  <small>{{venueFinal}}</small></li>
+        <li class="inactive"><i class="icon-home"></i>  <small>{{finalVenue.name}}</small></li>
         <li class="inactive start"><i class="icon-time"></i>  <small>{{startTimeDisp}}</small></li>
         <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTimeDisp}}</small></li>
       </ul>
@@ -418,14 +418,14 @@
   <div class="row-fluid">
     <div class="span6">
       <div class="center">
-        {{> venueFinalHeader}}
+        {{> finalVenueHeader}}
       </div>
     </div>
   </div>
   <div class="row-fluid">
     <div class="span6">
       <div class="center">
-        {{> venueFinal}}
+        {{> finalVenue}}
       </div>
     </div>
   </div>
@@ -438,25 +438,25 @@
   </div>    
 </template>
 
-<template name="venueFinalHeader">
+<template name="finalVenueHeader">
   <h3>Finalization of Venue</h3>
   <p>Venue must be finalized (better description soon)</p>
 </template>
 
-<template name="venueFinal">
-  <table class="table table-bordered">
+<template name="finalVenue">
+  <table id="venue_table" class="table table-bordered">
     <tbody>
       <tr>
         <th width="20%">Venue</th>
-        <td width="80%"><a href="#" class="editFinalVenue"></a></td>
+        <td width="80%"><a href="#" class="editFinalVenue">{{venue.venue}}</a></td>
       </tr>
       <tr>
         <th>Deal</th>
-        <td><a href="#" class="editDeal"></a></td>
+        <td><a href="#" class="editDeal">{{venue.deal}}</a></td>
       </tr>
       <tr>
         <th>Paid</th>
-        <td><a href="#" class="editPaid"></a></td>
+        <td><a href="#" class="editPaid">{{venue.paid}}</a></td>
       </tr>
     </tbody>
   </table>

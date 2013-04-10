@@ -30,7 +30,7 @@ Meteor.methods({
     {
       return Events.insert({
         name: options.name,
-        venueFinal: "None",
+        finalVenue: {},
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
         created: moment().utc().toString(),
@@ -86,12 +86,25 @@ Meteor.methods({
   },
  updateVenue: function(options) {
     options = options || {};
-    return Events.update(
-      {_id: options.selected},
-      {
-        $set: { venue: options.venue }
-      }
-    );
+    var event = Events.findOne({_id: options.selected});
+    if(_.contains(_.pluck(options.venue, "venue"),event.finalVenue.venue))
+    {
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { venue: options.venue}
+        }
+      );
+    }
+    else
+    {
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { venue: options.venue, finalVenue: {}}
+        }
+      );    
+    }
   },
   // Images methods
   addImage: function(options) {
@@ -115,6 +128,15 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { work: options.work }
+      }
+    );
+  },
+  updateFinalVenue: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalVenue: options.finalVenue }
       }
     );
   }     

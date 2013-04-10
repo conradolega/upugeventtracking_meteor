@@ -587,11 +587,31 @@ Template.week2.events({
     var save = [finalVenue.text(), deal.text(), paid.text()];
     if(!_.contains(save, "Empty"))
     {
+      Session.set("loading",true);
+      Meteor.call("updateFinalVenue", {
+        selected: Session.get("selected"),
+        finalVenue: {venue: save[0], deal: save[1], paid: save[2]}
+      }, function (error, _id) {
+        if (error) {
+          Session.set("addEventError", {error: error.reason, details: error.details});
+        }
+        else {
+          Session.set("addEventSuccess",{
+            success: "Successfully saved changes",
+            details: "Check other modules for completion"
+          });
+        }    
+      }); 
+      Session.set("loading",false);
+    }
+    else
+    {
+      Session.set("addEventError", {error: "Required parameter missing", details: "please check fields"});
     }
   }
 });
 
-Template.venueFinal.rendered = function() {
+Template.finalVenue.rendered = function() {
   var event = Events.findOne({_id: Session.get("selected")});
   var venues = [];
   if(event)
@@ -615,3 +635,10 @@ Template.venueFinal.rendered = function() {
   }
 }
 
+Template.finalVenue.venue = function() {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.finalVenue;
+  }
+}
