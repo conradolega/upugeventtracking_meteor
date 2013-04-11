@@ -41,7 +41,8 @@ Meteor.methods({
         sponsors: [],
         venue: [],
         work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
-        images: []
+        images: [],
+        wk2lineup: []
       });
     }
     else
@@ -68,10 +69,11 @@ Meteor.methods({
   },
   updateLineup: function(options) {
     options = options || {};
+    var event = Events.findOne({_id: options.selected});
     return Events.update(
       {_id: options.selected},
       {
-        $set: { lineup: options.lineup }
+        $set: { lineup: options.lineup, wk2lineup: options.lineup}
       }
     );
   },
@@ -126,5 +128,13 @@ Meteor.methods({
         $set: { finalVenue: options.finalVenue }
       }
     );
-  }     
+  },
+  updateBandContact: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk2lineup: options.wk2lineup }
+      })
+  }
 })

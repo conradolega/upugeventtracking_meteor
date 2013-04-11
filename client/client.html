@@ -222,7 +222,6 @@
       <div class="span6">
         {{> sponsors}}
       </div>
-    </div>
   </div>
   <hr>
   <div class="row-fluid">
@@ -429,10 +428,11 @@
   </div>
   <div class="row-fluid">
     <div class="span6">
-      <div class="center">
-        {{> finalVenue}}
-      </div>
+      {{> finalVenue}}
     </div>
+    <div class="span6">
+      {{> lineupContact}}
+    </div>    
   </div>
   <div class="row-fluid">
     <div class="center">
@@ -445,7 +445,7 @@
 
 <template name="finalVenueHeader">
   <h3>Finalization of Venue</h3>
-  <p>Venue must be finalized (better description soon)</p>
+  <p>Please fill in all fields. (better description soon)</p>
 </template>
 
 <template name="finalVenue">
@@ -470,4 +470,28 @@
 <template name="lineupContactHeader">
   <h3>Contacting of performers</h3>
   <p>Call/text bands asking if they will be available to perform</p>
+</template>
+
+<template name="lineupContact">
+  <table id="lineup_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Band</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editBandContact">{{band}}</a>
+          </td>
+          <td>
+            <a href="#" class="editBandContactStatus">{{status}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+  <button class="btn" id="addEntry">Add row</button>  
 </template>
