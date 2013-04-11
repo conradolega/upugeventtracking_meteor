@@ -70,7 +70,7 @@ Meteor.methods({
   updateLineup: function(options) {
     options = options || {};
     var event = Events.findOne({_id: options.selected});
-    if(event.lineup != options.lineup)
+    if(!_.isEqual(event.lineup,options.lineup))
     {
       var contact = [];
       _.each(options.lineup, function (element) {
