@@ -70,20 +70,23 @@ Meteor.methods({
   updateLineup: function(options) {
     options = options || {};
     var event = Events.findOne({_id: options.selected});
-    var contact = [];
-    _.each(options.lineup, function (element) {
-      var push = {
-        status: "Not yet contacted",
-        band: element.band
-      };
-      contact.push(push);
-    });
-    return Events.update(
-      {_id: options.selected},
-      {
-        $set: { lineup: options.lineup, wk2lineup: contact}
-      }
-    );
+    if(event.lineup != options.lineup)
+    {
+      var contact = [];
+      _.each(options.lineup, function (element) {
+        var push = {
+          status: "Not yet contacted",
+          band: element.band
+        };
+        contact.push(push);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { lineup: options.lineup, wk2lineup: contact}
+        }
+      );
+    }
   },
   updateSponsors: function(options) {
     options = options || {};
