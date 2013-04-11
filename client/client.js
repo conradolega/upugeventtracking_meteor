@@ -217,6 +217,7 @@ Template.collaboratorsModal.events({
           });
         }
       });
+      $("html, body").animate({ scrollTop: 0 }, "slow");      
     }
   }
 });
@@ -358,7 +359,7 @@ Template.week1.events({
     }    
   }); 
   Session.set("loading",false);
-
+  $("html, body").animate({ scrollTop: 0 }, "slow");
 }
 });
 
@@ -633,9 +634,10 @@ Template.week2.events({
           success: "Successfully saved changes",
           details: "Check other modules for completion"
         });
-      }    
+      } 
     });    
     Session.set("loading",false);
+    $("html, body").animate({ scrollTop: 0 }, "slow");    
   }
 });
 
