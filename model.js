@@ -42,7 +42,8 @@ Meteor.methods({
         venue: [],
         work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
         images: [],
-        wk2lineup: []
+        wk2lineup: [],
+        wk2sponsors: []
       });
     }
     else
@@ -90,12 +91,24 @@ Meteor.methods({
   },
   updateSponsors: function(options) {
     options = options || {};
-    return Events.update(
-      {_id: options.selected},
-      {
-        $set: { sponsors: options.sponsors }
-      }
-    );
+    var event = Events.findOne({_id: options.selected});    
+    if(!_.isEqual(event.sponsors,options.sponsors))
+    {
+      var contact = [];
+      _.each(options.sponsors, function (element) {
+        var push = {
+          status: "Not yet contacted",
+          sponsor: element.sponsor
+        };
+        contact.push(push);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { sponsors: options.sponsors, wk2sponsors: contact}
+        }
+      );
+    }
   },
  updateVenue: function(options) {
     options = options || {};
@@ -147,5 +160,13 @@ Meteor.methods({
       {
         $set: { wk2lineup: options.wk2lineup }
       })
+  },
+  updateSponsorsContact: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk2sponsors: options.wk2sponsors }
+      })    
   }
 })

@@ -635,7 +635,38 @@ Template.week2.events({
           details: "Check other modules for completion"
         });
       } 
-    });    
+    });
+    table = template.findAll("table")[2];
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var sponsor = $(this).find("a.editSponsorContact").html();
+      var status = $(this).find("a.editSponsorContactStatus").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          sponsor: sponsor,
+          status: status
+        };
+        save.push(push);
+      }
+    });
+    Meteor.call("updateSponsorsContact",
+    {
+      wk2sponsors: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+      else {
+        Session.set("addEventSuccess",{
+          success: "Successfully saved changes",
+          details: "Check other modules for completion"
+        });
+      } 
+    });      
     Session.set("loading",false);
     $("html, body").animate({ scrollTop: 0 }, "slow");    
   }
@@ -703,6 +734,40 @@ Template.lineupContact.events({
       unsavedclass: null,
       type: 'select',
       source: ["Not yet contacted", "Contacted", "Approved", "Rejected"]
+    });       
+  }
+});
+
+Template.sponsorsContact.rows = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.wk2sponsors;
+  }
+}
+
+Template.sponsorsContact.rendered = function () {
+  $(".editSponsorContact").editable({
+    unsavedclass: null,
+  });
+  $(".editSponsorContactStatus").editable({
+    unsavedclass: null,
+    type: 'select',
+    source: ["Not yet contacted", "Contacted", "Followed up", "Approved", "Rejected"]
+  });   
+}
+
+Template.sponsorsContact.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#lineup_table");
+    $(table).append('<tr><td><a href="#" class="editSponsorContact"></a></td><td><a href="#" class="editSponsorContactStatus">Not yet contacted</a></td></tr>');
+    $(".editSponsorContact").editable({
+      unsavedclass: null,
+    });
+    $(".editSponsorContactStatus").editable({
+      unsavedclass: null,
+      type: 'select',
+      source: ["Not yet contacted", "Contacted", "Followed up", "Approved", "Rejected"]
     });       
   }
 });
