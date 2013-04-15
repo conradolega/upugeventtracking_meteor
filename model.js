@@ -43,7 +43,8 @@ Meteor.methods({
         work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
         images: [],
         wk2lineup: [],
-        wk2sponsors: []
+        wk2sponsors: [],
+        wk2lineupContract: []
       });
     }
     else
@@ -84,7 +85,7 @@ Meteor.methods({
       return Events.update(
         {_id: options.selected},
         {
-          $set: { lineup: options.lineup, wk2lineup: contact}
+          $set: { lineup: options.lineup, wk2lineup: contact, wk2lineupContract: []}
         }
       );
     }
@@ -122,7 +123,6 @@ Meteor.methods({
   // Images methods
   addImage: function(options) {
     options = options || {};
-    console.log(options.url);
     return Events.update(
       {_id: options.id},
       {
@@ -155,10 +155,22 @@ Meteor.methods({
   },
   updateBandContact: function(options) {
     options = options || {};
+    var save = [];
+    var event = Events.findOne({_id:options.selected});
+    _.each(options.wk2lineup, function (element) {
+      if(element.status == "Approved")
+      {
+        var push = {
+          band: element.band,
+          status: "Not yet signed"
+        };
+        save.push(push);
+      }
+    });
     return Events.update(
       {_id: options.selected},
       {
-        $set: { wk2lineup: options.wk2lineup }
+        $set: { wk2lineup: options.wk2lineup, wk2lineupContract: save }
       })
   },
   updateSponsorsContact: function(options) {
@@ -168,5 +180,28 @@ Meteor.methods({
       {
         $set: { wk2sponsors: options.wk2sponsors }
       })    
+  },
+  updateLineupContract: function(options) {
+    options = options || {};
+    var event = Events.findOne({_id: options.selected});
+    var save = [];
+    if(event)
+    {
+      _.each(options.wk2lineupContract, function (element) {
+        if(_.contains(_.pluck(event.wk2lineupContract,'band'), element.band))
+        {
+          save.push(element);
+        }
+      });
+      _.each(event.wk2lineupContract, function (element) {
+        if(!_.contains(_.pluck(save,'band'), element.band))
+            save.push(element);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { wk2lineupContract: save }
+        })
+    }
   }
 })

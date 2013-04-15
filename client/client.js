@@ -10,7 +10,7 @@ Template.body.showDetails = function () {
 }
 
 Template.body.showSteps = function () {
-  return Session.get("selected") !== "addEvent";
+  return Session.get("selected") != "addEvent";
 }
 
 Template.page.loading = function () {
@@ -217,7 +217,6 @@ Template.collaboratorsModal.events({
           });
         }
       });
-      $("html, body").animate({ scrollTop: 0 }, "slow");      
     }
   }
 });
@@ -359,7 +358,6 @@ Template.week1.events({
     }    
   }); 
   Session.set("loading",false);
-  $("html, body").animate({ scrollTop: 0 }, "slow");
 }
 });
 
@@ -667,8 +665,41 @@ Template.week2.events({
         });
       } 
     });      
+    table = template.findAll("table")[3];
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var band = $(this).find("a.lineupContract").html();
+      var status = $(this).find("a.editLineupContractStatus").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          band: band,
+          status: status
+        };
+        save.push(push);
+      }
+    });
+    if(save.length > 0)
+    {
+      Meteor.call("updateLineupContract",
+      {
+        wk2lineupContract: save,
+        selected: Session.get("selected")
+      },
+      function (error, _id) {
+        if (error) {
+          Session.set("addEventError", {error: error.reason, details: error.details});
+        }
+        else {
+          Session.set("addEventSuccess",{
+            success: "Successfully saved changes",
+            details: "Check other modules for completion"
+          });
+        } 
+      });      
+    }   
     Session.set("loading",false);
-    $("html, body").animate({ scrollTop: 0 }, "slow");    
   }
 });
 
@@ -771,3 +802,19 @@ Template.sponsorsContact.events({
     });       
   }
 });
+
+Template.lineupContract.rows = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.wk2lineupContract;
+  }
+}
+
+Template.lineupContract.rendered = function () {
+  $(".editLineupContractStatus").editable({
+    unsavedclass: null,
+    type: 'select',
+    source: ["Not yet signed", "Signed"]
+  });   
+}
