@@ -854,3 +854,103 @@ Template.posterFinal.url = function () {
   if(event)
    return event.finalPoster;
 }
+
+Template.week3.dates = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    var startDate = moment(event.startTime).subtract('weeks', 2).format("ddd, MMM DD");
+    var endDate = moment(event.startTime).subtract('weeks', 1).format("ddd, MMM DD");
+    return startDate + " - " + endDate;
+  }
+}
+
+Template.finalLineup.rendered = function () {
+  $(".editCell").editable({
+    unsavedclass: null
+  });
+  $(".editStartTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });
+  $(".editEndTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });
+}
+
+Template.finalLineup.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#finalLineup");
+    var next = parseInt($(table).find("tr:last > td:first").html()) + 1;
+    if(isNaN(next))
+      next = 1;
+    $(table).append('<tr><td>' + next + '</td><td><a href="#" class="editCell"></a></td><td><a href="#" class="editStartTime"></a></td><td><a href="#" class="editEndTime"></a></td></tr>');
+    $(".editCell").editable({
+      unsavedclass: null
+    });
+    $(".editStartTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A',
+      unsavedclass: null
+    });
+    $(".editEndTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A',
+      unsavedclass: null
+    });    
+  }
+});
+
+Template.finalLineup.rows = function() {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { finalLineup: 1 });
+  if(cursor)
+  {
+    var num = 1;
+    cursor.finalLineup.forEach(function (entry)
+    {
+      entry.num = num;
+      num++;
+    });
+    return cursor.finalLineup;
+  }
+}
+
+Template.week3.events({
+  'click #save' : function (event, template) {
+    var table = template.find("#finalLineup");
+    var records = _.rest($(table).find("tr"));
+    var save = [];
+    $(records).each( function () {
+      var band = $(this).find("a.editCell").html();
+      var startTime = $(this).find("a.editStartTime").html();
+      var endTime = $(this).find("a.editEndTime").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          band: band,
+          startTime: startTime,
+          endTime: endTime
+        };
+        save.push(push);
+      }
+    });
+
+    Meteor.call("updateFinalLineup",
+    {
+      lineup: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+    });
+  }
+});

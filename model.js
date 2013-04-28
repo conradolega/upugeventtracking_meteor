@@ -45,7 +45,8 @@ Meteor.methods({
         wk2lineup: [],
         wk2sponsors: [],
         wk2lineupContract: [],
-        finalPoster: {}
+        finalPoster: {},
+        finalLineup: []
       });
     }
     else
@@ -210,8 +211,17 @@ Meteor.methods({
     return Events.update(
       {_id: options.id},
       {
-        $set: {   finalPoster: options.url }
+        $set: { finalPoster: options.url }
       }
     );
-  }  
+  },
+  updateFinalLineup: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalLineup: options.lineup }
+      }
+    );
+  }
 })
