@@ -822,7 +822,7 @@ Template.lineupContract.rendered = function () {
   $(".editLineupContractStatus").editable({
     unsavedclass: null,
     type: 'select',
-    source: ["Not yet signed", "Signed"]
+    source: ["Not yet signed", "Sent", "Signed"]
   });   
 }
 
