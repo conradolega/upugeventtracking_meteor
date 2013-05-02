@@ -46,7 +46,9 @@ Meteor.methods({
         wk2sponsors: [],
         wk2lineupContract: [],
         finalPoster: {},
-        finalLineup: []
+        finalLineup: [],
+        finalSponsors: [],
+        promotions: []
       });
     }
     else
@@ -223,5 +225,23 @@ Meteor.methods({
         $set: { finalLineup: options.lineup }
       }
     );
+  },
+  updateFinalSponsors: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalSponsors: options.finalSponsors }
+      }
+    );    
+  },
+  updatePromotions: function(options) {
+  options = options || {};
+  return Events.update(
+    {_id: options.selected},
+    {
+      $set: { promotions: options.promotions }
+    }
+  );    
   }
 })

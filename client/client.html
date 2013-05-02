@@ -454,7 +454,6 @@
 			</div>
 		</div>
 	</div>
-	<hr>  
 	<div class="row-fluid">
 		<div class="span6">
 			{{> sponsorsContact}}
@@ -531,7 +530,7 @@
 </template>
 
 <template name="sponsorsContact">
-	<table class="table table-bordered">
+	<table id="sponsors_contact_table" class="table table-bordered">
 		<thead>
 			<tr>
 				<th>Sponsor</th>
@@ -608,10 +607,30 @@
 				{{> finalLineupHeader}}
 			</div>
 		</div>
+		<div class="span6">
+			<div class="center">
+				{{> finalSponsorsHeader}}
+			</div>
+		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="span6">
 			{{> finalLineup}}
+		</div>
+		<div class="span6">
+			{{> finalSponsors}}
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> promotionsHeader}}
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			{{> promotions}}
 		</div>
 	</div>
 	<div class="row-fluid">
@@ -656,4 +675,63 @@
 		</tbody>
 	</table>
 	<button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="finalSponsorsHeader">
+	<h3>Finalizing of Sponsors</h3>
+	<p>Follow up ALL companies that were given letters often so they can send their logo for the poster</p>
+</template>
+
+<template name="finalSponsors">
+	<table id="final_sponsors_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Sponsor</th>
+			<th>Collaterals / Money Received</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editSponsor">{{sponsor}}</a>
+				</td>
+				<td>  
+					<a href="#" class="editCollaterals">{{collaterals}}</a>
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>  
+<button class="btn" id="addEntry">Add row</button>   
+</template>
+
+<template name="promotionsHeader">
+	<h3>Online Promotions</h3>
+	<p>Setup Facebook event, Tumblr post, etc</p>
+</template>
+
+<template name="promotions">
+	<table id="promotions_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Platform</th>
+			<th>Link</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editPlatform">{{platform}}</a>
+				</td>
+				<td>  
+					<a href="#" class="editLink">{{link}}</a>
+					<a href="{{link}}" class="goto"><small>[goto]</small></a>
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>  
+<button class="btn" id="addEntry">Add row</button>   
 </template>

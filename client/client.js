@@ -172,7 +172,8 @@ Template.detailsModule.updateText = function () {
   else
   {
     var user = Meteor.users.findOne({_id: event.lastUpdate});
-    return "Last updated: " + moment(event.updated).calendar() + " by " + user.profile.name;
+    if(user)
+      return "Last updated: " + moment(event.updated).calendar() + " by " + user.profile.name;
   }
 }
 
@@ -419,12 +420,15 @@ Template.lineup.rows = function() {
   if(cursor)
   {
     var num = 1;
-    cursor.lineup.forEach(function (entry)
+    if(cursor.lineup)
     {
-      entry.num = num;
-      num++;
-    });
-    return cursor.lineup;
+      cursor.lineup.forEach(function (entry)
+      {
+        entry.num = num;
+        num++;
+      });
+      return cursor.lineup;
+    }
   }
 }
 
@@ -549,12 +553,15 @@ Template.work.rows = function() {
   if(cursor)
   {
     var num = 1;
-   cursor.work.forEach(function (entry)
+    if(cursor.work)
     {
-      entry.class = (num > 6) ? "editWork" : "";
-      num++;
-    });
-    return cursor.work;
+      cursor.work.forEach(function (entry)
+      {
+        entry.class = (num > 6) ? "editWork" : "";
+        num++;
+      });
+      return cursor.work;
+    }
   }
 }
 
@@ -790,7 +797,7 @@ Template.sponsorsContact.rendered = function () {
 
 Template.sponsorsContact.events({
   'click #addEntry' : function(event, template) {
-    var table = template.find("#lineup_table");
+    var table = template.find("#sponsors_contact_table");
     $(table).append('<tr><td><a href="#" class="editSponsorContact"></a></td><td><a href="#" class="editSponsorContactStatus">Not yet contacted</a></td></tr>');
     $(".editSponsorContact").editable({
       unsavedclass: null,
@@ -865,6 +872,94 @@ Template.week3.dates = function () {
   }
 }
 
+Template.week3.events({
+  'click #save' : function (event, template) {
+    var table = template.find("#finalLineup");
+    var records = _.rest($(table).find("tr"));
+    var save = [];
+    $(records).each( function () {
+      var band = $(this).find("a.editCell").html();
+      var startTime = $(this).find("a.editStartTime").html();
+      var endTime = $(this).find("a.editEndTime").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          band: band,
+          startTime: startTime,
+          endTime: endTime
+        };
+        save.push(push);
+      }
+    });
+
+    Meteor.call("updateFinalLineup",
+    {
+      lineup: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+    });
+
+    table = template.find("#final_sponsors_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var sponsor = $(this).find("a.editSponsor").html();
+      var collaterals = $(this).find("a.editCollaterals").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          sponsor: sponsor,
+          collaterals: collaterals
+        };
+        save.push(push);
+      }
+    });
+
+    Meteor.call("updateFinalSponsors",
+    {
+      finalSponsors: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+    });
+
+    table = template.find("#promotions_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var platform = $(this).find("a.editPlatform").html();
+      var link = $(this).find("a.editLink").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          platform: platform,
+          link: link
+        };
+        save.push(push);
+      }
+    });
+
+   Meteor.call("updatePromotions",
+    {
+      promotions: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+    });
+
+  }
+});
+
 Template.finalLineup.rendered = function () {
   $(".editCell").editable({
     unsavedclass: null
@@ -913,44 +1008,80 @@ Template.finalLineup.rows = function() {
   if(cursor)
   {
     var num = 1;
-    cursor.finalLineup.forEach(function (entry)
+    if(cursor.finalLineup)
     {
-      entry.num = num;
-      num++;
-    });
+      cursor.finalLineup.forEach(function (entry)
+      {
+        entry.num = num;
+        num++;
+      });
+    }
     return cursor.finalLineup;
   }
 }
 
-Template.week3.events({
-  'click #save' : function (event, template) {
-    var table = template.find("#finalLineup");
-    var records = _.rest($(table).find("tr"));
-    var save = [];
-    $(records).each( function () {
-      var band = $(this).find("a.editCell").html();
-      var startTime = $(this).find("a.editStartTime").html();
-      var endTime = $(this).find("a.editEndTime").html();
-      if(($(this).find("a.editable-empty").length == 0))
-      {
-        var push = {
-          band: band,
-          startTime: startTime,
-          endTime: endTime
-        };
-        save.push(push);
-      }
-    });
+Template.finalSponsors.rows = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.finalSponsors;
+  }
+}
 
-    Meteor.call("updateFinalLineup",
-    {
-      lineup: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id) {
-      if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+Template.finalSponsors.rendered = function () {
+  $(".editSponsor").editable({
+    unsavedclass: null
+  });
+  $(".editCollaterals").editable({
+    unsavedclass: null
+  });   
+}
+
+Template.finalSponsors.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#final_sponsors_table");
+    $(table).append('<tr><td><a href="#" class="editSponsor"></a></td><td><a href="#" class="editCollaterals"></a></td></tr>');
+    $(template.findAll(".editSponsor")).editable({
+      unsavedclass: null
+    });
+    $(template.findAll(".editCollaterals")).editable({
+      unsavedclass: null
+    });       
+  }
+});
+
+Template.promotions.events({
+  'click #addEntry' : function(event, template) {
+    var table = template.find("#promotions_table");
+    $(table).append('<tr><td><a href="#" class="editPlatform"></a></td><td><small><a href="#" class="editLink"></a></small> <a href="#" class="goto"><small>[goto]</small></a></td></tr>');
+    $(".editPlatform").editable({
+      unsavedclass: null
+    });
+    $(".editLink").editable({
+      unsavedclass: null,
+      validate: function (value) {
+        $(".goto").attr("href", value);
       }
     });
   }
 });
+
+Template.promotions.rows = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.promotions;
+  }
+}
+
+Template.promotions.rendered = function () {
+  $(".editPlatform").editable({
+    unsavedclass: null
+  });
+  $(".editLink").editable({
+    unsavedclass: null,
+    validate: function (value) {
+      $(".goto").attr("href", value);
+    }
+  });
+}
