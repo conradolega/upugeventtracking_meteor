@@ -1085,3 +1085,22 @@ Template.promotions.rendered = function () {
     }
   });
 }
+
+Template.workAssignments.events({
+  'click #addShift' : function(event, template) {
+    var table = template.find("#work_assignments_table");
+    var c = $(table).find("tr:first").children().length;
+    $(table).find("tr:first").append("<th>Shift " + c + "</th>");
+    $(table).find("tr:gt(0)").append("<td>Col</td>");
+  },
+  'click #addEntry': function(event, template) {
+    var table = template.find("#work_assignments_table");
+    var c = $(table).find("tr:first").children().length;
+    var tr = $("<tr>");
+    for(var i = 0; i < c; i++)
+    {
+      tr.append("<td>a</td>");
+    }
+    $(table).append(tr);
+  }
+});

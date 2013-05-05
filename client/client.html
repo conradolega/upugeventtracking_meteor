@@ -621,6 +621,16 @@
 			{{> finalSponsors}}
 		</div>
 	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> workAssignmentsHeader}}
+		</div>
+	</div>
+	<div class="row-fluid">
+		{{> workAssignments}}
+	</div>
+	<hr>
 	<div class="row-fluid">
 		<div class="span6">
 			<div class="center">
@@ -734,4 +744,28 @@
 	</tbody>
 </table>  
 <button class="btn" id="addEntry">Add row</button>   
+</template>
+
+<template name="workAssignmentsHeader">
+	<h3>Assigning of Work</h3>
+	<p>Releasing of work assignments during GA</p>
+</template>
+
+<template name="workAssignments">
+	<table id="work_assignments_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Work</th>
+				<th>Shift 1</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Col</td>
+				<td>Col</td>				
+			</tr>
+		</tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
+<button class="btn" id="addShift">Add shift</button>
 </template>
