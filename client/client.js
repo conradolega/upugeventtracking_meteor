@@ -321,13 +321,13 @@ Template.week1.events({
       if(num == "Empty")
       {
         var push = {
-          work: work,
+          name: work,
         };
       }
       else
       {
         var push = {
-          work: work,
+          name: work,
           num: num
         };
       }
@@ -336,7 +336,7 @@ Template.week1.events({
     else if($(this).find("a.editable-empty").length == 0)
     {
       var push = {
-        work: work,
+        name: work,
         num: num
       };
       save.push(push);
@@ -957,6 +957,54 @@ Template.week3.events({
       }
     });
 
+
+   var saveHeader = [];
+   table = template.find("#work_assignments_table");
+   records = _.first($(table).find("tr"));
+   $(_.rest($(records).children())).each( function () {
+    if($(this).find('a.editable-empty').length == 0)
+    {
+      var push = {
+        start: $(this).find('a.editShiftStartTime').html(),
+        end: $(this).find('a.editShiftEndTime').html()
+      };
+      saveHeader.push(push); 
+    }
+   });
+
+   var saveWork = [];
+   records = _.rest($(table).find("tr"));      
+   var count = 0;
+   $(records).each( function () {
+    var work = $(this).find("a.editWorkAssignments").html();
+    if($(this).find("a.editable-empty.editWorkAssignments").length == 0)
+    {
+      var push = {name: work, workers: []};
+      $(_.rest($(this).children())).each( function () {
+        if(count != saveHeader.length)
+        {
+          if($(this).find("a.editable-empty").length > 0)
+            push.workers.push("");
+          else
+            push.workers.push($(this).find("a.editWorkers").html());
+          count++;
+        }
+      });
+      saveWork.push(push);
+    }
+   });
+
+   Meteor.call("updateWorkAssignments",
+    {
+      workAssignments: saveWork,
+      workAssignmentsHeader: saveHeader,
+      selected: Session.get("selected"),
+    },
+    function (error, _id) {
+      if (error) {
+        Session.set("addEventError", {error: error.reason, details: error.details});
+      }
+    });
   }
 });
 
@@ -1089,9 +1137,27 @@ Template.promotions.rendered = function () {
 Template.workAssignments.events({
   'click #addShift' : function(event, template) {
     var table = template.find("#work_assignments_table");
-    var c = $(table).find("tr:first").children().length;
-    $(table).find("tr:first").append("<th>Shift " + c + "</th>");
-    $(table).find("tr:gt(0)").append("<td>Col</td>");
+    $(table).find("tr:first").append('<th><small><a href="#" class="editShiftStartTime"></a> - <a href="#" class="editShiftEndTime"></a></small></th>');
+    $(table).find("tr:gt(0)").append('<td><a href="#" class="editWorkers" /></td>');
+
+    $(".editShiftStartTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A',
+      unsavedclass: null
+    });
+    $(".editShiftEndTime").editable({
+      type: 'combodate',
+      format: 'hh:mm A',
+      template: 'hh : mm A',
+      unsavedclass: null
+    });
+    $(".editWorkAssignments").editable({
+      unsavedclass: null
+    });    
+    $(".editWorkers").editable({
+      unsavedclass: null
+    });        
   },
   'click #addEntry': function(event, template) {
     var table = template.find("#work_assignments_table");
@@ -1099,8 +1165,54 @@ Template.workAssignments.events({
     var tr = $("<tr>");
     for(var i = 0; i < c; i++)
     {
-      tr.append("<td>a</td>");
+      if(i == 0)
+        tr.append('<td><a href="#" class="editWorkAssignments" /></td>');
+      else
+        tr.append('<td><a href="#" class="editWorkers" /></td>');
     }
     $(table).append(tr);
+    $(".editWorkAssignments").editable({
+      unsavedclass: null
+    });
+    $(".editWorkers").editable({
+      unsavedclass: null
+    });    
   }
 });
+
+Template.workAssignments.rendered = function () {
+  $(".editWorkAssignments").editable({
+    unsavedclass: null
+  });
+  $(".editWorkers").editable({
+    unsavedclass: null
+  });    
+  $(".editShiftStartTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });
+  $(".editShiftEndTime").editable({
+    type: 'combodate',
+    format: 'hh:mm A',
+    template: 'hh : mm A',
+    unsavedclass: null
+  });  
+}
+
+Template.workAssignments.headers = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.workAssignmentsHeader;
+  }
+}
+
+Template.workAssignments.work = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.workAssignments;
+  }
+}

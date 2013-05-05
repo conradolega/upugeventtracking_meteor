@@ -40,7 +40,7 @@ Meteor.methods({
         lineup: [],
         sponsors: [],
         venue: [],
-        work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
+        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"} ],
         images: [],
         wk2lineup: [],
         wk2sponsors: [],
@@ -48,7 +48,9 @@ Meteor.methods({
         finalPoster: {},
         finalLineup: [],
         finalSponsors: [],
-        promotions: []
+        promotions: [],
+        workAssignments: [],
+        workAssignmentsHeader: []
       });
     }
     else
@@ -144,7 +146,7 @@ Meteor.methods({
     return Events.update(
       {_id: options.selected},
       {
-        $set: { work: options.work }
+        $set: { work: options.work, workAssignments: options.work }
       }
     );
   },
@@ -236,12 +238,22 @@ Meteor.methods({
     );    
   },
   updatePromotions: function(options) {
-  options = options || {};
-  return Events.update(
-    {_id: options.selected},
-    {
-      $set: { promotions: options.promotions }
-    }
-  );    
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { promotions: options.promotions }
+      }
+   );    
+  },
+  updateWorkAssignments: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { workAssignments: options.workAssignments, 
+          workAssignmentsHeader: options.workAssignmentsHeader}
+      }
+   );   
   }
 })
