@@ -9,9 +9,8 @@ bootstrap
 jquery
 accounts-base
 accounts-ui
-bootstrap-datetimepicker
-moment
 accounts-facebook
-x-editable-bootstrap
 underscore
+moment
 filepicker
+x-editable-bootstrap

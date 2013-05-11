@@ -1,0 +1,37 @@
+{
+  "meteor": {
+    "git": "https://github.com/meteor/meteor.git",
+    "branch": "master",
+    "commit": "bfe4b72ebec4367eaddcdf0887fcf5e649d9dcb8"
+  },
+  "dependencies": {
+    "basePackages": {
+      "moment": {},
+      "x-editable-bootstrap": {},
+      "filepicker": {},
+      "bootstrap-datetimepicker": {
+        "path": "../meteor-bootstrap-datetimepicker"
+      }
+    },
+    "packages": {
+      "moment": {
+        "git": "https://github.com/possibilities/meteor-moment.git",
+        "tag": "v1.7.0",
+        "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
+      },
+      "x-editable-bootstrap": {
+        "git": "https://github.com/nate-strauser/meteor-x-editable-bootstrap.git",
+        "tag": "v0.1.4",
+        "commit": "bc4ff2ce77c37640802559148db69838532e9b32"
+      },
+      "filepicker": {
+        "git": "https://github.com/Filepicker/meteor.git",
+        "tag": "v0.3.0",
+        "commit": "dcb6f3779e5fc105520ba06b0392e3a79c73a7e6"
+      },
+      "bootstrap-datetimepicker": {
+        "path": "../meteor-bootstrap-datetimepicker"
+      }
+    }
+  }
+}
