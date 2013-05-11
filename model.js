@@ -30,7 +30,7 @@ Meteor.methods({
     {
       return Events.insert({
         name: options.name,
-        venueFinal: "None",
+        finalVenue: {},
         startTime: start.format('MM/DD/YYYY hh:mm A'),  
         endTime: end.format('MM/DD/YYYY hh:mm A'),
         created: moment().utc().toString(),
@@ -40,8 +40,17 @@ Meteor.methods({
         lineup: [],
         sponsors: [],
         venue: [],
-        work: [{work: "Program"}, {work: "Runner"}, {work: "Timer"}, {work: "Peace"}, {work: "Hosts"}, {work: "Baggage"} ],
-        images: []
+        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"} ],
+        images: [],
+        wk2lineup: [],
+        wk2sponsors: [],
+        wk2lineupContract: [],
+        finalPoster: {},
+        finalLineup: [],
+        finalSponsors: [],
+        promotions: [],
+        workAssignments: [],
+        workAssignmentsHeader: []
       });
     }
     else
@@ -68,35 +77,58 @@ Meteor.methods({
   },
   updateLineup: function(options) {
     options = options || {};
-    return Events.update(
-      {_id: options.selected},
-      {
-        $set: { lineup: options.lineup }
-      }
-    );
+    var event = Events.findOne({_id: options.selected});
+    if(!_.isEqual(event.lineup,options.lineup))
+    {
+      var contact = [];
+      _.each(options.lineup, function (element) {
+        var push = {
+          status: "Not yet contacted",
+          band: element.band
+        };
+        contact.push(push);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { lineup: options.lineup, wk2lineup: contact, wk2lineupContract: []}
+        }
+      );
+    }
   },
   updateSponsors: function(options) {
     options = options || {};
-    return Events.update(
-      {_id: options.selected},
-      {
-        $set: { sponsors: options.sponsors }
-      }
-    );
+    var event = Events.findOne({_id: options.selected});    
+    if(!_.isEqual(event.sponsors,options.sponsors))
+    {
+      var contact = [];
+      _.each(options.sponsors, function (element) {
+        var push = {
+          status: "Not yet contacted",
+          sponsor: element.sponsor
+        };
+        contact.push(push);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { sponsors: options.sponsors, wk2sponsors: contact}
+        }
+      );
+    }
   },
  updateVenue: function(options) {
     options = options || {};
     return Events.update(
       {_id: options.selected},
       {
-        $set: { venue: options.venue }
+        $set: { venue: options.venue}
       }
-    );
+    );    
   },
   // Images methods
   addImage: function(options) {
     options = options || {};
-    console.log(options.url);
     return Events.update(
       {_id: options.id},
       {
@@ -108,5 +140,120 @@ Meteor.methods({
         }
       }
     );
-  }   
+  },
+ updateWork: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { work: options.work, workAssignments: options.work }
+      }
+    );
+  },
+  updateFinalVenue: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalVenue: options.finalVenue }
+      }
+    );
+  },
+  updateBandContact: function(options) {
+    options = options || {};
+    var save = [];
+    var event = Events.findOne({_id:options.selected});
+    _.each(options.wk2lineup, function (element) {
+      if(element.status == "Approved")
+      {
+        var push = {
+          band: element.band,
+          status: "Not yet signed"
+        };
+        save.push(push);
+      }
+    });
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk2lineup: options.wk2lineup, wk2lineupContract: save }
+      })
+  },
+  updateSponsorsContact: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk2sponsors: options.wk2sponsors }
+      })    
+  },
+  updateLineupContract: function(options) {
+    options = options || {};
+    var event = Events.findOne({_id: options.selected});
+    var save = [];
+    if(event)
+    {
+      _.each(options.wk2lineupContract, function (element) {
+        if(_.contains(_.pluck(event.wk2lineupContract,'band'), element.band))
+        {
+          save.push(element);
+        }
+      });
+      _.each(event.wk2lineupContract, function (element) {
+        if(!_.contains(_.pluck(save,'band'), element.band))
+            save.push(element);
+      });
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { wk2lineupContract: save }
+        })
+    }
+  },
+  addFinalPoster: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.id},
+      {
+        $set: { finalPoster: options.url }
+      }
+    );
+  },
+  updateFinalLineup: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalLineup: options.lineup }
+      }
+    );
+  },
+  updateFinalSponsors: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { finalSponsors: options.finalSponsors }
+      }
+    );    
+  },
+  updatePromotions: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { promotions: options.promotions }
+      }
+   );    
+  },
+  updateWorkAssignments: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { workAssignments: options.workAssignments, 
+          workAssignmentsHeader: options.workAssignmentsHeader}
+      }
+   );   
+  }
 })

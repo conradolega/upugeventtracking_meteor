@@ -1,406 +1,780 @@
 <head>
-  <title>Event Tracking System</title>
+	<title>Event Tracking System</title>
 </head>
 
 <body>
-  {{> page}}
+	{{> page}}
 </body>
 
 <template name="page">
-  {{> navBar}}
-  <div class="container-fluid">
+	{{> navBar}}
+	<div class="container-fluid">
 
-    {{#if loading}}
-      <img src="http://viewvc.svn.mozilla.org/vc/addons/trunk/bandwagon/skin/images/spinner.gif?revision=18591&view=co&pathrev=18591">
-    {{else}}
-      {{> body}}
-    {{/if}}
-  </div>
+		{{#if loading}}
+			<img src="http://viewvc.svn.mozilla.org/vc/addons/trunk/bandwagon/skin/images/spinner.gif?revision=18591&view=co&pathrev=18591">
+		{{else}}
+			{{> body}}
+		{{/if}}
+	</div>
 
 </template>
 
 <template name="body">
-    <div class="row-fluid">
-      <div class="span3">
+		<div class="row-fluid">
+			<div class="span3">
 
-      {{#if currentUser}}
+			{{#if currentUser}}
 
-        <div id="sidebar" class="well sidebar-nav sidebar-nav-fixed">
-            {{> eventSidebar}}
-        </div>
+				<div id="sidebar" class="well sidebar-nav sidebar-nav-fixed">
+						{{> eventSidebar}}
+				</div>
 
-      {{/if}}        
-      </div>
-      <div class="span9">
-        {{#if currentUser}}
+			{{/if}}        
+			</div>
+			<div class="span9">
+				{{#if currentUser}}
 
-            {{#if showError}}
-              <div class="alert alert-error">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>{{showError.error}}:</strong> {{showError.details}}.
-              </div>
-            {{/if}}
+						{{#if showError}}
+							<div class="alert alert-error">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>{{showError.error}}:</strong> {{showError.details}}.
+							</div>
+						{{/if}}
 
-            {{#if showSuccess}}
-              <div class="alert alert-success">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
-              </div>
-            {{/if}}
+						{{#if showSuccess}}
+							<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
+							</div>
+						{{/if}}
 
-            {{#if showDetails}}
-              
-              {{> detailsModule}}
-              {{#if showSteps}}
-                {{> collaboratorsModule}}
-                {{> week1}}
-              {{/if}}
-              
-            {{/if}}
+						{{#if showDetails}}
+							
+							{{> detailsModule}}
+							{{#if showSteps}}
+								{{> collaboratorsModule}}
+								{{> week1}}
+								{{> week2}}
+								{{> week3}}
+							{{/if}}
+							
+						{{/if}}
 
-        {{/if}}
-     </div>
-    </div>
+				{{/if}}
+		 </div>
+		</div>
 </template>
 
 <template name="navBar">
-  <div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="brand" href="#">Project name</a>
-      <div class="nav-collapse collapse">
-        <p class="navbar-text pull-right">
-            {{loginButtons align="right"}}
-        </p>
-        <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="brand" href="#">Project name</a>
+			<div class="nav-collapse collapse">
+				<p class="navbar-text pull-right">
+						{{loginButtons align="right"}}
+				</p>
+				<ul class="nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
 </div>
 </template>
 
 <template name="eventSidebar">
-  <ul class="nav nav-list">
-    <li class="nav-header">My Events</li>
-      <li class="divider"></li>   
-        {{#each eventBlock}}
-          {{> event}}
-        {{/each}}
-        <li class="{{addEventClass}}"><a id="addEvent" href="#"><small>Add event...</small></a></li>
-   </ul>
+	<ul class="nav nav-list">
+		<li class="nav-header">My Events</li>
+			<li class="divider"></li>		
+				{{#each eventBlock}}
+					{{> event}}
+				{{/each}}
+				<li class="{{addEventClass}}"><a id="addEvent" href="#"><small>Add event...</small></a></li>
+	 </ul>
 </template>
 
 
 <template name="event">
-  <li class="{{listItemClass}}">
-    <a id="event" href="#">{{name}}
-      <ul class="nav nav-list">
-        <li class="inactive"><i class="icon-home"></i>  <small>{{venueFinal}}</small></li>
-        <li class="inactive start"><i class="icon-time"></i>  <small>{{startTimeDisp}}</small></li>
-        <li class="inactive end"><i class="icon-minus"></i>  <small>{{endTimeDisp}}</small></li>
-      </ul>
-    </a>
-  </li>
-  <li class="divider"></li>
+	<li class="{{listItemClass}}">
+		<a id="event" href="#">{{name}}
+			<ul class="nav nav-list">
+				<li class="inactive"><i class="icon-home"></i>  <small>{{finalVenue.name}}</small></li>
+				<li class="inactive start"><i class="icon-time"></i>  <small>{{startTimeDisp}}</small></li>
+				<li class="inactive end"><i class="icon-minus"></i>  <small>{{endTimeDisp}}</small></li>
+			</ul>
+		</a>
+	</li>
+	<li class="divider"></li>
 </template>
 
 <template name="detailsModule">
-  <div class="page-header">
-    <h1>{{moduleHeader}}</h1>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="eventName">Name</label>
-  <div class="controls">
-    <input class="input-xlarge" type="text" id="name" value="{{eventName}}">
-    </div>
-  </div>
-  {{#constant}}
-  <div class="control-group">
-    <label class="control-label" for="startTime">Start</label>
-    <div id="startTime" class="input-append">
-      <input id="startTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
-      <span class="add-on">
-        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-        </i>
-      </span>
-    </div>
-    <label class="control-label" for="endTime">End</label>
-    <div id="endTime" class="input-append">
-      <input id="endTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text"  disabled></input>
-      <span class="add-on">
-        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-        </i>
-      </span>
-    </div>    
-  {{/constant}}    
-  <p class="muted">{{updateText}}</p>
-  <div class="form-actions">
-      <button id="add" class="btn btn-primary">{{buttonName}}</button>
-      <button id="cancel" class="btn">Cancel</button>
-    </div>
-  </div>
+	<div class="page-header">
+		<h1>{{moduleHeader}}</h1>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="eventName">Name</label>
+	<div class="controls">
+		<input class="input-xlarge" type="text" id="name" value="{{eventName}}">
+		</div>
+	</div>
+	{{#constant}}
+	<div class="control-group">
+		<label class="control-label" for="startTime">Start</label>
+		<div id="startTime" class="input-append">
+			<input id="startTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text" disabled></input>
+			<span class="add-on">
+				<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				</i>
+			</span>
+		</div>
+		<label class="control-label" for="endTime">End</label>
+		<div id="endTime" class="input-append">
+			<input id="endTimeField" data-format="MM/dd/yyyy HH:mm PP" type="text"  disabled></input>
+			<span class="add-on">
+				<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+				</i>
+			</span>
+		</div>    
+	{{/constant}}    
+	<p class="muted">{{updateText}}</p>
+	<div class="form-actions">
+			<button id="add" class="btn btn-primary">{{buttonName}}</button>
+			<button id="cancel" class="btn">Cancel</button>
+		</div>
+	</div>
 </template>
 
 <template name="collaboratorsModule">
-   <div class="page-header">
-    <h1>2. Add collaborators</h1>
-  </div>
-  <div class="row-fluid">
-    <div class="center">
-    <ul>
-      {{#each help}}
-        <li class="span4">
-          <strong>{{profile.name}}</strong>
-          {{#if you}}
-             <span class="badge badge-success">You</span>
-          {{/if}}
-        </li>
-      {{/each}}
-    </ul>
-      </div>
-  </div>
-  <div class="row-fluid">
-    <div class="form-actions">
-      <a data-toggle="modal" href="#example" class="btn btn-primary">Manage your troops!</a>
-    </div>
-  </div>
+	 <div class="page-header">
+		<h1>2. Add collaborators</h1>
+	</div>
+	<div class="row-fluid">
+		<div class="center">
+		<ul>
+			{{#each help}}
+				<li class="span4">
+					<strong>{{profile.name}}</strong>
+					{{#if you}}
+						 <span class="badge badge-success">You</span>
+					{{/if}}
+				</li>
+			{{/each}}
+		</ul>
+			</div>
+	</div>
+	<div class="row-fluid">
+		<div class="form-actions">
+			<a data-toggle="modal" href="#example" class="btn btn-primary">Manage your troops!</a>
+		</div>
+	</div>
 
-  {{> collaboratorsModal}}
+	{{> collaboratorsModal}}
 </template>
 
 <template name="collaboratorsModal">
-  <div class="container">
-    <div class="modal hide fade in" id="example" style="display: none; ">
-        <div class="modal-header">
-            <a class="close" data-dismiss="modal">×</a>
-            <h3>Troops</h3>
-        </div>
-        <div id="collaboratorModal" class="modal-body">
-            <ul>
-            {{#each others}}
-             <li class="span4"><label class="checkbox">{{profile.name}}<input userId="{{_id}}" type="checkbox"></label></li>
-            {{/each}}
-            <li class="span4"><p class="muted">Invite more users!</p></li>
-            </ul>
-        </div>
-        <div class="modal-footer">
-            <a id="addCollaborator" data-dismiss="modal"class="btn btn-success" href="#">Call to action</a>
-            <a class="btn" data-dismiss="modal" href="#">Close</a>
-        </div>
-    </div>
-  </div>
+	<div class="container">
+		<div class="modal hide fade in" id="example" style="display: none; ">
+				<div class="modal-header">
+						<a class="close" data-dismiss="modal">×</a>
+						<h3>Troops</h3>
+				</div>
+				<div id="collaboratorModal" class="modal-body">
+						<ul>
+						{{#each others}}
+						 <li class="span4"><label class="checkbox">{{profile.name}}<input userId="{{_id}}" type="checkbox"></label></li>
+						{{/each}}
+						<li class="span4"><p class="muted">Invite more users!</p></li>
+						</ul>
+				</div>
+				<div class="modal-footer">
+						<a id="addCollaborator" data-dismiss="modal"class="btn btn-success" href="#">Call to action</a>
+						<a class="btn" data-dismiss="modal" href="#">Close</a>
+				</div>
+		</div>
+	</div>
 </template>
 
 <template name="week1">
-  <div class="page-header">
-    <h1>3. Week 1 <small>{{dates}}</small></h1>
-  </div>
-  <div class="row-fluid">
-    <div class="center">
-      <div class="span6">
-        {{> lineupHeader}}
-      </div>
-      <div class="span6">
-        {{> sponsorsHeader}}
-      </div>      
-    </div>
-  </div>
-  <div class="row-fluid">
-      <div class="span6">
-        {{> lineup}}    
-      </div>
-      <div class="span6">
-        {{> sponsors}}
-      </div>
-    </div>
-  </div>
-  <hr>
-  <div class="row-fluid">
-    <div class="center">
-      {{> posterDraft}}
-    </div>
-  </div>
-  <hr>
-  <div class="row-fluid">
-    <div class="span6">
-      <div class="center">
-        {{> venueHeader}}
-      </div>
-    </div>
-    <div class="span6">
-      <div class="center">
-        {{> workHeader}}
-      </div>
-    </div>
-  </div>
-  <div class="row-fluid">
-    <div class="span6">
-      <div class="center">
-        {{> venue}}
-      </div>
-    </div>
-    <div class="span6">
-      <div class="center">
-        {{> work}}
-      </div>
-    </div>
-  </div>
-  <div class="row-fluid">
-    <div class="center">
-      <div class="form-actions">
-          <button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
-      </div>
-    </div>
-  </div>  
+	<div class="page-header">
+		<h1>3. Week 1 <small>{{dates}}</small></h1>
+	</div>
+	<div class="row-fluid">
+		<div class="center">
+			<div class="span6">
+				{{> lineupHeader}}
+			</div>
+			<div class="span6">
+				{{> sponsorsHeader}}
+			</div>      
+		</div>
+	</div>
+	<div class="row-fluid">
+			<div class="span6">
+				{{> lineup}}    
+			</div>
+			<div class="span6">
+				{{> sponsors}}
+			</div>
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> posterDraft}}
+		</div>
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> venueHeader}}
+			</div>
+		</div>
+		<div class="span6">
+			<div class="center">
+				{{> workHeader}}
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> venue}}
+			</div>
+		</div>
+		<div class="span6">
+			<div class="center">
+				<div class="span8 offset2">
+					{{> work}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="center">
+			<div class="form-actions">
+					<button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+			</div>
+		</div>
+	</div>  
 </template>
 
 <template name="lineupHeader">
-  <h3>Line-up</h3>
-  <p>List bands/performers that would be playing and their corresponding set times</p>
+	<h3>Line-up</h3>
+	<p>List bands/performers that would be playing and their corresponding set times</p>
 </template>
 
 <template name="lineup">
-  <table id="lineup_table" class="table table-bordered">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Band</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each rows}}
-        <tr>
-          <td>{{num}}</td>
-          <td>
-            <a href="#" class="editCell">{{band}}</a>
-          </td>
-          <td>
-            <a href="#" class="editStartTime">{{startTime}}</a>
-          </td>
-          <td>
-            <a href="#" class="editEndTime">{{endTime}}</a>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <button class="btn" id="addEntry">Add row</button>
+	<table id="lineup_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Band</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td>{{num}}</td>
+					<td>
+						<a href="#" class="editCell">{{band}}</a>
+					</td>
+					<td>
+						<a href="#" class="editStartTime">{{startTime}}</a>
+					</td>
+					<td>
+						<a href="#" class="editEndTime">{{endTime}}</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	<button class="btn" id="addEntry">Add row</button>
 </template>
 
 <template name="sponsorsHeader">
-  <h3>Potential sponsors</h3>
-  <p>List companies you intend to send sponsorship letters to</p>
+	<h3>Potential sponsors</h3>
+	<p>List companies you intend to send sponsorship letters to</p>
 </template>
 
 <template name="sponsors">
-  <table id="sponsors_table" class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Sponsor</th>
-        <th>Contact person</th>
-        <th>Contact info</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each rows}}
-      <tr>
-        <td>
-          <a href="#" class="editSponsor">{{sponsor}}</a>
-        </td>
-        <td>
-          <a href="#" class="editPerson">{{person}}</a>
-        </td>
-        <td>
-          <a href="#" class="editContact">{{contact}}</a>
-        </td>              
-      </tr>   
-      {{/each}}         
-    </tbody>
-  </table>
-  <button class="btn" id="addEntry">Add row</button>
+	<table id="sponsors_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Sponsor</th>
+				<th>Contact person</th>
+				<th>Contact info</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editSponsor">{{sponsor}}</a>
+				</td>
+				<td>
+					<a href="#" class="editPerson">{{person}}</a>
+				</td>
+				<td>
+					<a href="#" class="editContact">{{contact}}</a>
+				</td>              
+			</tr>   
+			{{/each}}         
+		</tbody>
+	</table>
+	<button class="btn" id="addEntry">Add row</button>
 </template>
 
 <template name="posterDraft">
-  <h3>Studies for event poster</h3>
-    <ul class="thumbnails">
-    {{#each images}}
-      <li class="span4">
-        <a href="#" class="thumbnail">
-          <img src="{{url}}" alt="">
-        </a>
-      </li>
-    {{/each}}
-  </ul> 
-  <p>Upload concept sketches for the event poster</p>
-  <p class="muted">(usually in 8.5x11 or 11x17)</p>
-  <button class="btn" id="upload">Pick file</button>
+	<h3>Studies for event poster</h3>
+	<p>Upload concept sketches for the event poster</p>
+	<p class="muted">(usually in 8.5x11 or 11x17)</p>
+	<p class="alert-error">DI PA PWEDE MAG DELETE NG IMAGES SORRY!</p>
+		<ul class="thumbnails">
+		{{#each images}}
+			<li class="span4">
+				<a href="{{url}}" class="thumbnail">
+					<img src="{{url}}" alt="">
+				</a>
+			</li>
+		{{/each}}
+	</ul> 
+	<button class="btn" id="upload">Pick file</button>
 </template>
 
 <template name="venueHeader">
-  <h3>Potential venues</h3>
-  <p>List possible venues of the event, unless assigned beforehand</p>
+	<h3>Potential venues</h3>
+	<p>List possible venues of the event, unless assigned beforehand</p>
 </template>
 
 <template name="venue">
-  <table id="venue_table" class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Venue</th>
-      <th>Address</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each rows}}
-      <tr>
-        <td>
-          <a href="#" class="editVenue">{{venue}}</a>
-        </td>
-        <td>
-          <a href="#" class="editAddress">{{address}}</a>
-        </td>        
-      </tr>
-    {{/each}}
-  </tbody>
+	<table id="venue_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Venue</th>
+			<th>Address</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editVenue">{{venue}}</a>
+				</td>
+				<td>
+					<a href="#" class="editAddress">{{address}}</a>
+				</td>        
+			</tr>
+		{{/each}}
+	</tbody>
 </table>
 <button class="btn" id="addEntry">Add row</button>
 </template>
 
 <template name="workHeader">
-  <h3>Work logistics</h3>
-  <p>List down the number and type of workers you would need</p>
+	<h3>Work logistics</h3>
+	<p>List down the number and type of workers you would need</p>
 </template>  
 
 <template name="work">
-  <table id="work_table" class="table table-bordered">
-  <thead>
-    <tr>
-      <th style="width:85%">Work</th>
-      <th style="width:15%">Number</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each rows}}
-      <tr>
-        <td style="width:85%">
-          {{work}}
-        </td>
-        <td style="width:15%">
-          <a href="#" class="editAddress">{{address}}</a>
-        </td>                
-      </tr>
-    {{/each}}
-  </tbody>
+	<table id="work_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th style="width:85%">Work</th>
+			<th style="width:15%">Number</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td style="width:85%">
+					<a href="" class="{{class}}">
+						{{name}}
+					</a>
+				</td>
+				<td style="width:15%">
+					<a href="#" class="editNum">{{num}}</a>
+				</td>                
+			</tr>
+		{{/each}}
+	</tbody>
 </table>
 <button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="week2">
+	<div class="page-header">
+		<h1>4. Week 2 <small>{{dates}}</small></h1>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> finalVenueHeader}}
+			</div>
+		</div>
+		<div class="span6">
+			<div class="center">
+				{{> lineupContactHeader}}
+			</div>
+		</div>    
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			{{> finalVenue}}
+		</div>
+		<div class="span6">
+			{{> lineupContact}}
+		</div>    
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> posterFinal}}
+		</div>
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> sponsorsContactHeader}}
+			</div>
+		</div>
+		<div class="span6">
+			<div class="center">
+				{{> lineupContractHeader}}
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			{{> sponsorsContact}}
+		</div>
+		<div class="span6">
+			{{> lineupContract}}
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="center">
+			<div class="form-actions">
+					<button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+			</div>
+		</div>
+	</div>    
+</template>
+
+<template name="finalVenueHeader">
+	<h3>Finalization of Venue</h3>
+	<p>Please fill in all fields. (better description soon)</p>
+</template>
+
+<template name="finalVenue">
+	<table id="venue_table" class="table table-bordered">
+		<tbody>
+			<tr>
+				<th width="20%">Venue</th>
+				<td width="80%"><a href="#" class="editFinalVenue">{{venue.venue}}</a></td>
+			</tr>
+			<tr>
+				<th>Deal</th>
+				<td><a href="#" class="editDeal">{{venue.deal}}</a></td>
+			</tr>
+			<tr>
+				<th>Paid</th>
+				<td><a href="#" class="editPaid">{{venue.paid}}</a></td>
+			</tr>
+		</tbody>
+	</table>
+</template>
+
+<template name="lineupContactHeader">
+	<h3>Contacting of performers</h3>
+	<p>Call/text bands asking if they will be available to perform</p>
+</template>
+
+<template name="lineupContact">
+	<table id="lineup_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Band</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td>
+						<a href="#" class="editBandContact">{{band}}</a>
+					</td>
+					<td>
+						<a href="#" class="editBandContactStatus">{{status}}</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>  
+	<button class="btn" id="addEntry">Add row</button>  
+</template>
+
+<template name="sponsorsContactHeader">
+	<h3>Sending of sponsorship letters</h3>
+	<p>Calling/e-mailing of letters to sponsors and following them up a few days after sending</p>  
+</template>
+
+<template name="sponsorsContact">
+	<table id="sponsors_contact_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Sponsor</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td>
+						<a href="#" class="editSponsorContact">{{sponsor}}</a>
+					</td>
+					<td>  
+						<a href="#" class="editSponsorContactStatus">{{status}}</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>  
+	<button class="btn" id="addEntry">Add row</button>    
+</template>
+
+<template name="lineupContractHeader">
+	<h3>Preparation of band contracts</h3>
+	<p>Filling out of band contracts for the confirmed bands</p>
+</template>
+
+<template name="lineupContract">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Band</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td>
+						<a class="lineupContract">{{band}}</a>
+					</td>
+					<td>
+						<a href="#" class="editLineupContractStatus">{{status}}</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>  
+</template>
+
+<template name="posterFinal">
+	<h3>Finalization of Event Poster</h3>
+	<p>Final poster design and layout </p>
+	<p class="alert-error">DI PA PWEDE MAG DELETE NG IMAGES SORRY!</p>
+	{{#if url}}
+		<ul class="thumbnails">
+			<li class="span6 offset3">
+				<a href="{{url}}" class="thumbnail">
+					<img src="{{url}}" alt="">
+				</a>
+			</li>
+		</ul> 
+	{{/if}}
+	<button class="btn" id="upload">Pick file</button>
+</template>
+
+<template name="week3">
+	<div class="page-header">
+		<h1>5. Week 3 <small>{{dates}}</small></h1>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> finalLineupHeader}}
+			</div>
+		</div>
+		<div class="span6">
+			<div class="center">
+				{{> finalSponsorsHeader}}
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			{{> finalLineup}}
+		</div>
+		<div class="span6">
+			{{> finalSponsors}}
+		</div>
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> workAssignmentsHeader}}
+		</div>
+	</div>
+	<div class="row-fluid">
+		{{> workAssignments}}
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="span6">
+			<div class="center">
+				{{> promotionsHeader}}
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span6">
+			{{> promotions}}
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="center">
+			<div class="form-actions">
+					<button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+			</div>
+		</div>
+	</div> 
+</template>
+
+<template name="finalLineupHeader">
+	<h3>Finalizing of line-up</h3>
+	<p>Line-up must be finalized</p>
+</template>
+
+<template name="finalLineup">
+	<table id="finalLineup" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Band</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td>{{num}}</td>
+					<td>
+						<a href="#" class="editCell">{{band}}</a>
+					</td>
+					<td>
+						<a href="#" class="editStartTime">{{startTime}}</a>
+					</td>
+					<td>
+						<a href="#" class="editEndTime">{{endTime}}</a>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	<button class="btn" id="addEntry">Add row</button>
+</template>
+
+<template name="finalSponsorsHeader">
+	<h3>Finalizing of Sponsors</h3>
+	<p>Follow up ALL companies that were given letters often so they can send their logo for the poster</p>
+</template>
+
+<template name="finalSponsors">
+	<table id="final_sponsors_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Sponsor</th>
+			<th>Collaterals / Money Received</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editSponsor">{{sponsor}}</a>
+				</td>
+				<td>  
+					<a href="#" class="editCollaterals">{{collaterals}}</a>
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>  
+<button class="btn" id="addEntry">Add row</button>   
+</template>
+
+<template name="promotionsHeader">
+	<h3>Online Promotions</h3>
+	<p>Setup Facebook event, Tumblr post, etc</p>
+</template>
+
+<template name="promotions">
+	<table id="promotions_table" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Platform</th>
+			<th>Link</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each rows}}
+			<tr>
+				<td>
+					<a href="#" class="editPlatform">{{platform}}</a>
+				</td>
+				<td>  
+					<a href="#" class="editLink">{{link}}</a>
+					<a href="{{link}}" class="goto"><small>[goto]</small></a>
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>  
+<button class="btn" id="addEntry">Add row</button>   
+</template>
+
+<template name="workAssignmentsHeader">
+	<h3>Assigning of Work</h3>
+	<p>Releasing of work assignments during GA</p>
+</template>
+
+<template name="workAssignments">
+	<table id="work_assignments_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Work</th>
+				{{#each headers}}
+					<th>
+						<a href="#" class="editShiftStartTime">{{start}}</a> - 
+						<a href="#" class="editShiftEndTime">{{end}}</a>
+					</th>
+				{{/each}}
+			</tr>
+		</thead>
+		<tbody>
+			{{#each work}}
+			<tr>
+				<td><a href="#" class="editWorkAssignments">{{name}}</a></td>
+				{{#each workers}}
+					<td><a href="#" class="editWorkers">{{this}}</a></td>
+				{{/each}}
+			</tr>
+			{{/each}}
+		</tbody>
+</table>
+<button class="btn" id="addEntry">Add work</button>
+<button class="btn" id="addShift">Add shift</button>
 </template>
