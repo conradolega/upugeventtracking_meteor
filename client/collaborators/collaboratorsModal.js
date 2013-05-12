@@ -33,7 +33,7 @@ Template.collaboratorsModal.events({
           toastr.error(error.details, error.reason)
         }
         else {
-          toastr.error('Collaborators successfully added!')
+          toastr.success('Collaborators successfully added!')
         }
       });
     }
