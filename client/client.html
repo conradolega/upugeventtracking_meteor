@@ -649,7 +649,7 @@
 	<thead>
 		<tr>
 			<th>Sponsor</th>
-			<th>Collaterals / Money Received</th>
+			<th>Deal</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -821,7 +821,7 @@
 </template>
 
 <template name="sponsorCollateral">
-	<table id="remind_performers_table" class="table table-bordered">
+	<table id="sponsor_collateral_table" class="table table-bordered">
 		<thead>
 			<tr>
 				<th>Sponsor</th>
@@ -833,14 +833,22 @@
 		<tbody>
 			{{#each rows}}
 				<tr>
-					<td>
-						<a href="#" class="editPerformerRemind">{{band}}</a>
-					</td>
-					<td>  
-						<a href="#" class="editPerformerRemindStatus">{{status}}</a>
-					</td>
+					<td><a href="#" class="editSponsor">{{sponsor}}</a></td>
+					<td><a href="#" class="editReceived">{{received}}</a></td>
+					<td><a href="#" class="editDate">{{date}}</a></td>
+					<td><a href="#" class="editReceivedBy">{{receivedBy}}</a></td>
 				</tr>
 			{{/each}}
 		</tbody>
 	</table>  
+	<button class="btn" id="addEntry">Add row</button>	
+</template>
+
+<template name="wk4promotionsHeader">
+	<h3>Promotions</h3>
+	<p>Posting of posters, giving out of flyers, RTR, etc</p>
+</template>
+
+<template name="wk4promotions">
+	
 </template>

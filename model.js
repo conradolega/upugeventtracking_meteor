@@ -51,7 +51,8 @@ Meteor.methods({
         promotions: [],
         workAssignments: [],
         workAssignmentsHeader: [],
-        performerRemind: []
+        performerRemind: [],
+        sponsorCollateral: [],
       });
     }
     else
@@ -240,10 +241,14 @@ Meteor.methods({
   },
   updateFinalSponsors: function(options) {
     options = options || {};
+    var sponsorCollateral = []
+    _.each(_.pluck(options.finalSponsors, 'sponsor'), function (d) {
+      sponsorCollateral.push({sponsor: d});
+    })
     return Events.update(
       {_id: options.selected},
       {
-        $set: { finalSponsors: options.finalSponsors }
+        $set: { finalSponsors: options.finalSponsors, sponsorCollateral: sponsorCollateral }
       }
     );    
   },
@@ -272,6 +277,14 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { performerRemind: options.performerRemind }
+      })
+  },
+  updateSponsorCollateral: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { sponsorCollateral: options.sponsorCollateral }
       })
   }
 })
