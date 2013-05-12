@@ -50,7 +50,8 @@ Meteor.methods({
         finalSponsors: [],
         promotions: [],
         workAssignments: [],
-        workAssignmentsHeader: []
+        workAssignmentsHeader: [],
+        performerRemind: []
       });
     }
     else
@@ -221,10 +222,19 @@ Meteor.methods({
   },
   updateFinalLineup: function(options) {
     options = options || {};
+    var bands = _.pluck(options.lineup, 'band');
+    var save = []
+    _.each(bands, function (entry)
+    {
+      save.push({
+        band: entry,
+        status: "Not yet contacted"
+      });
+    });
     return Events.update(
       {_id: options.selected},
       {
-        $set: { finalLineup: options.lineup }
+        $set: { finalLineup: options.lineup, performerRemind: save }
       }
     );
   },
@@ -255,5 +265,13 @@ Meteor.methods({
           workAssignmentsHeader: options.workAssignmentsHeader}
       }
    );   
+  },
+  updatePerformerRemind: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { performerRemind: options.performerRemind }
+      })
   }
 })
