@@ -17,7 +17,6 @@ Template.week1.events({
       save.push(push);
     }
   });
-  Session.set("loading", true);
   Meteor.call("updateSponsors",
   {
     sponsors: save,
@@ -27,6 +26,8 @@ Template.week1.events({
     if (error) {
       Session.set("addEventError", {error: error.reason, details: error.details});
     }
+    else
+      toastr.success("Potential sponsors saved!", "Week 1")
   });
 
   table = template.find("#lineup_table");
@@ -54,8 +55,10 @@ Template.week1.events({
   },
   function (error, _id) {
     if (error) {
-      Session.set("addEventError", {error: error.reason, details: error.details});
+      toastr.error(error.details, error.reason);
     }
+    else
+      toastr.success('Line-up saved!', 'Week 1')
   });
 
   table = template.find("#venue_table");
@@ -81,8 +84,10 @@ Template.week1.events({
   },
   function (error, _id) {
     if (error) {
-      Session.set("addEventError", {error: error.reason, details: error.details});
+      toastr.error(error.details, error.reason);
     }
+    else
+      toastr.success('Potential venues saved!', 'Week 1');
   });
 
   table = template.find("#work_table");
@@ -125,16 +130,12 @@ Template.week1.events({
   },
   function (error, _id) {
     if (error) {
-      Session.set("addEventError", {error: error.reason, details: error.details});
+      toastr.error(error.details, error.reason);
     }
     else {
-      Session.set("addEventSuccess",{
-        success: "Successfully saved changes",
-        details: "Check other modules for completion"
-      });
+      toastr.success('Work logistics info saved!', 'Week 1');
     }    
   }); 
-  Session.set("loading",false);
 }
 });
 

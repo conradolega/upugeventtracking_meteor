@@ -18,19 +18,15 @@ Template.week2.events({
     {
       save[0]=save[1]=save[2] = "";
     }
-    Session.set("loading",true);
     Meteor.call("updateFinalVenue", {
       selected: Session.get("selected"),
       finalVenue: {venue: save[0], deal: save[1], paid: save[2]}
     }, function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason);
       }
       else {
-        Session.set("addEventSuccess",{
-          success: "Successfully saved changes",
-          details: "Check other modules for completion"
-        });
+        toastr.success('Final venue saved!', 'Week 2')
       }    
     }); 
     table = template.findAll("table")[1];
@@ -55,13 +51,10 @@ Template.week2.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason);
       }
       else {
-        Session.set("addEventSuccess",{
-          success: "Successfully saved changes",
-          details: "Check other modules for completion"
-        });
+        toastr.success('Performer contact info saved!', 'Week 2')
       } 
     });
     table = template.findAll("table")[2];
@@ -86,13 +79,10 @@ Template.week2.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason);
       }
       else {
-        Session.set("addEventSuccess",{
-          success: "Successfully saved changes",
-          details: "Check other modules for completion"
-        });
+        toastr.success('Sponsor contact info saved!', 'Week 2')
       } 
     });      
     table = template.findAll("table")[3];
@@ -119,16 +109,12 @@ Template.week2.events({
       },
       function (error, _id) {
         if (error) {
-          Session.set("addEventError", {error: error.reason, details: error.details});
+          toastr.error(error.details, error.reason);
         }
         else {
-          Session.set("addEventSuccess",{
-            success: "Successfully saved changes",
-            details: "Check other modules for completion"
-          });
+          toastr.success('Band contract info saved!', 'Week 2')
         } 
       });      
     }   
-    Session.set("loading",false);
   }
 });

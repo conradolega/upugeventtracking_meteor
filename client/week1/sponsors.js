@@ -23,13 +23,13 @@ Template.sponsors.rows = function() {
 }
 
 Template.sponsors.rendered = function () {
-  $(this).find(".editSponsor").editable({
+  $(this.findAll(".editSponsor")).editable({
     unsavedclass: null
   });
-  $(this).find(".editPerson").editable({
+  $(this.findAll(".editPerson")).editable({
     unsavedclass: null
   });
-  $(this).find(".editContact").editable({
+  $(this.findAll(".editContact")).editable({
     unsavedclass: null
   });  
 }

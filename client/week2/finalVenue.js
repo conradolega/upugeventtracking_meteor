@@ -6,16 +6,16 @@ Template.finalVenue.rendered = function () {
     $(event.venue).each( function () {
       venues.push($(this).attr("venue"));
     });
-    $(this).find(".editFinalVenue").editable({
+    $(this.findAll(".editFinalVenue")).editable({
       unsavedclass: null,
       type: 'typeahead',
       source: venues
     });
-    $(this).find(".editDeal").editable({
+    $(this.findAll(".editDeal")).editable({
       unsavedclass: null,
       type: 'textarea'
     });  
-    $(this).find(".editPaid").editable({
+    $(this.findAll(".editPaid")).editable({
         unsavedclass: null,
         type: 'number'
     });      

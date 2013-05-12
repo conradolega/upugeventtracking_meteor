@@ -7,10 +7,10 @@ Template.lineupContact.rows = function () {
 }
 
 Template.lineupContact.rendered = function () {
-  $(this).find(".editBandContact").editable({
+  $(this.findAll(".editBandContact")).editable({
     unsavedclass: null,
   });
-  $(this).find(".editBandContactStatus").editable({
+  $(this.findAll(".editBandContactStatus")).editable({
     unsavedclass: null,
     type: 'select',
     source: ["Not yet contacted", "Contacted", "Approved", "Rejected"]

@@ -45,19 +45,19 @@ Template.workAssignments.events({
 });
 
 Template.workAssignments.rendered = function () {
-  $(this).find(".editWorkAssignments").editable({
+  $(this.findAll(".editWorkAssignments")).editable({
     unsavedclass: null
   });
-  $(this).find(".editWorkers").editable({
+  $(this.findAll(".editWorkers")).editable({
     unsavedclass: null
   });    
-  $(this).find(".editShiftStartTime").editable({
+  $(this.findAll(".editShiftStartTime")).editable({
     type: 'combodate',
     format: 'hh:mm A',
     template: 'hh : mm A',
     unsavedclass: null
   });
-  $(this).find(".editShiftEndTime").editable({
+  $(this.findAll(".editShiftEndTime")).editable({
     type: 'combodate',
     format: 'hh:mm A',
     template: 'hh : mm A',

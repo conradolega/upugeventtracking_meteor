@@ -7,10 +7,10 @@ Template.sponsorsContact.rows = function () {
 }
 
 Template.sponsorsContact.rendered = function () {
-  $(this).find(".editSponsorContact").editable({
+  $(this.findAll(".editSponsorContact")).editable({
     unsavedclass: null,
   });
-  $(this).find(".editSponsorContactStatus").editable({
+  $(this.findAll(".editSponsorContactStatus")).editable({
     unsavedclass: null,
     type: 'select',
     source: ["Not yet contacted", "Contacted", "Followed up", "Approved", "Rejected"]

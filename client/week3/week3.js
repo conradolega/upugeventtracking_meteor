@@ -35,8 +35,10 @@ Template.week3.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason)
       }
+      else
+        toastr.success('Final lineup saved!', 'Week 3')
     });
 
     table = template.find("#final_sponsors_table");
@@ -62,8 +64,10 @@ Template.week3.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason)
       }
+      else
+        toastr.success('Final sponsors saved!', 'Week 3')
     });
 
     table = template.find("#promotions_table");
@@ -89,8 +93,10 @@ Template.week3.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason)
       }
+      else
+        toastr.success('Online promotions info saved!', 'Week 3')
     });
 
 
@@ -130,7 +136,7 @@ Template.week3.events({
     }
    });
 
-   Meteor.call("updateWorkAssignments",
+    Meteor.call("updateWorkAssignments",
     {
       workAssignments: saveWork,
       workAssignmentsHeader: saveHeader,
@@ -138,8 +144,10 @@ Template.week3.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.reason)
       }
+      else
+        toastr.success('Work assignments saved!', 'Week 3')
     });
   }
 });

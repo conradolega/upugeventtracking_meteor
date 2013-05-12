@@ -20,10 +20,10 @@ Template.venue.rows = function() {
 }
 
 Template.venue.rendered = function () {
-  $(this).find(".editVenue").editable({
+  $(this.findAll(".editVenue")).editable({
     unsavedclass: null
   });
-  $(this).find(".editAddress").editable({
+  $(this.findAll(".editAddress")).editable({
     unsavedclass: null
   });
 }

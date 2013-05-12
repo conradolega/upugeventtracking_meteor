@@ -33,8 +33,10 @@ Template.week4.events({
     },
     function (error, _id) {
       if (error) {
-        Session.set("addEventError", {error: error.reason, details: error.details});
+        toastr.error(error.details, error.success)
       }
+      else
+        toastr.success("Remind performers info saved!", "Week 4")
     }); 
   } 
 });

@@ -30,10 +30,10 @@ Template.work.rows = function() {
 }
 
 Template.work.rendered = function () {
-  $(this).find(".editWork").editable({
+  $(this.findAll(".editWork")).editable({
     unsavedclass: null
   });
-  $(this).find(".editNum").editable({
+  $(this.findAll(".editNum")).editable({
     unsavedclass: null,
     type: 'number'
   });

@@ -7,10 +7,10 @@ Template.finalSponsors.rows = function () {
 }
 
 Template.finalSponsors.rendered = function () {
-  $(this).find(".editSponsor").editable({
+  $(this.findAll(".editSponsor")).editable({
     unsavedclass: null
   });
-  $(this).find(".editCollaterals").editable({
+  $(this.findAll(".editCollaterals")).editable({
     unsavedclass: null
   });   
 }

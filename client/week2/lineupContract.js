@@ -7,7 +7,7 @@ Template.lineupContract.rows = function () {
 }
 
 Template.lineupContract.rendered = function () {
-  $(this).find(".editLineupContractStatus").editable({
+  $(this.findAll(".editLineupContractStatus")).editable({
     unsavedclass: null,
     type: 'select',
     source: ["Not yet signed", "Sent", "Signed"]

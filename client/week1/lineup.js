@@ -1,14 +1,14 @@
 Template.lineup.rendered = function () {
-  $(this).find(".editCell").editable({
+  $(this.findAll(".editCell")).editable({
     unsavedclass: null
   });
-  $(this).find(".editStartTime").editable({
+  $(this.findAll(".editStartTime")).editable({
     type: 'combodate',
     format: 'hh:mm A',
     template: 'hh : mm A',
     unsavedclass: null
   });
-  $(this).find(".editEndTime").editable({
+  $(this.findAll(".editEndTime")).editable({
     type: 'combodate',
     format: 'hh:mm A',
     template: 'hh : mm A',

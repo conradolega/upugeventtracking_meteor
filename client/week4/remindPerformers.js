@@ -7,7 +7,7 @@ Template.remindPerformers.rows = function () {
 }
 
 Template.remindPerformers.rendered = function () {
-  $(".editPerformerRemindStatus").editable({
+  $(this.findAll(".editPerformerRemindStatus")).editable({
     unsavedclass: null,
     type: 'select',
     source: ["Not yet contacted", "Contacted"]

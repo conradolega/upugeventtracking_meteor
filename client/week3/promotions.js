@@ -23,10 +23,10 @@ Template.promotions.rows = function () {
 }
 
 Template.promotions.rendered = function () {
-  $(this).find(".editPlatform").editable({
+  $(this.findAll(".editPlatform")).editable({
     unsavedclass: null
   });
-  $(this).find(".editLink").editable({
+  $(this.findAll(".editLink")).editable({
     unsavedclass: null,
     validate: function (value) {
       $(".goto").attr("href", value);
