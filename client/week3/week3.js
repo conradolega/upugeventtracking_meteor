@@ -116,9 +116,9 @@ Template.week3.events({
 
    var saveWork = [];
    records = _.rest($(table).find("tr"));      
-   var count = 0;
    $(records).each( function () {
     var work = $(this).find("a.editWorkAssignments").html();
+    var count = 0;
     if($(this).find("a.editable-empty.editWorkAssignments").length == 0)
     {
       var push = {name: work, workers: []};
