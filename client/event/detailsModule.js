@@ -49,8 +49,6 @@ Template.detailsModule.events({
         }
         Session.set("loading", false);
       });
-      Session.set("addEventError", null);
-      Session.set("addEventSuccess", null);
     }
     else
     {
@@ -59,8 +57,6 @@ Template.detailsModule.events({
   },
   'click #cancel' : function () {
     Session.set("selected", null);
-    Session.set("addEventError", null);    
-    Session.set("addEventSuccess", null);
   },
 });
 

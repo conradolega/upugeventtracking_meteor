@@ -1,7 +1,6 @@
 Template.event.events({
   'click #event' : function (event) {
     Session.set("addEventError", null);
-    Session.set("addEventSuccess", null);
     Session.set("selected", this._id);
   }
 });

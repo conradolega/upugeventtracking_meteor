@@ -30,13 +30,10 @@ Template.collaboratorsModal.events({
       },
       function (error, _id) {
         if (error) {
-          Session.set("addEventError", {error: error.reason, details: error.details});
+          toastr.error(error.details, error.reason)
         }
         else {
-          Session.set("addEventSuccess",{
-            success: "Successfully added collaborators",
-            details: "Start working on the event"
-          });
+          toastr.error('Collaborators successfully added!')
         }
       });
     }

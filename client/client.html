@@ -33,21 +33,6 @@
 			</div>
 			<div class="span9">
 				{{#if currentUser}}
-
-						{{#if showError}}
-							<div class="alert alert-error">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<strong>{{showError.error}}:</strong> {{showError.details}}.
-							</div>
-						{{/if}}
-
-						{{#if showSuccess}}
-							<div class="alert alert-success">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<strong>{{showSuccess.success}}!</strong> {{showSuccess.details}}.
-							</div>
-						{{/if}}
-
 						{{#if showDetails}}
 							
 							{{> detailsModule}}
