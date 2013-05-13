@@ -1,0 +1,27 @@
+<template name="remindPerformersHeader">
+  <h3>Remind Performers of event</h3>
+  <p>Text performers reminding them of the event and their set times/call times</p>
+</template>
+
+<template name="remindPerformers">
+  <table id="remind_performers_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Performer</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editPerformerRemind">{{band}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editPerformerRemindStatus">{{status}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+</template>

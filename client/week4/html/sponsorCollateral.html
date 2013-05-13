@@ -1,0 +1,28 @@
+<template name="sponsorCollateralHeader">
+  <h3>Collection of Sponsorship collaterals</h3>
+  <p>Contact sponsors they can send the money/items they agreed to give</p>
+</template>
+
+<template name="sponsorCollateral">
+  <table id="sponsor_collateral_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sponsor</th>
+        <th>Received</th>
+        <th>Date received</th>
+        <th>Received by</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td><a href="#" class="editSponsor">{{sponsor}}</a></td>
+          <td><a href="#" class="editReceived">{{received}}</a></td>
+          <td><a href="#" class="editDate">{{date}}</a></td>
+          <td><a href="#" class="editReceivedBy">{{receivedBy}}</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+  <button class="btn" id="addEntry">Add row</button>  
+</template>

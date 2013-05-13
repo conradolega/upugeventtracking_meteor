@@ -1,0 +1,28 @@
+<template name="venueHeader">
+  <h3>Potential venues</h3>
+  <p>List possible venues of the event, unless assigned beforehand</p>
+</template>
+
+<template name="venue">
+  <table id="venue_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Venue</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td>
+          <a href="#" class="editVenue">{{venue}}</a>
+        </td>
+        <td>
+          <a href="#" class="editAddress">{{address}}</a>
+        </td>        
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
+</template>

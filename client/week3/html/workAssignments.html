@@ -1,0 +1,32 @@
+<template name="workAssignmentsHeader">
+  <h3>Assigning of Work</h3>
+  <p>Releasing of work assignments during GA</p>
+</template>
+
+<template name="workAssignments">
+  <table id="work_assignments_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Work</th>
+        {{#each headers}}
+          <th>
+            <a href="#" class="editShiftStartTime">{{start}}</a> - 
+            <a href="#" class="editShiftEndTime">{{end}}</a>
+          </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each work}}
+      <tr>
+        <td><a href="#" class="editWorkAssignments">{{name}}</a></td>
+        {{#each workers}}
+          <td><a href="#" class="editWorkers">{{this}}</a></td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+</table>
+<button class="btn" id="addEntry">Add work</button>
+<button class="btn" id="addShift">Add shift</button>
+</template>

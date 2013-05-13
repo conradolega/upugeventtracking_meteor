@@ -1,0 +1,22 @@
+<template name="collaboratorsModal">
+  <div class="container">
+    <div class="modal hide fade in" id="example" style="display: none; ">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Troops</h3>
+        </div>
+        <div id="collaboratorModal" class="modal-body">
+            <ul>
+            {{#each others}}
+             <li class="span4"><label class="checkbox">{{profile.name}}<input userId="{{_id}}" type="checkbox"></label></li>
+            {{/each}}
+            <li class="span4"><p class="muted">Invite more users!</p></li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a id="addCollaborator" data-dismiss="modal"class="btn btn-success" href="#">Call to action</a>
+            <a class="btn" data-dismiss="modal" href="#">Close</a>
+        </div>
+    </div>
+  </div>
+</template>

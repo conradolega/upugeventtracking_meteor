@@ -1,0 +1,16 @@
+<template name="posterDraft">
+  <h3>Studies for event poster</h3>
+  <p>Upload concept sketches for the event poster</p>
+  <p class="muted">(usually in 8.5x11 or 11x17)</p>
+  <p class="alert-error">DI PA PWEDE MAG DELETE NG IMAGES SORRY!</p>
+    <ul class="thumbnails">
+    {{#each images}}
+      <li class="span4">
+        <a href="{{url}}" class="thumbnail">
+          <img src="{{url}}" alt="">
+        </a>
+      </li>
+    {{/each}}
+  </ul> 
+  <button class="btn" id="upload">Pick file</button>
+</template>

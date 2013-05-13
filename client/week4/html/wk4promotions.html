@@ -1,0 +1,23 @@
+<template name="wk4promotionsHeader">
+  <h3>Online promotions</h3>
+  <p>Sharing of event page, liking of event-related posts, reblogging of Tumblr post, etc</p>
+</template>
+
+<template name="wk4promotions">
+  <table id="online_promotions_share_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td><a href="#" class="editPromotion">{{platform}}</a></td>
+          <td><a href="#" class="editPromotionStatus">{{status}}</a></td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+</template>

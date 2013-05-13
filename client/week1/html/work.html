@@ -1,0 +1,30 @@
+<template name="workHeader">
+  <h3>Work logistics</h3>
+  <p>List down the number and type of workers you would need</p>
+</template>  
+
+<template name="work">
+  <table id="work_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th style="width:85%">Work</th>
+      <th style="width:15%">Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td style="width:85%">
+          <a href="" class="{{class}}">
+            {{name}}
+          </a>
+        </td>
+        <td style="width:15%">
+          <a href="#" class="editNum">{{num}}</a>
+        </td>                
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<button class="btn" id="addEntry">Add row</button>
+</template>

@@ -1,0 +1,28 @@
+<template name="sponsorsContactHeader">
+  <h3>Sending of sponsorship letters</h3>
+  <p>Calling/e-mailing of letters to sponsors and following them up a few days after sending</p>  
+</template>
+
+<template name="sponsorsContact">
+  <table id="sponsors_contact_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sponsor</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editSponsorContact">{{sponsor}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editSponsorContactStatus">{{status}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+  <button class="btn" id="addEntry">Add row</button>    
+</template>

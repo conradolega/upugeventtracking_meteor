@@ -1,0 +1,23 @@
+<template name="finalVenueHeader">
+  <h3>Finalization of Venue</h3>
+  <p>Please fill in all fields. (better description soon)</p>
+</template>
+
+<template name="finalVenue">
+  <table id="venue_table" class="table table-bordered">
+    <tbody>
+      <tr>
+        <th width="20%">Venue</th>
+        <td width="80%"><a href="#" class="editFinalVenue">{{venue.venue}}</a></td>
+      </tr>
+      <tr>
+        <th>Deal</th>
+        <td><a href="#" class="editDeal">{{venue.deal}}</a></td>
+      </tr>
+      <tr>
+        <th>Paid</th>
+        <td><a href="#" class="editPaid">{{venue.paid}}</a></td>
+      </tr>
+    </tbody>
+  </table>
+</template>

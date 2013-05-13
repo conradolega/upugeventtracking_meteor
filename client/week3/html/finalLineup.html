@@ -1,0 +1,34 @@
+<template name="finalLineupHeader">
+  <h3>Finalizing of line-up</h3>
+  <p>Line-up must be finalized</p>
+</template>
+
+<template name="finalLineup">
+  <table id="finalLineup" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Band</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>{{num}}</td>
+          <td>
+            <a href="#" class="editCell">{{band}}</a>
+          </td>
+          <td>
+            <a href="#" class="editStartTime">{{startTime}}</a>
+          </td>
+          <td>
+            <a href="#" class="editEndTime">{{endTime}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <button class="btn" id="addEntry">Add row</button>
+</template>

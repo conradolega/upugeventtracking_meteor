@@ -1,0 +1,33 @@
+<template name="posters">
+  <h4>Posting of posters</h4>
+  <a data-toggle="modal" href="#posters" class="btn btn-small btn-success">Launch</a>
+  {{> postersModal}}
+</template>
+
+<template name="postersModal">
+<div class="container">
+  <div class="modal hide fade in" id="posters" style="display: none; ">
+      <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Posters</h3>
+      </div>
+      <div class="modal-body">
+        <table id="posting_assignments_table" class="table" style="clear: both">
+          <thead>
+            <th>Place of posting</th>
+            <th>#</th>
+            <th>Person assigned</th>
+          </thead>
+          <tbody>
+            {{#each rows}}
+            <tr><td width="30%">{{where}}</td><td width="5%">{{number}}</td><td width="65%"><a href='#' class='editPerson'>{{person}}</a></td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" href="#">Close</a>
+      </div>
+  </div>
+</div>
+</template>

@@ -1,0 +1,27 @@
+<template name="lineupContractHeader">
+  <h3>Preparation of band contracts</h3>
+  <p>Filling out of band contracts for the confirmed bands</p>
+</template>
+
+<template name="lineupContract">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Band</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a class="lineupContract">{{band}}</a>
+          </td>
+          <td>
+            <a href="#" class="editLineupContractStatus">{{status}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+</template>

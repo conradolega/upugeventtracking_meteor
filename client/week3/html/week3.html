@@ -1,0 +1,50 @@
+<template name="week3">
+  <div class="page-header">
+    <h1>5. Week 3 <small>{{dates}}</small></h1>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> finalLineupHeader}}
+        {{> finalLineup}}
+      </div>
+    </div>
+    <div class="span6">
+      <div class="center">
+        {{> finalSponsorsHeader}}
+        {{> finalSponsors}}
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row-fluid">
+    <div class="center">
+      {{> workAssignmentsHeader}}
+      {{> workAssignments}}
+    </div>
+  </div>
+  <div class="row-fluid">
+  </div>
+  <hr>
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="center">
+        {{> promotionsHeader}}
+        {{> promotions}}        
+      </div>
+    </div>
+    <div class="span6">
+      <div class="center">
+        {{> printingPubmatsHeader}}
+        {{> printingPubmats}}       
+      </div>
+    </div>    
+  </div>
+  <div class="row-fluid">
+    <div class="center">
+      <div class="form-actions">
+          <button type="submit" class="btn btn-primary large" id="save">Save changes</button>    
+      </div>
+    </div>
+  </div> 
+</template>
