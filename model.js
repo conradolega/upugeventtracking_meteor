@@ -53,6 +53,10 @@ Meteor.methods({
         workAssignmentsHeader: [],
         performerRemind: [],
         sponsorCollateral: [],
+        wk4promotions: [],
+        postingAssignments: [{where: 'FA', number: 4}, {where: 'CASAA', number: 10}],
+        rtr: [{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}],
+        otherPromotions: []
       });
     }
     else
@@ -254,10 +258,14 @@ Meteor.methods({
   },
   updatePromotions: function(options) {
     options = options || {};
+    var wk4promotions = []
+    _.each(_.pluck(options.promotions, 'platform'), function (d) {
+      wk4promotions.push({platform: d, status: "Not yet shared"});
+    })
     return Events.update(
       {_id: options.selected},
       {
-        $set: { promotions: options.promotions }
+        $set: { promotions: options.promotions, wk4promotions: wk4promotions }
       }
    );    
   },
@@ -285,6 +293,59 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { sponsorCollateral: options.sponsorCollateral }
+      })
+  },
+  updateWk4Promotions: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk4promotions: options.wk4promotions }
+      })
+  },
+  updatePostingAssignments: function(options) {
+    options = options || {};
+    var event = Events.findOne({_id: options.selected}, {postingAssignments: 1})
+    if(event)
+    {
+      var count = 0;
+      _.each(event.postingAssignments, function (d) {
+        d.person = options.postingAssignments[count]
+        count++;
+      })
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { postingAssignments: event.postingAssignments }
+        }
+      )
+    }    
+  },
+  updateRTR: function(options) {
+    options = options || {}
+    var event = Events.findOne({_id: options.selected}, {rtr: 1})
+    if(event)
+    {
+      var count = 0;
+      _.each(event.rtr, function(d) {
+        d.tth = options.rtr[count].tth
+        d.wf = options.rtr[count].wf
+        count++;
+      })
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { rtr: event.rtr }
+        }
+      )
+    }
+  },
+  updateOtherPromotions: function(options) {
+    options = options || {}
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { otherPromotions: options.otherPromotions }
       })
   }
 })

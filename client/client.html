@@ -773,10 +773,24 @@
 		</div>
 		<div class="span6">
 			<div class="center">
-				{{> sponsorCollateralHeader}}
-				{{> sponsorCollateral}}				
+				{{> wk4promotionsHeader}}
+				{{> wk4promotions}}				
 			</div>
 		</div>		
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> sponsorCollateralHeader}}
+			{{> sponsorCollateral}}			
+		</div>
+	</div>
+	<hr>
+	<div class="row-fluid">
+		<div class="center">
+			{{> offlinePromotionsHeader}}
+			{{> offlinePromotions}}
+		</div>
 	</div>
 	<div class="row-fluid">
 		<div class="center">
@@ -845,10 +859,146 @@
 </template>
 
 <template name="wk4promotionsHeader">
+	<h3>Online promotions</h3>
+	<p>Sharing of event page, liking of event-related posts, reblogging of Tumblr post, etc</p>
+</template>
+
+<template name="wk4promotions">
+	<table id="online_promotions_share_table" class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Platform</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each rows}}
+				<tr>
+					<td><a href="#" class="editPromotion">{{platform}}</a></td>
+					<td><a href="#" class="editPromotionStatus">{{status}}</a></td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>  
+</template>
+
+<template name="offlinePromotionsHeader">
 	<h3>Promotions</h3>
 	<p>Posting of posters, giving out of flyers, RTR, etc</p>
 </template>
 
-<template name="wk4promotions">
-	
+<template name="offlinePromotions">
+	<div class="row-fluid">
+		<div class="span4">
+			{{> posters}}
+		</div>
+		<div class="span4">
+			{{> rtr}}
+		</div>
+		<div class="span4">
+			{{> other}}
+		</div>
+	</div>
+</template>
+
+<template name="posters">
+	<h4>Posting of posters</h4>
+	<a data-toggle="modal" href="#posters" class="btn btn-small btn-success">Launch</a>
+	{{> postersModal}}
+</template>
+
+<template name="postersModal">
+<div class="container">
+	<div class="modal hide fade in" id="posters" style="display: none; ">
+			<div class="modal-header">
+					<a class="close" data-dismiss="modal">×</a>
+					<h3>Posters</h3>
+			</div>
+			<div class="modal-body">
+				<table id="posting_assignments_table" class="table" style="clear: both">
+					<thead>
+						<th>Place of posting</th>
+						<th>#</th>
+						<th>Person assigned</th>
+					</thead>
+					<tbody>
+						{{#each rows}}
+						<tr><td width="30%">{{where}}</td><td width="5%">{{number}}</td><td width="65%"><a href='#' class='editPerson'>{{person}}</a></td></tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" href="#">Close</a>
+			</div>
+	</div>
+</div>
+</template>
+
+<template name="rtr">
+	<h4>RTR</h4>
+	<a data-toggle="modal" href="#rtr" class="btn btn-small btn-success">Launch</a>
+	{{> rtrModal}}
+</template>
+
+<template name="rtrModal">
+<div class="container">
+	<div class="modal hide fade in" id="rtr" style="display: none; ">
+			<div class="modal-header">
+					<a class="close" data-dismiss="modal">×</a>
+					<h3>RTR</h3>
+			</div>
+			<div class="modal-body">
+				<table id="rtr_table" class="table" style="clear: both">
+					<thead>
+						<th>Time</th>
+						<th>Tue / Thu</th>
+						<th>Wed / Fri</th>
+					</thead>
+					<tbody>
+					{{#each rows}}
+						<tr><td>{{time}}</td><td><a href="#" class="editPerson">{{tth}}</a></td><td><a href="#" class="editPerson">{{wf}}</a></td></tr>
+					{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<a class="btn" data-dismiss="modal" href="#">Close</a>
+			</div>
+	</div>
+</div>
+</template>
+
+<template name="other">
+	<h4>Other promotions</h4>
+	<a data-toggle="modal" href="#other" class="btn btn-small btn-success">Launch</a>	
+	{{> otherModal}}
+</template>
+
+<template name="otherModal">
+	<div class="container">
+		<div class="modal hide fade in" id="other" style="display: none; ">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">×</a>
+					<h3>Other Promotions</h3>
+				</div>
+				<div class="modal-body">
+					<table id="other_table" class="table" style="clear: both">
+						<thead>
+							<th>Promotion</th>
+							<th>Status</th>
+						</thead>
+						<tbody>
+						{{#each rows}}
+							<tr><td><a href="#" class="editPromotion">{{promotion}}</a></td><td><a href="#" class="editStatus">{{status}}</a></td></tr>
+						{{/each}}
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-primary" href="#" id="addEntry">Add row</a>
+					<a class="btn" data-dismiss="modal" href="#">Close</a>
+				</div>
+		</div>
+	</div>	
 </template>
