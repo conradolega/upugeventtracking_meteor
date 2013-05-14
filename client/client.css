@@ -11,6 +11,22 @@
   margin-left:0;
   }
 
+.items li { 
+  float: left; 
+}
+
+ul.items
+{
+  list-style-type: none;  
+  width: 400px;
+}
+
+ul.items li
+{
+  width: 200px;
+  display: inline;     
+}
+
   .center {
   text-align: center;
   }
