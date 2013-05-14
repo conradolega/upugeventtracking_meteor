@@ -149,5 +149,9 @@ Template.week3.events({
       else
         toastr.success('Work assignments saved!', 'Week 3')
     });
+    Meteor.call("updateText",
+    {
+      selected: Session.get("selected")
+    })      
   }
 });

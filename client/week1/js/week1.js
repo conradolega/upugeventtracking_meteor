@@ -136,6 +136,11 @@ Template.week1.events({
       toastr.success('Work logistics info saved!', 'Week 1');
     }    
   }); 
+
+  Meteor.call("updateText",
+  {
+    selected: Session.get("selected")
+  })
 }
 });
 

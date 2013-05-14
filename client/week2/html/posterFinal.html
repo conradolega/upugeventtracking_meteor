@@ -1,13 +1,13 @@
 <template name="posterFinal">
-  <h3>Finalization of Event Poster</h3>
+  <h3>Finalization of event poster</h3>
   <p>Final poster design and layout </p>
-  <p class="alert-error">DI PA PWEDE MAG DELETE NG IMAGES SORRY!</p>
   {{#if url}}
     <ul class="thumbnails">
       <li class="span6 offset3">
         <a href="{{url}}" class="thumbnail">
           <img src="{{url}}" alt="">
         </a>
+        <span class="muted">{{date}}</span>        
       </li>
     </ul> 
   {{/if}}

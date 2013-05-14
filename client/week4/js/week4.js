@@ -75,35 +75,6 @@ Template.week4.events({
         toastr.success('Updated sponsor collaterals info!', 'Week 4')
     })
 
-    table = template.find("#online_promotions_share_table");
-    records = _.rest($(table).find("tr"));
-    save = [];
-    $(records).each( function () {
-      var platform = $(this).find("a.editPromotion").html();
-      var status = $(this).find("a.editPromotionStatus").html();
-      if($(this).find("a.editable-empty").length == 0)
-      {
-        var push = {
-          platform: platform,
-          status: status
-        }
-        save.push(push);        
-      }
-    });
-
-    Meteor.call("updateWk4Promotions",
-    {
-      wk4promotions: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id){
-      if(error) {
-        toastr.error(error.details, error.reason)
-      }
-      else
-        toastr.success('Updated online promotions info!', 'Week 4')
-    })
-
     table = template.find("#posting_assignments_table");
     records = _.rest($(table).find("tr"));
     save = [];
@@ -182,5 +153,9 @@ Template.week4.events({
       else
         toastr.success('Other promotions info saved!', 'Week 4')
     })
-  } 
+    Meteor.call("updateText",
+    {
+      selected: Session.get("selected")
+    })  
+  }
 });

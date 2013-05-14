@@ -1,5 +1,5 @@
 <template name="posters">
-  <h4>Posting of posters</h4>
+  <h4>Posting  assignments</h4>
   <a data-toggle="modal" href="#posters" class="btn btn-small btn-success">Launch</a>
   {{> postersModal}}
 </template>
@@ -20,7 +20,7 @@
           </thead>
           <tbody>
             {{#each rows}}
-            <tr><td width="30%">{{where}}</td><td width="5%">{{number}}</td><td width="65%"><a href='#' class='editPerson'>{{person}}</a></td></tr>
+            <tr><td width="30%"><span class="text-info">{{where}}</span></td><td width="5%">{{number}}</td><td width="65%"><a href='#' class='editPerson'>{{person}}</a></td></tr>
             {{/each}}
           </tbody>
         </table>

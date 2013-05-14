@@ -1,6 +1,6 @@
 <template name="finalVenueHeader">
-  <h3>Finalization of Venue</h3>
-  <p>Please fill in all fields. (better description soon)</p>
+  <h3>Finalization of venue</h3>
+  <p>Once the venue is decided on, provide a detailed description of the cost for renting the venue, the payment method(s), and how much has been paid</p>
 </template>
 
 <template name="finalVenue">
@@ -18,6 +18,10 @@
         <th>Paid</th>
         <td><a href="#" class="editPaid">{{venue.paid}}</a></td>
       </tr>
+      <tr>
+        <th>Cash from where?</th>
+        <td><a href="#" class="editWhere">{{venue.where}}</a></td>
+      </tr>      
     </tbody>
   </table>
 </template>

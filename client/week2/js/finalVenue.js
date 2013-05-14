@@ -19,6 +19,10 @@ Template.finalVenue.rendered = function () {
         unsavedclass: null,
         type: 'number'
     });      
+    $(this.findAll(".editWhere")).editable({
+        unsavedclass: null,
+        type: 'textarea'
+    });      
   }
 }
 

@@ -31,5 +31,17 @@ Template.posterFinal.events({
 Template.posterFinal.url = function () {
   var event = Events.findOne({_id: Session.get("selected")});
   if(event)
-   return event.finalPoster;
+  {
+    if(_.isEmpty(event.finalPoster))
+      return false;
+    return event.finalPoster.url;
+  }
+}
+
+Template.posterFinal.date = function () {
+  var event = Events.findOne({_id: Session.get("selected")});
+  if(event)
+  {
+    return event.finalPoster.date
+  }
 }

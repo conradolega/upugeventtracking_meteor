@@ -13,14 +13,15 @@ Template.week2.events({
     var finalVenue = $(template.find(".editFinalVenue"));
     var deal = $(template.find(".editDeal"));
     var paid = $(template.find(".editPaid"));
-    var save = [finalVenue.html(), deal.html(), paid.html()];
+    var where = $(template.find(".editWhere"));
+    var save = [finalVenue.html(), deal.html(), paid.html(), where.html()];
     if(_.contains(save,"Empty"))
     {
       save[0]=save[1]=save[2] = "";
     }
     Meteor.call("updateFinalVenue", {
       selected: Session.get("selected"),
-      finalVenue: {venue: save[0], deal: save[1], paid: save[2]}
+      finalVenue: {venue: save[0], deal: save[1], paid: save[2], where: save[3]}
     }, function (error, _id) {
       if (error) {
         toastr.error(error.details, error.reason);
@@ -115,6 +116,10 @@ Template.week2.events({
           toastr.success('Band contract info saved!', 'Week 2')
         } 
       });      
-    }   
+    }
+    Meteor.call("updateText",
+    {
+      selected: Session.get("selected")
+    })         
   }
 });
