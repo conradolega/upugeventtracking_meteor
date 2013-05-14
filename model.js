@@ -205,7 +205,7 @@ Meteor.methods({
         $addToSet: { 
           images: {
             url: options.url,
-            date: moment().format('MMMM Do YYYY, h:mm:ss a').toString()
+            date: moment().utc().format('MMMM Do YYYY, h:mm:ss a').toString()
             // To do: get uploader
           }  
         }
@@ -287,7 +287,7 @@ Meteor.methods({
     return Events.update(
       {_id: options.id},
       {
-        $set: { finalPoster: { url: options.url, date: moment().format('MMMM Do YYYY, h:mm:ss a').toString() } }
+        $set: { finalPoster: { url: options.url, date: moment().utc().format('MMMM Do YYYY, h:mm:ss a').toString() } }
       }
     );
   },
