@@ -10,7 +10,7 @@ Template.week4.dates = function () {
 
 Template.week4.events({
   'click #save' : function (event, template) {
-
+    Session.set("loading", true)
     var table = template.find("#remind_performers_table");
     var records = _.rest($(table).find("tr"));
     var save = [];
@@ -157,5 +157,6 @@ Template.week4.events({
     {
       selected: Session.get("selected")
     })  
+    Session.set("loading", false)    
   }
 });

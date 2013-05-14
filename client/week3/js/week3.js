@@ -10,6 +10,7 @@ Template.week3.dates = function () {
 
 Template.week3.events({
   'click #save' : function (event, template) {
+    Session.set("loading", true)    
     var table = template.find("#finalLineup");
     var records = _.rest($(table).find("tr"));
     var save = [];
@@ -153,5 +154,6 @@ Template.week3.events({
     {
       selected: Session.get("selected")
     })      
+    Session.set("loading", false)    
   }
 });

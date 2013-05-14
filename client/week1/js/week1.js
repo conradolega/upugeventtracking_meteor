@@ -1,5 +1,6 @@
 Template.week1.events({
  'click #save' : function(event, template) {
+  Session.set("loading", true)  
   var table = template.find("#sponsors_table");
   var records = _.rest($(table).find("tr"));
   var save = [];
@@ -141,6 +142,7 @@ Template.week1.events({
   {
     selected: Session.get("selected")
   })
+  Session.set("loading", false)  
 }
 });
 

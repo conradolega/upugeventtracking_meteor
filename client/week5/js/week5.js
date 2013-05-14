@@ -10,7 +10,7 @@ Template.week5.dates = function () {
 
 Template.week5.events({
   'click #save' : function (event, template) {
-    
+    Session.set("loading", true)    
     var table = template.find("table#sponsor_collateral_table");
     var records = _.rest($(table).find("tr"));
     var save = [];
@@ -155,5 +155,6 @@ Template.week5.events({
     {
       selected: Session.get("selected")
     })    
+    Session.set("loading", false);
   }
 })

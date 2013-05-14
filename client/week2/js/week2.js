@@ -10,6 +10,7 @@ Template.week2.dates = function () {
 
 Template.week2.events({
   'click #save' : function (event, template) {
+    Session.set("loading", true)
     var finalVenue = $(template.find(".editFinalVenue"));
     var deal = $(template.find(".editDeal"));
     var paid = $(template.find(".editPaid"));
@@ -132,6 +133,7 @@ Template.week2.events({
     Meteor.call("updateText",
     {
       selected: Session.get("selected")
-    })         
+    })
+    Session.set("loading", false)         
   }
 });
