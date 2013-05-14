@@ -17,7 +17,7 @@ Template.week2.events({
     var save = [finalVenue.html(), deal.html(), paid.html(), where.html()];
     if(_.contains(save,"Empty"))
     {
-      save[0]=save[1]=save[2] = "";
+      save[0] = save[1]= save[2] = save[3] = "";
     }
     Meteor.call("updateFinalVenue", {
       selected: Session.get("selected"),
@@ -36,11 +36,15 @@ Template.week2.events({
     $(records).each( function () {
       var band = $(this).find("a.editBandContact").html();
       var status = $(this).find("a.editBandContactStatus").html();
-      if(($(this).find("a.editable-empty").length == 0))
+      var date = $(this).find("a.editBandDate").html();
+      if(($(this).find("a.editBandContact.editable-empty").length == 0))
       {
+        if(date == "Empty")
+          date = ""
         var push = {
           band: band,
-          status: status
+          status: status,
+          date: date
         };
         save.push(push);
       }
@@ -64,11 +68,15 @@ Template.week2.events({
     $(records).each( function () {
       var sponsor = $(this).find("a.editSponsorContact").html();
       var status = $(this).find("a.editSponsorContactStatus").html();
-      if(($(this).find("a.editable-empty").length == 0))
+      var date = $(this).find("a.editSponsorDate").html();      
+      if(($(this).find("a.sponsorContact.editable-empty").length == 0))
       {
+        if(date == "Empty")
+          date = ""
         var push = {
           sponsor: sponsor,
-          status: status
+          status: status,
+          date: date
         };
         save.push(push);
       }
@@ -92,11 +100,15 @@ Template.week2.events({
     $(records).each( function () {
       var band = $(this).find("a.lineupContract").html();
       var status = $(this).find("a.editLineupContractStatus").html();
-      if(($(this).find("a.editable-empty").length == 0))
+      var date = $(this).find("a.editLineupContractDate").html();
+      if(($(this).find("a.lineupContract.editable-empty").length == 0))
       {
+        if(date == "Empty")
+          date = ""
         var push = {
           band: band,
-          status: status
+          status: status,
+          date: date
         };
         save.push(push);
       }

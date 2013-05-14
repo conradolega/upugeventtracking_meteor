@@ -15,12 +15,16 @@ Template.lineupContact.rendered = function () {
     type: 'select',
     source: ["Not yet contacted", "Contacted", "Approved", "Rejected"]
   });
+  $(this.findAll(".editBandDate")).editable({
+    type: 'combodate',
+    unsavedclass: null
+  });  
 }
 
 Template.lineupContact.events({
   'click #addEntry' : function(event, template) {
     var table = template.find("#lineup_table");
-    $(table).append('<tr><td><a href="#" class="editBandContact"></a></td><td><a href="#" class="editBandContactStatus">Not yet contacted</a></td></tr>');
+    $(table).append('<tr><td><a href="#" class="editBandContact"></a></td><td><a href="#" class="editBandContactStatus">Not yet contacted</a></td><td><a href="#" class="editBandDate"</a></td></tr>');
     $(template.findAll(".editBandContact")).editable({
       unsavedclass: null,
     });
@@ -28,6 +32,10 @@ Template.lineupContact.events({
       unsavedclass: null,
       type: 'select',
       source: ["Not yet contacted", "Contacted", "Approved", "Rejected"]
-    });       
+    });
+    $(template.findAll(".editBandDate")).editable({
+      type: 'combodate',
+      unsavedclass: null
+    });      
   }
 });

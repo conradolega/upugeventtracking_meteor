@@ -12,4 +12,8 @@ Template.lineupContract.rendered = function () {
     type: 'select',
     source: ["Not yet signed", "Sent", "Signed"]
   });   
+  $(this.findAll(".editLineupContractDate")).editable({
+      unsavedclass: null,
+      type: 'combodate'
+  });     
 }
