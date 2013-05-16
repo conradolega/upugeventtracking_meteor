@@ -302,6 +302,9 @@ Meteor.methods({
         status: "Not yet contacted"
       });
     });
+    var event = Events.findOne({_id: options.selected});
+    if(_.isEqual(event.finalLineup, options.lineup))
+      return false
     return Events.update(
       {_id: options.selected},
       {
