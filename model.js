@@ -40,7 +40,7 @@ Meteor.methods({
         lineup: [],
         sponsors: [],
         venue: [],
-        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"}, {name: "Tech"}, {name: "Entrance"} ],
+        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"}, {name: "Tech"}, {name: "Entrance"}, {name: "Documentation"} ],
         images: [],
         wk2lineup: [],
         wk2sponsors: [],
