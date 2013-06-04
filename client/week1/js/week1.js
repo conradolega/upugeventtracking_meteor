@@ -150,8 +150,8 @@ Template.week1.dates = function () {
   var event = Events.findOne({_id: Session.get("selected")});
   if(event)
   {
-    var startDate = moment(event.startTime).subtract('weeks', 5).format("ddd, MMM DD");
-    var endDate = moment(event.startTime).subtract('weeks', 4).format("ddd, MMM DD");
+    var startDate = moment(event.startTime).subtract('weeks', 6).format("ddd, MMM DD");
+    var endDate = moment(event.startTime).subtract('weeks', 5).format("ddd, MMM DD");
     return startDate + " - " + endDate;
   }
 }
