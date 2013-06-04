@@ -70,7 +70,7 @@ Template.week6.events({
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success("Remind performers info saved!", "Week 5")
+        toastr.success("Remind performers info saved!", "Week 6")
     });
     
     table = template.find("#posting_assignments_table");
@@ -94,10 +94,10 @@ Template.week6.events({
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success('Posting assignments saved!', 'Week 5')
+        toastr.success('Posting assignments saved!', 'Week 6')
     })
 
-    table = template.find("#rtr_table");
+    table = template.find("table#rtr_table");
     records = _.rest($(table).find("tr"));
     save = [];
     $(records).each( function () {
@@ -149,7 +149,7 @@ Template.week6.events({
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success('Other promotions info saved!', 'Week 5')
+        toastr.success('Other promotions info saved!', 'Week 6')
     })
     
     Meteor.call("updateText",
