@@ -23,7 +23,7 @@ Template.lineupContact.rendered = function () {
 
 Template.lineupContact.events({
   'click #addEntry' : function(event, template) {
-    var table = template.find("#lineup_table");
+    var table = template.find("#lineup_contact_table");
     $(table).append('<tr><td><a href="#" class="editBandContact"></a></td><td><a href="#" class="editBandContactStatus">Not yet contacted</a></td><td><a href="#" class="editBandDate"</a></td></tr>');
     $(template.findAll(".editBandContact")).editable({
       unsavedclass: null,
