@@ -60,7 +60,7 @@ Template.week5.events({
         save.push(push);
       }
     });
-    Meteor.call("updatePerformerRemind2",
+    Meteor.call("updatePerformerRemind",
     {
       performerRemind: save,
       selected: Session.get("selected")
@@ -73,84 +73,56 @@ Template.week5.events({
         toastr.success("Remind performers info saved!", "Week 5")
     });
 
-    table = $("#posting_assignments_table");
-    records = _.rest($(table).find("tr"));
-    save = [];
-    $(records).each( function () {
-      var person = $(this).find('a.editPerson').html();
-      if(person == "Empty")
-        save.push("")
-      else
-        save.push(person)
-    });
-
-    Meteor.call("updatePostingAssignments",
-    {
-      postingAssignments: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id) {
-      if(error) {
-        toastr.error(error.details, error.reason)
-      }
-      else
-        toastr.success('Posting assignments saved!', 'Week 5')
-    })
-
-    table = template.find("table#rtr_table");
-    records = _.rest($(table).find("tr"));
-    save = [];
-    $(records).each( function () {
-      var tth = $($(this).find('a.editPerson')[0]).html();
-      var wf = $($(this).find('a.editPerson')[1]).html();
-      if(tth == "Empty")
-        tth = ""
-      if(wf == "Empty")
-        wf = "" 
-      save.push({tth: tth, wf: wf})
-    });
-
-    Meteor.call("updateRTR2",
-    {
-      rtr: save,
-      selected: Session.get("selected")
-    },
-    function (error, _id) {
-      if(error) {
-        toastr.error(error.details, error.reason)
-      }
-      else
-        toastr.success('RTR info saved!', 'Week 5')
-    })
-
-    table = $("#other_table");
-    records = _.rest($(table).find("tr"));
-    save = [];
-    $(records).each( function () {
-      var promotion = $(this).find("a.editPromotion").html();
-      var status = $(this).find("a.editStatus").html();
-      if($(this).find("a.editable-empty").length == 0)
-      {
-        var push = {
-          promotion: promotion,
-          status: status
+    var saveHeader = [];
+    table = template.find("#work_assignments_table");
+    records = _.first($(table).find("tr"));
+    $(_.rest($(records).children())).each( function () {
+      if($(this).find('a.editable-empty').length == 0)
+        {
+          var push = {
+            start: $(this).find('a.editShiftStartTime').html(),
+            end: $(this).find('a.editShiftEndTime').html()
+          };
+          saveHeader.push(push); 
         }
-        save.push(push);        
-      }
     });
 
-    Meteor.call("updateOtherPromotions",
+    var saveWork = [];
+    records = _.rest($(table).find("tr"));      
+    $(records).each( function () {
+      var work = $(this).find("a.editWorkAssignments").html();
+      var count = 0;
+      if($(this).find("a.editable-empty.editWorkAssignments").length == 0)
+        {
+          var push = {name: work, workers: []};
+          $(_.rest($(this).children())).each( function () {
+            if(count != saveHeader.length)
+              {
+                if($(this).find("a.editable-empty").length > 0)
+                  push.workers.push("");
+                else
+                  push.workers.push($(this).find("a.editWorkers").html());
+                count++;
+              }
+          });
+          saveWork.push(push);
+        }
+    });
+
+    Meteor.call("updateWorkAssignments",
     {
-      otherPromotions: save,
-      selected: Session.get("selected")
+      workAssignments: saveWork,
+      workAssignmentsHeader: saveHeader,
+      selected: Session.get("selected"),
     },
     function (error, _id) {
-      if(error) {
+      if (error) {
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success('Other promotions info saved!', 'Week 5')
-    })    
+        toastr.success('Work assignments saved!', 'Week 5')
+    });
+
     Meteor.call("updateText",
     {
       selected: Session.get("selected")
