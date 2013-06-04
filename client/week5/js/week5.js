@@ -122,7 +122,85 @@ Template.week5.events({
       else
         toastr.success('Work assignments saved!', 'Week 5')
     });
+    table = template.find("#posting_assignments_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var person = $(this).find('a.editPerson').html();
+      if(person == "Empty")
+        save.push("")
+      else
+        save.push(person)
+    });
 
+    Meteor.call("updatePostingAssignments",
+    {
+      postingAssignments: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if(error) {
+        toastr.error(error.details, error.reason)
+      }
+      else
+        toastr.success('Posting assignments saved!', 'Week 5')
+    })
+
+    table = template.find("#rtr_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var tth = $($(this).find('a.editPerson')[0]).html();
+      var wf = $($(this).find('a.editPerson')[1]).html();
+      if(tth == "Empty")
+        tth = ""
+      if(wf == "Empty")
+        wf = "" 
+      save.push({tth: tth, wf: wf})
+    });
+
+    Meteor.call("updateRTR",
+    {
+      rtr: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if(error) {
+        toastr.error(error.details, error.reason)
+      }
+      else
+        toastr.success('RTR info saved!', 'Week 5')
+    })
+
+    table = template.find("#other_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var promotion = $(this).find("a.editPromotion").html();
+      var status = $(this).find("a.editStatus").html();
+      if($(this).find("a.editable-empty").length == 0)
+      {
+        var push = {
+          promotion: promotion,
+          status: status
+        }
+        save.push(push);        
+      }
+    });
+
+    Meteor.call("updateOtherPromotions",
+    {
+      otherPromotions: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if(error) {
+        toastr.error(error.details, error.reason)
+      }
+      else
+        toastr.success('Other promotions info saved!', 'Week 5')
+    })
+    
     Meteor.call("updateText",
     {
       selected: Session.get("selected")
