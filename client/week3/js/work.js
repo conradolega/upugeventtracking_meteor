@@ -21,7 +21,7 @@ Template.work.rows = function() {
     {
       cursor.work.forEach(function (entry)
       {
-        entry.class = (num > 8) ? "editWork" : "";
+        entry.class = (num > 9) ? "editWork" : "";
         num++;
       });
       return cursor.work;
