@@ -1,0 +1,28 @@
+<template name="printingPubmatsHeader">
+  <h3>Printing of pubmats</h3>
+  <p>Printing of posters, flyers, etc.</p>
+</template>
+
+<template name="printingPubmats">
+  <table id="promotions_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editPlatform">{{platform}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editLink">{{link}}</a>
+            <a href="{{link}}" class="goto"><small>[goto]</small></a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table> 
+</template>

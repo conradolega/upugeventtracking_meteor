@@ -1,0 +1,33 @@
+<template name="rtr">
+  <h4>RTR</h4>
+  <a data-toggle="modal" href="#rtr" class="btn btn-small btn-success">Launch</a>
+  {{> rtrModal}}
+</template>
+
+<template name="rtrModal">
+<div class="container">
+  <div class="modal hide fade in" id="rtr" style="display: none; ">
+      <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>RTR</h3>
+      </div>
+      <div class="modal-body">
+        <table id="rtr_table" class="table" style="clear: both">
+          <thead>
+            <th>Time</th>
+            <th>Tue / Thu</th>
+            <th>Wed / Fri</th>
+          </thead>
+          <tbody>
+          {{#each rows}}
+            <tr><td><span class="text-info">{{time}}</span></td><td><a href="#" class="editPerson">{{tth}}</a></td><td><a href="#" class="editPerson">{{wf}}</a></td></tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <a class="btn" data-dismiss="modal" href="#">Close</a>
+      </div>
+  </div>
+</div>
+</template>

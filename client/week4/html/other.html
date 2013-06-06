@@ -1,0 +1,33 @@
+<template name="other">
+  <h4>Other promotions</h4>
+  <a data-toggle="modal" href="#other" class="btn btn-small btn-success">Launch</a> 
+  {{> otherModal}}
+</template>
+
+<template name="otherModal">
+  <div class="container">
+    <div class="modal hide fade in" id="other" style="display: none; ">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3>Other Promotions</h3>
+        </div>
+        <div class="modal-body">
+          <table id="other_table" class="table" style="clear: both">
+            <thead>
+              <th>Promotion</th>
+              <th>Status</th>
+            </thead>
+            <tbody>
+            {{#each rows}}
+              <tr><td><a href="#" class="editPromotion">{{promotion}}</a></td><td><a href="#" class="editStatus">{{status}}</a></td></tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" href="#" id="addEntry">Add row</a>
+          <a class="btn" data-dismiss="modal" href="#">Close</a>
+        </div>
+    </div>
+  </div>  
+</template>

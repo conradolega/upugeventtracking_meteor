@@ -1,0 +1,28 @@
+<template name="finalSponsorsHeader">
+  <h3>Finalizing of sponsors</h3>
+  <p>List down all the sponsors that have agreed to sponsor the event. Include a description of the deal (i.e. what will they provide, what they request you to do in exchange, etc)</p>
+</template>
+
+<template name="finalSponsors">
+  <table id="final_sponsors_table" class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Sponsor</th>
+      <th>Deal</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each rows}}
+      <tr>
+        <td>
+          <a href="#" class="editSponsor">{{sponsor}}</a>
+        </td>
+        <td>  
+          <a href="#" class="editCollaterals">{{collaterals}}</a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>  
+<button class="btn" id="addEntry">Add row</button>   
+</template>

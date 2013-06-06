@@ -1,0 +1,22 @@
+<template name="remindPerformers2">
+  <table id="remind_performers_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Performer</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editPerformerRemind">{{band}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editPerformerRemindStatus">{{status}}</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+</template>

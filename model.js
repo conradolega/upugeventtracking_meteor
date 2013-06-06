@@ -40,7 +40,7 @@ Meteor.methods({
         lineup: [],
         sponsors: [],
         venue: [],
-        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"} ],
+        work: [{name: "Program"}, {name: "Runner"}, {name: "Timer"}, {name: "Peace"}, {name: "Hosts"}, {name: "Baggage"}, {name: "Tech"}, {name: "Entrance"} ],
         images: [],
         wk2lineup: [],
         wk2sponsors: [],
@@ -50,7 +50,77 @@ Meteor.methods({
         finalSponsors: [],
         promotions: [],
         workAssignments: [],
-        workAssignmentsHeader: []
+        workAssignmentsHeader: [],
+        performerRemind: [],
+        sponsorCollateral: [],
+        wk4promotions: [],
+        postingAssignments: [{where: 'FA', number: 4}, 
+{where: 'College of Science', number: 2}, 
+{where: 'Chem Pav. - OSA', number: 4}, 
+{where: 'CASAA', number: 10}, 
+{where: 'Law - OSA', number: 2}, 
+{where: 'Ilang-Ilang Dorm - OSA', number: 2}, 
+{where: 'SC Stalls and Board', number: 25}, 
+{where: 'Kalai Dorm - OSA', number: 2}, 
+{where: 'Molave Dorm - OSA', number: 4}, 
+{where: 'Coll. of Mass Com', number: 6}, 
+{where: 'Gym', number: 5}, 
+{where: 'ISSI - OSA', number: 3}, 
+{where: 'SURP - OSA', number: 3}, 
+{where: 'Kamia Dorm - OSA', number: 2}, 
+{where: 'Sampaguita Dorm', number: 2}, 
+{where: 'Ipil Dorm - OSA', number: 4}, 
+{where: 'CNB (CAL) - FC', number: 4}, 
+{where: 'AS', number: 40}, 
+{where: 'PHAN - OSA', number: 6}, 
+{where: 'Educ - OSA', number: 5}, 
+{where: "Vinzon's - OSA", number: 4}, 
+{where: 'CHE - OSA/College', number: 6}, 
+{where: 'Math', number: 10}, 
+{where: 'BA', number: 4}, 
+{where: 'Econ', number: 4}, 
+{where: 'Stat - OSA', number: 4}, 
+{where: 'Engg - OSA', number: 10}, 
+{where: 'CSWCD', number: 6}, 
+{where: 'Archi', number: 16}, 
+{where: 'NCPAG - OSA', number: 4}, 
+{where: 'IB - OSA', number: 4}, 
+{where: 'NIGS - OSA', number: 4}, 
+{where: 'Villadolid - OSA', number: 2}, 
+{where: 'Albert Hall', number: 2}, 
+{where: 'NIP', number: 4}, 
+{where: 'Kiosks sa FC', number: 4}, 
+{where: 'Main Lib. Walk', number: 12}, 
+{where: "Center for Women's Studies", number: 2}, 
+{where: 'Vanguard - OSA', number: 2}, 
+{where: 'AIT - OSA', number: 4}, 
+{where: 'Physics Pav. - OSA', number: 4}, 
+{where: 'Bio Pav. - OSA', number: 4}, 
+{where: 'College Of Music', number: 8},
+{where: 'Philcoa', number: 20}, 
+{where: 'Katipunan', number: 20}, 
+{where: 'Pantranco', number: 20}, 
+{where: 'MRT/Hi-way', number: 20}, 
+{where: 'SM North', number: 20}, 
+{where: 'Ikot', number: 20},  
+{where: 'Toki', number: 20},  
+{where: 'Ateneo', number: 2},  
+{where: 'Katipunan Area', number: 10},  
+{where: 'Philcoa Area', number: 20},  
+{where: "KNL Area and Sarah's", number: 20},  
+{where: 'Freedom Bar', number: 2},  
+{where: 'Bluberri', number: 2},  
+{where: 'MRS', number: 2},  
+{where: 'Blue Room', number: 2}, 
+{where: 'Circus', number: 2},   
+{where: 'Love One Another', number: 2},  
+{where: 'Maginhawa', number: 25},  
+{where: 'Pansol Area', number: 10},  
+],
+        rtr: [{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}, {time: "11:30 - 1:00"}, {time: "1:00 - 2:30"}, {time: "2:30 - 4:00"}, {time: "4:00 - 5:30"}],
+        rtr2:[{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}, {time: "11:30 - 1:00"}, {time: "1:00 - 2:30"}, {time: "2:30 - 4:00"}, {time: "4:00 - 5:30"}],
+        otherPromotions: [],
+        performerRemind2: []
       });
     }
     else
@@ -134,7 +204,8 @@ Meteor.methods({
       {
         $addToSet: { 
           images: {
-            url: options.url
+            url: options.url,
+            date: moment().utc().format('MMMM Do YYYY, h:mm:ss a').toString()
             // To do: get uploader
           }  
         }
@@ -177,6 +248,7 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { wk2lineup: options.wk2lineup, wk2lineupContract: save }
+
       })
   },
   updateSponsorsContact: function(options) {
@@ -215,34 +287,54 @@ Meteor.methods({
     return Events.update(
       {_id: options.id},
       {
-        $set: { finalPoster: options.url }
+        $set: { finalPoster: { url: options.url, date: moment().utc().format('MMMM Do YYYY, h:mm:ss a').toString() } }
       }
     );
   },
   updateFinalLineup: function(options) {
     options = options || {};
+    var bands = _.pluck(options.lineup, 'band');
+    var save = []
+    _.each(bands, function (entry)
+    {
+      save.push({
+        band: entry,
+        status: "Not yet contacted"
+      });
+    });
+    var event = Events.findOne({_id: options.selected});
+    if(_.isEqual(event.finalLineup, options.lineup))
+      return false
     return Events.update(
       {_id: options.selected},
       {
-        $set: { finalLineup: options.lineup }
+        $set: { finalLineup: options.lineup, performerRemind: save, performerRemind2: save }
       }
     );
   },
   updateFinalSponsors: function(options) {
     options = options || {};
+    var sponsorCollateral = []
+    _.each(_.pluck(options.finalSponsors, 'sponsor'), function (d) {
+      sponsorCollateral.push({sponsor: d});
+    })
     return Events.update(
       {_id: options.selected},
       {
-        $set: { finalSponsors: options.finalSponsors }
+        $set: { finalSponsors: options.finalSponsors, sponsorCollateral: sponsorCollateral }
       }
     );    
   },
   updatePromotions: function(options) {
     options = options || {};
+    var wk4promotions = []
+    _.each(_.pluck(options.promotions, 'platform'), function (d) {
+      wk4promotions.push({platform: d, status: "Not yet shared"});
+    })
     return Events.update(
       {_id: options.selected},
       {
-        $set: { promotions: options.promotions }
+        $set: { promotions: options.promotions, wk4promotions: wk4promotions }
       }
    );    
   },
@@ -255,5 +347,108 @@ Meteor.methods({
           workAssignmentsHeader: options.workAssignmentsHeader}
       }
    );   
-  }
+  },
+  updatePerformerRemind: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { performerRemind: options.performerRemind }
+      })
+  },
+  updateSponsorCollateral: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { sponsorCollateral: options.sponsorCollateral }
+      })
+  },
+  updateWk4Promotions: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { wk4promotions: options.wk4promotions }
+      })
+  },
+  updatePostingAssignments: function(options) {
+    options = options || {};
+    var event = Events.findOne({_id: options.selected}, {postingAssignments: 1})
+    if(event)
+    {
+      var count = 0;
+      _.each(event.postingAssignments, function (d) {
+        d.person = options.postingAssignments[count]
+        count++;
+      })
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { postingAssignments: event.postingAssignments }
+        }
+      )
+    }    
+  },
+  updateRTR: function(options) {
+    options = options || {}
+    var event = Events.findOne({_id: options.selected}, {rtr: 1})
+    if(event)
+    {
+      var count = 0;
+      _.each(event.rtr, function(d) {
+        d.tth = options.rtr[count].tth
+        d.wf = options.rtr[count].wf
+        count++;
+      })
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { rtr: event.rtr }
+        }
+      )
+    }
+  },
+  updateOtherPromotions: function(options) {
+    options = options || {}
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { otherPromotions: options.otherPromotions }
+      })
+  },
+  updateText: function (options) {
+    return  Events.update(
+      {_id: options.selected},
+      {
+        $set: {updated: moment().utc().toString(), lastUpdate: Meteor.userId()}
+      })  
+  },
+  updatePerformerRemind2: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { performerRemind2: options.performerRemind }
+      })
+  },
+  updateRTR2: function(options) {
+    options = options || {}
+    var event = Events.findOne({_id: options.selected}, {rtr2: 1})
+    if(event)
+    {
+      var count = 0;
+      _.each(event.rtr2, function(d) {
+        d.tth = options.rtr[count].tth
+        d.wf = options.rtr[count].wf
+        count++;
+      })
+      return Events.update(
+        {_id: options.selected},
+        {
+          $set: { rtr2: event.rtr2 }
+        }
+      )
+    }
+  }  
 })

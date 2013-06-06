@@ -1,0 +1,29 @@
+<template name="promotionsHeader">
+  <h3>Online promotions</h3>
+  <p>Setup a Facebook event page for the event and other promotional posts on different online platforms (Tumblr, Twitter, etc).  Provide the link to the posts below</p>
+</template>
+
+<template name="promotions">
+  <table id="promotions_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editPlatform">{{platform}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editLink">{{link}}</a>
+            <a href="{{link}}" class="goto"><small>[goto]</small></a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+  <button class="btn" id="addEntry">Add row</button>   
+</template>

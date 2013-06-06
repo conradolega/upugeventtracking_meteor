@@ -1,0 +1,32 @@
+<template name="sponsorsContactHeader">
+  <h3>Sending of sponsorship letters</h3>
+  <p>E-mail sponsorship letters to potential sponsors. E-mails have to be followed up ideally twice a week. Also, don’t forget to ask them to send their company logo to be included in the poster (if they agree to sponsor the event)</p>  
+</template>
+
+<template name="sponsorsContact">
+  <table id="sponsors_contact_table" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Sponsor</th>
+        <th>Status</th>
+        <th>Updated on</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+        <tr>
+          <td>
+            <a href="#" class="editSponsorContact">{{sponsor}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editSponsorContactStatus">{{status}}</a>
+          </td>
+          <td>  
+            <a href="#" class="editSponsorDate">{{date}}</a>
+          </td>          
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>  
+  <button class="btn" id="addEntry">Add row</button>    
+</template>
