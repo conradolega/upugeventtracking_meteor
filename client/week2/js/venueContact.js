@@ -23,3 +23,10 @@ Template.venueContact.rendered = function () {
     source: ["Not yet contacted", "Contacted", "Approved", "Rejected"]
   });
 }
+
+Template.venueContact.rows = function () {
+  var cursor = Events.findOne({_id: Session.get("selected")}, { venueContact: 1 });
+  if(cursor){
+    return cursor.venueContact
+  }
+}

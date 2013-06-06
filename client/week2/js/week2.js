@@ -75,7 +75,38 @@ Template.week2.events({
         toastr.success('Sponsor contact info saved!', 'Week 2')
       } 
     });         
-    
+
+    table = template.find("#venue_contact_table");
+    records = _.rest($(table).find("tr"));
+    save = [];
+
+    $(records).each( function () {
+      var venue = $(this).find("a.editVenueContact").html();
+      var status = $(this).find("a.editVenueStatus").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          venue: venue,
+          status: status
+        }
+        save.push(push);
+      }
+    });
+
+    Meteor.call("updateVenueContact",
+    {
+      venueContact: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        toastr.error(error.details, error.reason);
+      }
+      else {
+        toastr.success('Venue contact info saved!', 'Week 2')
+      } 
+    });   
+
     Meteor.call("updateText",
     {
       selected: Session.get("selected")

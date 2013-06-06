@@ -12,7 +12,12 @@
       </tr>
     </thead>
     <tbody>
-    <tr>
+      {{#each rows}}
+        <tr>
+          <td><a class="editVenueContact" href="#">{{venue}}</a></td>
+          <td><a class="editVenueStatus" href="#">{{status}}</a></td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
   <button class="btn" id="addEntry">Add row</button>  

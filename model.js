@@ -120,7 +120,8 @@ Meteor.methods({
         rtr: [{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}, {time: "11:30 - 1:00"}, {time: "1:00 - 2:30"}, {time: "2:30 - 4:00"}, {time: "4:00 - 5:30"}],
         rtr2:[{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}, {time: "11:30 - 1:00"}, {time: "1:00 - 2:30"}, {time: "2:30 - 4:00"}, {time: "4:00 - 5:30"}],
         otherPromotions: [],
-        performerRemind2: []
+        performerRemind2: [],
+        venueContact: {}
       });
     }
     else
@@ -248,8 +249,16 @@ Meteor.methods({
       {_id: options.selected},
       {
         $set: { wk2lineup: options.wk2lineup, wk2lineupContract: save }
-
       })
+  },
+  updateVenueContact: function(options) {
+    options = options || {};
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { venueContact: options.venueContact }
+      }
+    )
   },
   updateSponsorsContact: function(options) {
     options = options || {};
