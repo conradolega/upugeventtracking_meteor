@@ -190,10 +190,18 @@ Meteor.methods({
   },
  updateVenue: function(options) {
     options = options || {};
+    var venueContact = []
+    _.each(options.venue, function (d) {
+      var save = {
+        venue: d.venue,
+        status: "Not yet contacted"
+      }
+      venueContact.push(save)
+    })
     return Events.update(
       {_id: options.selected},
       {
-        $set: { venue: options.venue}
+        $set: { venue: options.venue, venueContact: venueContact}
       }
     );    
   },
