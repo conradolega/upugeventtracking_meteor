@@ -50,7 +50,7 @@
 								{{> week4}}
 								{{> week5}}
 							{{/if}}
-							
+							{{> saveaspdf}}
 						{{/if}}
 
 				{{/if}}
@@ -137,4 +137,8 @@
 			<button id="cancel" class="btn">Cancel</button>
 		</div>
 	</div>
+</template>
+
+<template name="saveaspdf">
+	<a class="btn btn-primary downloadpdf">Save data as PDF</a>
 </template>
