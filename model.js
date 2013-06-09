@@ -122,7 +122,7 @@ Meteor.methods({
         otherPromotions: [],
         performerRemind2: [],
         venueContact: {},
-        printPromotions: []
+        printPromotions: [{task: "Print posters", status: "Not yet started"}, {task: "OSA approval", status: "Not yet started"}]
       });
     }
     else
