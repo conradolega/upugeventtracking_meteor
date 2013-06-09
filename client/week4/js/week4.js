@@ -125,7 +125,7 @@ Template.week4.events({
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success('Online promotions info saved!', 'Week 3')
+        toastr.success('Online promotions info saved!', 'Week 4')
     });
 
 
