@@ -59,7 +59,7 @@ Template.week1.events({
       toastr.error(error.details, error.reason);
     }
     else
-      toastr.success('Line-up saved!', 'Week 1')
+      toastr.success('Potential line-up saved!', 'Week 1')
   });
 
   table = template.find("#venue_table");
