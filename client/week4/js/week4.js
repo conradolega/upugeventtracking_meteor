@@ -47,6 +47,36 @@ Template.week4.events({
         } 
       });      
     } 
+    table = template.find("#finalLineup");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var band = $(this).find("a.editCell").html();
+      var startTime = $(this).find("a.editStartTime").html();
+      var endTime = $(this).find("a.editEndTime").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          band: band,
+          startTime: startTime,
+          endTime: endTime
+        };
+        save.push(push);
+      }
+    });
+
+    Meteor.call("updateFinalLineup",
+    {
+      lineup: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        toastr.error(error.details, error.reason)
+      }
+      else
+        toastr.success('Final lineup saved!', 'Week 4')
+    });
 
     var finalVenue = $(template.find(".editFinalVenue"));
     var deal = $(template.find(".editDeal"));
