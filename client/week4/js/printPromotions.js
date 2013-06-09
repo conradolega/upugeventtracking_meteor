@@ -12,3 +12,21 @@ Template.printPromotions.events({
     });
   }
 })
+
+Template.printPromotions.rendered = function () {
+  $(this.findAll(".editTask")).editable({
+    unsavedclass: null
+  });
+  $(this.findAll(".editStatus")).editable({
+    type: 'select',
+    source: ["Not yet started", "Started", "Completed"],
+    unsavedclass: null
+  });
+}
+
+Template.printPromotions.rows = function () {
+  var event = Events.findOne({_id: Session.get("selected")})
+  if(event){
+    return event.printPromotions
+  }
+}
