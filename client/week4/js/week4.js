@@ -48,6 +48,27 @@ Template.week4.events({
       });      
     } 
 
+    var finalVenue = $(template.find(".editFinalVenue"));
+    var deal = $(template.find(".editDeal"));
+    var paid = $(template.find(".editPaid"));
+    var where = $(template.find(".editWhere"));
+    var save = [finalVenue.html(), deal.html(), paid.html(), where.html()];
+    if(_.contains(save,"Empty"))
+    {
+      save[0] = save[1]= save[2] = save[3] = "";
+    }
+    Meteor.call("updateFinalVenue", {
+      selected: Session.get("selected"),
+      finalVenue: {venue: save[0], deal: save[1], paid: save[2], where: save[3]}
+    }, function (error, _id) {
+      if (error) {
+        toastr.error(error.details, error.reason);
+      }
+      else {
+        toastr.success('Final venue saved!', 'Week 4')
+      }    
+    }); 
+    
     table = template.find("#promotions_table");
     records = _.rest($(table).find("tr"));
     save = [];
