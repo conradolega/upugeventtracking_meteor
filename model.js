@@ -226,7 +226,7 @@ Meteor.methods({
     return Events.update(
       {_id: options.selected},
       {
-        $set: { work: options.work, workAssignments: options.work }
+        $set: { work: options.work, workAssignments: options.work, workAssignmentsHeader: []}
       }
     );
   },
