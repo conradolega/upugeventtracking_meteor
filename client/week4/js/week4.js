@@ -128,6 +128,34 @@ Template.week4.events({
         toastr.success('Online promotions info saved!', 'Week 4')
     });
 
+    table = template.find("#printPromotions");
+    records = _.rest($(table).find("tr"));
+    save = [];
+    $(records).each( function () {
+      var task = $(this).find("a.editTask").html();
+      var status = $(this).find("a.editStatus").html();
+      if(($(this).find("a.editable-empty").length == 0))
+      {
+        var push = {
+          task: task,
+          status: status 
+        };
+        save.push(push);
+      }
+    });
+
+   Meteor.call("updatePrintPromotions",
+    {
+      printPromotions: save,
+      selected: Session.get("selected")
+    },
+    function (error, _id) {
+      if (error) {
+        toastr.error(error.details, error.reason)
+      }
+      else
+        toastr.success('Print promotions info saved!', 'Week 4');
+    });
 
     Meteor.call("updateText",
     {
