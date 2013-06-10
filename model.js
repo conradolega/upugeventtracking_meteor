@@ -121,7 +121,8 @@ Meteor.methods({
         rtr2:[{time: "8:30 - 10:00"}, {time: "10:00 - 11:30"}, {time: "11:30 - 1:00"}, {time: "1:00 - 2:30"}, {time: "2:30 - 4:00"}, {time: "4:00 - 5:30"}],
         otherPromotions: [],
         performerRemind2: [],
-        venueContact: {}
+        venueContact: {},
+        printPromotions: [{task: "Print posters", status: "Not yet started"}, {task: "OSA approval", status: "Not yet started"}]
       });
     }
     else
@@ -226,7 +227,7 @@ Meteor.methods({
     return Events.update(
       {_id: options.selected},
       {
-        $set: { work: options.work, workAssignments: options.work }
+        $set: { work: options.work, workAssignments: options.work, workAssignmentsHeader: []}
       }
     );
   },
@@ -467,5 +468,14 @@ Meteor.methods({
         }
       )
     }
-  }  
+  },
+  updatePrintPromotions: function(options) {
+    options = options || {}
+    return Events.update(
+      {_id: options.selected},
+      {
+        $set: { printPromotions: options.printPromotions }
+      }
+    )
+  }
 })

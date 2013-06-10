@@ -120,7 +120,7 @@ Template.week6.events({
         toastr.error(error.details, error.reason)
       }
       else
-        toastr.success('RTR info saved!', 'Week 5')
+        toastr.success('RTR info saved!', 'Week 6')
     })
 
     table = template.find("#other_table");
